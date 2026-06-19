@@ -1,0 +1,25 @@
+{
+  "name": "Agricultura Litoral Norte",
+  "short_name": "LN Agro",
+  "description": "Seguimiento de labores agrícolas - Ceibos Group",
+  "start_url": "/Agricultura-Litoral-Norte/",
+  "scope": "/Agricultura-Litoral-Norte/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1a4a1a",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -5,6 +5,13 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
 <title>Agricultura · Litoral Norte</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#1a4a1a">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="LN Agro">
+<link rel="apple-touch-icon" href="logo.png">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
@@ -20,6 +27,11 @@ html,body{background:#fff;color:#18180f;font-family:-apple-system,BlinkMacSystem
   --purple:#534AB7;--pbg:#EEEDFE;
   --r:12px;--rs:7px;
 }
+
+
+/* LOGO */
+.sp-logo-img{width:120px;height:auto;margin-bottom:4px;}
+.hdr-logo{height:28px;width:auto;}
 
 /* SPLASH */
 #splash{position:fixed;inset:0;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;z-index:200;transition:opacity .3s;}
@@ -157,9 +169,8 @@ html,body{background:#fff;color:#18180f;font-family:-apple-system,BlinkMacSystem
 
 <!-- SPLASH / LOADING -->
 <div id="splash">
-  <div class="sp-logo">Ceibos Group</div>
-  <div class="sp-title">Agricultura · Litoral Norte</div>
-  <div class="sp-sub">Seguimiento de labores</div>
+  <img src="logo.png" class="sp-logo-img" alt="Agricultura Litoral Norte">
+  <div class="sp-sub">Seguimiento de labores · Ceibos Group</div>
   <div class="sp-status" id="sp-status">
     <div class="spin"></div>
     <span id="sp-msg">Conectando con GitHub...</span>
@@ -171,7 +182,7 @@ html,body{background:#fff;color:#18180f;font-family:-apple-system,BlinkMacSystem
 <!-- APP -->
 <div id="app" style="display:none;">
   <div class="hdr">
-    <div class="hdr-title">AGRICULTURA <span>· Litoral Norte</span></div>
+    <img src="logo.png" class="hdr-logo" alt="LN Agro">
     <div class="hdr-r">
       <div id="camp-pills" style="display:flex;gap:4px;flex-wrap:nowrap;"></div>
       <div class="sync-ok" id="sync-ok" style="display:none;"><i class="ti ti-cloud-check"></i><span id="sync-txt"></span></div>
@@ -542,6 +553,16 @@ function setFilt(c,el){filtCult=c;document.querySelectorAll('#cult-chips .fchip'
 
 // ── START ─────────────────────────────────────────────────────
 initApp();
+</script>
+
+<script>
+if('serviceWorker' in navigator){
+  window.addEventListener('load', ()=>{
+    navigator.serviceWorker.register('sw.js')
+      .then(()=>console.log('SW registrado'))
+      .catch(e=>console.log('SW error:',e));
+  });
+}
 </script>
 </body>
 </html>
