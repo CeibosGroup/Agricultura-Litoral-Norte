@@ -1,4 +1,4 @@
-const CACHE = 'ln-agro-v1';
+const CACHE = 'ln-agro-v2';
 const STATIC = [
   '/Agricultura-Litoral-Norte/',
   '/Agricultura-Litoral-Norte/index.html',
