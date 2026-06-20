@@ -11,7 +11,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="LN Agro">
-<link rel="apple-touch-icon" href="LOGO.jpeg">
+<link rel="apple-touch-icon" href="LOGO.png">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
@@ -147,7 +147,7 @@ html,body{background:#fff;color:#18180f;font-family:-apple-system,BlinkMacSystem
 .ln{font-size:11px;font-weight:600;display:flex;align-items:center;gap:4px;flex-wrap:wrap;}
 .ld{font-size:10px;color:var(--tx2);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .lf{font-size:10px;color:var(--green);margin-top:1px;}
-.ff{font-size:9px;color:var(--blue);font-weight:700;background:var(--bbg);padding:1px 5px;border-radius:3px;border:1px solid #c0cce8;}
+.ff{display:inline-flex;align-items:center;vertical-align:middle;margin-left:3px;}.ff img{width:14px;height:14px;object-fit:contain;opacity:.85;}
 .fsec{padding:11px 13px;}
 .ftit{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--tx3);margin-bottom:9px;display:flex;align-items:center;gap:4px;}
 .fgrp{margin-bottom:10px;}
@@ -169,7 +169,7 @@ html,body{background:#fff;color:#18180f;font-family:-apple-system,BlinkMacSystem
 
 <!-- SPLASH / LOADING -->
 <div id="splash">
-  <img src="LOGO.jpeg" class="sp-logo-img" alt="Agricultura Litoral Norte">
+  <img src="LOGO.png" class="sp-logo-img" alt="Agricultura Litoral Norte">
   <div class="sp-sub">Seguimiento de labores · Ceibos Group</div>
   <div class="sp-status" id="sp-status">
     <div class="spin"></div>
@@ -182,7 +182,7 @@ html,body{background:#fff;color:#18180f;font-family:-apple-system,BlinkMacSystem
 <!-- APP -->
 <div id="app" style="display:none;">
   <div class="hdr">
-    <img src="LOGO.jpeg" class="hdr-logo" alt="LN Agro">
+    <img src="LOGO.png" class="hdr-logo" alt="LN Agro">
     <div class="hdr-r">
       <div id="camp-pills" style="display:flex;gap:4px;flex-wrap:nowrap;"></div>
       <div class="sync-ok" id="sync-ok" style="display:none;"><i class="ti ti-cloud-check"></i><span id="sync-txt"></span></div>
@@ -437,8 +437,15 @@ function setCamp(c,el){activeCamp=c;document.querySelectorAll('.cpill').forEach(
 // ── ALERTS ────────────────────────────────────────────────────
 function getLoteAlerts(d){
   const a=[];
-  if(season!=='inv'||d.cult!=='Cz'||!d.siem?.fecha)return a;
-  const [dd,mm,yy]=d.siem.fecha.split('/').map(Number);
+  if(season!=='inv'||d.cult!=='Cz')return a;
+  // Use resiembra date if re >= 50% of lote, else use siembra
+  let refFecha=d.siem?.fecha;
+  if(d.re1?.fecha&&d.re1?.ha&&d.has){
+    const rePct=Math.round(d.re1.ha/d.has*100);
+    if(rePct>=50) refFecha=d.re1.fecha;
+  }
+  if(!refFecha)return a;
+  const [dd,mm,yy]=refFecha.split('/').map(Number);
   const sd=new Date(yy,mm-1,dd);
   const TODAY=new Date();
   [40,60].forEach(n=>{
@@ -459,18 +466,18 @@ function colPct(p){return p>=70?'var(--green)':p>=40?'var(--amber)':'var(--red)'
 function rotB(c){if(!c||c==='—')return`<span style="font-size:8px;color:var(--tx3)">—</span>`;return`<span class="rb ${CB[c]||'b-Cobertura'}">${CL_INV[c]||CL_VER[c]||c}</span>`;}
 
 // ── DETAIL ────────────────────────────────────────────────────
-const FS=()=>'<span class="ff">F</span>';
-function LI(done,finn,icon,name,det,fecha,extra=''){const cls=finn?'finn':done?'done':'pend';return`<div class="li ${cls} ${extra}"><i class="ti ${icon}"></i><div class="lb"><div class="ln">${name}${finn?FS():''}</div>${det?`<div class="ld">${det}</div>`:''}</div></div>`;}
-function FC(done,finn,label,val,unit,fecha,sub,extra=''){const cls=finn?'finn':done?'done':'pend';return`<div class="fc ${cls} ${extra}"><div class="fcl">${label}${finn?FS():''}</div><div class="fcv">${val!=null?val:'—'}<span class="fcu">${val!=null?unit:''}</span></div>${fecha?`<div class="fcd"><i class="ti ti-calendar" style="font-size:9px;vertical-align:-1px;"></i> ${fecha}</div>`:''}</div>`;}
+const FS=()=>'<span class="ff"><img src="data:image/png;base64,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" alt="F"></span>';
+function LI(done,finn,icon,name,det,fecha,extra=''){const cls=finn?'finn':done?'done':'pend';return`<div class="li ${cls} ${extra}"><i class="ti ${icon}"></i><div class="lb"><div class="ln">${name}${finn?FS():''}</div>${det?`<div class="ld">${det}</div>`:''}${fecha?`<div class="lf"><i class="ti ti-calendar" style="font-size:9px;vertical-align:-1px;"></i> ${fecha}</div>`:''}</div></div>`;}
+function FC(done,finn,label,val,unit,fecha,extra=''){const cls=finn?'finn':done?'done':'pend';return`<div class="fc ${cls} ${extra}"><div class="fcl">${label}${finn?FS():''}</div><div class="fcv">${val!=null?val:'—'}<span class="fcu">${val!=null?unit:''}</span></div>${fecha?`<div class="fcd"><i class="ti ti-calendar" style="font-size:9px;vertical-align:-1px;"></i> ${fecha}</div>`:''}</div>`;}
 
 function renderDetail(d){
   const isCz=d.cult==='Cz',isVer=season==='ver';
   const hasRe=d.re1?.var||d.re1?.fecha;
   const rePct=hasRe&&d.re1?.ha?Math.round(d.re1.ha/d.has*100):null;
-  const totU=totalUrea(d);const totUt=totU?Math.round(totU*d.has/1000*10)/10:0;
+  const totU=totalUrea(d);
   const humPct=d.hum?.ha?Math.round(d.hum.ha/d.has*100):null;
   let h=`<div class="dbanner"><span class="dvar">${d.siem?.var||d.cult||'—'}</span>${hasRe?`<span class="re-tag"><i class="ti ti-refresh" style="font-size:10px;vertical-align:-1px;"></i> Resiembra · ${d.re1.var||''}${d.re1.ha?' · '+Math.round(d.re1.ha)+' ha':''}</span>`:''}</div>`;
-  if(hasRe&&rePct!=null)h+=`<div class="re-pb"><span class="re-pbl">Resiembra:</span><div class="re-pbg"><div class="re-pf" style="width:${rePct}%;"></div></div><span class="re-pv">${rePct}%</span></div><div style="height:6px;"></div>`;
+  if(hasRe&&rePct!=null)h+=`<div class="re-pb"><span class="re-pbl">Resiembra del lote:</span><div class="re-pbg"><div class="re-pf" style="width:${rePct}%;"></div></div><span class="re-pv">${rePct}%</span></div><div style="height:4px;"></div>`;
   h+=`<div class="sgrid">
     <div class="sec"><div class="st"><i class="ti ti-spray"></i>Herbicidas</div>
       ${LI(!!(d.barb?.prod||d.barb?.fecha),d.barb?.finn,'ti-check-circle','Barbecho',d.barb?.prod,d.barb?.fecha)}
@@ -488,10 +495,10 @@ function renderDetail(d){
   </div>`;
   if(!isVer||isMz(d)){
     h+=`<div class="fsec"><div class="ftit"><i class="ti ti-test-pipe"></i>Fertilizaciones</div>`;
-    if(!isVer)h+=`<div class="fgrp"><div class="fgl">Basal</div><div class="frow">${FC(d.fert_bas?.spt!=null,d.fert_bas?.finn,'Fósforo (P)',d.fert_bas?.spt,' kg/ha',null,null)}${FC(d.fert_bas?.kcl!=null,d.fert_bas?.finn,'Potasio (K)',d.fert_bas?.kcl,' kg/ha',null,null)}${isCz?FC(d.fert_bas?.fosz!=null,false,'Foszinc',d.fert_bas?.fosz,' kg/ha',null,null):''}</div></div>`;
+    if(!isVer)h+=`<div class="fgrp"><div class="fgl">Basal</div><div class="frow">${FC(d.fert_bas?.spt!=null,d.fert_bas?.finn,'Fósforo (P)',d.fert_bas?.spt,' kg/ha',d.fert_bas?.fecha)}${FC(d.fert_bas?.kcl!=null,d.fert_bas?.finn,'Potasio (K)',d.fert_bas?.kcl,' kg/ha',d.fert_bas?.fecha)}${isCz?FC(d.fert_bas?.fosz!=null,false,'Foszinc',d.fert_bas?.fosz,' kg/ha',d.fert_bas?.fecha):''}</div></div>`;
     const uits=!isVer?[['Siembra',d.urea_siem],['Z22/B4',d.z22],['Z30/C1',d.z30],['Z33',d.z33]]:[['Siembra',d.urea_siem],['V4',d.v4],['V8',d.v8]];
-    h+=`<div class="fgrp"><div class="fgl">Urea azufrada (kg/ha)</div><div class="frow">${uits.map(([l,u])=>FC(u?.kg!=null,u?.finn,l,u?.kg,' kg/ha',u?.fecha,null)).join('')}<div class="fc total"><div class="fcl">Total</div><div class="fcv">${totU||'—'}<span class="fcu">${totU?' kg/ha':''}</span></div>${totUt?`<div class="fcs" style="color:var(--purple);">${totUt} t en lote</div>`:''}</div></div></div>`;
-    h+=`<div class="fgrp" style="margin-bottom:0;"><div class="fgl">Otros</div><div class="frow">${FC(d.znf?.dosis!=null,d.znf?.finn,'Zinc foliar',d.znf?.dosis,' L/ha',d.znf?.fecha,null)}${!isVer?`<div class="fc ${d.hum?.dosis!=null?(d.hum?.finn?'finn':'done'):'pend'}"><div class="fcl">Ác. húmicos${d.hum?.finn?FS():''}</div><div class="fcv">${d.hum?.dosis!=null?d.hum.dosis:'—'}<span class="fcu">${d.hum?.dosis!=null?' L/ha':''}</span></div>${d.hum?.fecha?`<div class="fcd"><i class="ti ti-calendar" style="font-size:9px;"></i> ${d.hum.fecha}</div>`:''}${humPct!=null?`<div style="margin-top:3px;"><div style="display:flex;justify-content:space-between;font-size:9px;color:var(--tx3);"><span>${Math.round(d.hum.ha)}/${Math.round(d.has)} ha</span><span style="font-weight:700;color:var(--green);">${humPct}%</span></div><div class="hbar"><div class="hbarf" style="width:${humPct}%;"></div></div></div>`:''}</div>`:''}</div></div></div>`;
+    h+=`<div class="fgrp"><div class="fgl">Urea azufrada (kg/ha)</div><div class="frow">${uits.map(([l,u])=>FC(u?.kg!=null,u?.finn,l,u?.kg,' kg/ha',u?.fecha)).join('')}<div class="fc total"><div class="fcl">Total</div><div class="fcv">${totU||'—'}<span class="fcu">${totU?' kg/ha':''}</span></div></div></div></div>`;
+    h+=`<div class="fgrp" style="margin-bottom:0;"><div class="fgl">Otros</div><div class="frow">${FC(d.znf?.dosis!=null,d.znf?.finn,'Zinc foliar',d.znf?.dosis,' L/ha',d.znf?.fecha)}${!isVer?`<div class="fc ${d.hum?.dosis!=null?(d.hum?.finn?'finn':'done'):'pend'}"><div class="fcl">Ác. húmicos${d.hum?.finn?FS():''}</div><div class="fcv">${d.hum?.dosis!=null?d.hum.dosis:'—'}<span class="fcu">${d.hum?.dosis!=null?' L/ha':''}</span></div>${d.hum?.fecha?`<div class="fcd"><i class="ti ti-calendar" style="font-size:9px;"></i> ${d.hum.fecha}</div>`:''}${humPct!=null?`<div style="margin-top:3px;"><div style="display:flex;justify-content:space-between;font-size:9px;color:var(--tx3);"><span>${Math.round(d.hum.ha)}/${Math.round(d.has)} ha</span><span style="font-weight:700;color:var(--green);">${humPct}%</span></div><div class="hbar"><div class="hbarf" style="width:${humPct}%;"></div></div></div>`:''}</div>`:''}</div></div></div>`;
   }
   return h;
 }
@@ -514,11 +521,11 @@ function render(){
   const urows=season==='ver'?rows.filter(isMz):prod;
   const conU=urows.filter(d=>totalUrea(d)>0);
   const promU=conU.length?Math.round(conU.reduce((a,d)=>a+totalUrea(d)*d.has,0)/conU.reduce((a,d)=>a+d.has,0)):0;
-  const totUt=conU.reduce((a,d)=>a+totalUrea(d)*d.has/1000,0);
+  
   const pR=pctArea(prod,d=>d.rep?.fecha),pF1=pctArea(prod,d=>d.f1?.prod),pF2=pctArea(prod,d=>d.f2?.prod),pZn=pctArea(prod,d=>d.znf?.dosis);
   document.getElementById('metrics').innerHTML=
     MC('ti-map','Has',Math.round(totH).toLocaleString('es'),`${rows.length} lotes`,null,null)+
-    MC('ti-flask',season==='ver'?'Urea maíz':'Urea az.',promU?promU+' kg/ha':'—',`${Math.round(totUt*10)/10} t`,null,null)+
+    MC('ti-flask',season==='ver'?'Urea maíz':'Urea az.',promU?promU+' kg/ha':'—',`${conU.length} lotes`,null,null)+
     MC('ti-repeat','Repaso',pR+'%','% área',pR,colPct(pR))+
     MC('ti-shield','Fung 1',pF1+'%','% área',pF1,colPct(pF1))+
     MC('ti-shield-check','Fung 2',pF2+'%','% área',pF2,colPct(pF2))+
