@@ -1,5 +1,5 @@
 // SW v8 - cache bust
-const CACHE = 'ln-agro-v8';
+const CACHE = 'ln-agro-v9';
 
 self.addEventListener('install', e => {
   self.skipWaiting();

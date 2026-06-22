@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
 <title>Agricultura · Litoral Norte</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js" onload="xlsxReady=true;tryStart()" onerror="xlsxFallback()"></script>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#1a4a1a">
 <meta name="mobile-web-app-capable" content="yes">
@@ -595,10 +595,34 @@ function setSeason(s,el){season=s;filtCult='all';document.querySelectorAll('.fst
 function setFilt(c,el){filtCult=c;document.querySelectorAll('#cult-chips .fchip').forEach(x=>x.classList.remove('on'));el.classList.add('on');render();}
 
 // ── START ─────────────────────────────────────────────────────
-initApp();
-</script>
+let xlsxReady = false;
+let domReady = false;
 
-<script>
+function tryStart(){
+  if(xlsxReady && domReady) initApp();
+}
+
+function xlsxFallback(){
+  // XLSX failed from CDN, try unpkg
+  const s = document.createElement('script');
+  s.src = 'https://unpkg.com/xlsx@0.18.5/dist/xlsx.full.min.js';
+  s.onload = ()=>{ xlsxReady=true; tryStart(); };
+  s.onerror = ()=>{
+    document.getElementById('splash').innerHTML +=
+      '<div style="color:red;font-size:12px;padding:16px;">Error: no se pudo cargar la librería Excel. Verificá tu conexión.</div>';
+  };
+  document.head.appendChild(s);
+}
+
+if(document.readyState === 'loading'){
+  document.addEventListener('DOMContentLoaded', ()=>{ domReady=true; tryStart(); });
+} else {
+  domReady = true;
+  tryStart();
+}
+
+// Service Worker
+
 if('serviceWorker' in navigator){
   window.addEventListener('load', ()=>{
     navigator.serviceWorker.register('sw.js')
@@ -606,6 +630,7 @@ if('serviceWorker' in navigator){
       .catch(e=>console.log('SW error:',e));
   });
 }
+
 </script>
 </body>
 </html>
