@@ -223,39 +223,47 @@ const openC = new Set(), openL = new Set();
 const HAS_REF = {};
 
 // ── INIT ──────────────────────────────────────────────────────
-async function initApp(manual=false){
-  setStatus('Cargando datos...',true);
-  document.getElementById('sp-err').style.display='none';
-  document.getElementById('sp-retry').style.display='none';
+function initApp(manual=false){
   if(manual){
     document.getElementById('splash').classList.remove('hide');
     document.getElementById('app').style.display='none';
   }
 
-  // Load historic
+  // Load historic data (embedded)
   allData = JSON.parse(JSON.stringify(HISTORIC));
   Object.values(allData).forEach(cd=>{
     (cd.inv||[]).forEach(d=>{ HAS_REF[`${d.campo}|${d.lote}`]=d.has; });
   });
 
-  // Try fetching active planilla directly by raw URL (no API needed)
+  const camps = Object.keys(allData).sort().reverse();
+  activeCamp = camps[0];
+
+  document.getElementById('splash').classList.add('hide');
+  setTimeout(()=>document.getElementById('splash').style.display='none',200);
+  document.getElementById('app').style.display='block';
+  document.getElementById('sync-txt').textContent = activeCamp;
+  document.getElementById('sync-ok').style.display='flex';
+
+  buildCampPills(camps);
+  render();
+
+  // Try to update active campaign in background (non-blocking)
+  updateFromGithub();
+}
+
+async function updateFromGithub(){
   const RAW = 'https://raw.githubusercontent.com/CeibosGroup/Agricultura-Litoral-Norte/main';
   const now = new Date();
-  const candidates = [];
   for(let y = now.getFullYear()+2; y >= 2024; y--){
     const yy = String(y).slice(2);
     const yp = String(y+1).slice(2);
-    candidates.push(`Planilla_labores_${yy}-${yp}.xlsx`);
-  }
-
-  let loadedCamp = null;
-  for(const fname of candidates){
-    const m = fname.match(/(\d{2}-\d{2})/);
-    if(!m) continue;
-    const camp = m[1];
+    const fname = `Planilla_labores_${yy}-${yp}.xlsx`;
+    const camp = `${yy}-${yp}`;
     try{
-      setStatus(`Actualizando ${camp}...`, true);
-      const res = await fetch(`${RAW}/${fname}`, {cache:'no-store'});
+      const ctrl = new AbortController();
+      const tid = setTimeout(()=>ctrl.abort(), 8000);
+      const res = await fetch(`${RAW}/${fname}`, {cache:'no-store', signal:ctrl.signal});
+      clearTimeout(tid);
       if(!res.ok) continue;
       const buf = await res.arrayBuffer();
       const wb = XLSX.read(buf,{cellStyles:true});
@@ -264,22 +272,14 @@ async function initApp(manual=false){
         ver: parseSheet(wb,'Verano',camp),
       };
       (allData[camp].inv||[]).forEach(d=>{HAS_REF[`${d.campo}|${d.lote}`]=d.has;});
-      loadedCamp = camp;
+      const camps = Object.keys(allData).sort().reverse();
+      activeCamp = camps[0];
+      buildCampPills(camps);
+      render();
+      document.getElementById('sync-txt').textContent = camp + ' ↑';
       break;
     } catch(e){ continue; }
   }
-
-  const camps = Object.keys(allData).sort().reverse();
-  activeCamp = camps[0];
-
-  document.getElementById('splash').classList.add('hide');
-  setTimeout(()=>document.getElementById('splash').style.display='none',300);
-  document.getElementById('app').style.display='block';
-  document.getElementById('sync-txt').textContent = loadedCamp || 'histórico';
-  document.getElementById('sync-ok').style.display='flex';
-
-  buildCampPills(camps);
-  render();
 }
 
 function setStatus(msg,showSpin){
