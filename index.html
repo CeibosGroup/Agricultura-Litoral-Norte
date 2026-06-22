@@ -621,16 +621,15 @@ if(document.readyState === 'loading'){
   tryStart();
 }
 
-// Service Worker
 
+
+<script>
+// Unregister any service workers
 if('serviceWorker' in navigator){
-  window.addEventListener('load', ()=>{
-    navigator.serviceWorker.register('sw.js')
-      .then(()=>console.log('SW registrado'))
-      .catch(e=>console.log('SW error:',e));
+  navigator.serviceWorker.getRegistrations().then(regs=>{
+    regs.forEach(r=>r.unregister());
   });
 }
-
 </script>
 </body>
 </html>
