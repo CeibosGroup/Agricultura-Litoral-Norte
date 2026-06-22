@@ -224,7 +224,7 @@ const HAS_REF = {};
 
 // ── INIT ──────────────────────────────────────────────────────
 async function initApp(manual=false){
-  setStatus('Conectando con GitHub...',true);
+  setStatus('Cargando datos...',true);
   document.getElementById('sp-err').style.display='none';
   document.getElementById('sp-retry').style.display='none';
   if(manual){
@@ -232,92 +232,54 @@ async function initApp(manual=false){
     document.getElementById('app').style.display='none';
   }
 
-  // Load historic into allData
+  // Load historic
   allData = JSON.parse(JSON.stringify(HISTORIC));
   Object.values(allData).forEach(cd=>{
     (cd.inv||[]).forEach(d=>{ HAS_REF[`${d.campo}|${d.lote}`]=d.has; });
   });
 
-  // Fetch file list from GitHub API to find most recent planilla
-  try{
-    setStatus('Buscando planilla activa...',true);
-    const apiUrl = `https://api.github.com/repos/CeibosGroup/Agricultura-Litoral-Norte/contents`;
-    const res = await fetch(apiUrl);
-    if(!res.ok) throw new Error(`GitHub API: ${res.status}`);
-    const files = await res.json();
+  // Try fetching active planilla directly by raw URL (no API needed)
+  const RAW = 'https://raw.githubusercontent.com/CeibosGroup/Agricultura-Litoral-Norte/main';
+  const now = new Date();
+  const candidates = [];
+  for(let y = now.getFullYear()+2; y >= 2024; y--){
+    const yy = String(y).slice(2);
+    const yp = String(y+1).slice(2);
+    candidates.push(`Planilla_labores_${yy}-${yp}.xlsx`);
+  }
 
-    // Find all Planilla_labores_XX-XX.xlsx files
-    const planillas = files
-      .filter(f=>f.name.match(/Planilla_labores_\d{2}-\d{2}\.xlsx$/i))
-      .sort((a,b)=>b.name.localeCompare(a.name));  // most recent first
-
-    if(!planillas.length){
-      throw new Error('No se encontró ninguna planilla en el repositorio');
-    }
-
-    // Load most recent (and any others not in historic)
-    const historicCamps = new Set(Object.keys(HISTORIC));
-    const toLoad = planillas.filter(f=>{
-      const m=f.name.match(/(\d{2}-\d{2})/);
-      return m && !historicCamps.has(m[1]);
-    });
-
-    // Always load the most recent
-    if(!toLoad.includes(planillas[0])) toLoad.unshift(planillas[0]);
-
-    for(const file of toLoad){
-      const m=file.name.match(/(\d{2}-\d{2})/);
-      if(!m) continue;
-      const camp=m[1];
-      setStatus(`Cargando campaña ${camp}...`,true);
-      const xlsRes = await fetch(file.download_url);
-      if(!xlsRes.ok) throw new Error(`No se pudo descargar ${file.name}`);
-      const buf = await xlsRes.arrayBuffer();
+  let loadedCamp = null;
+  for(const fname of candidates){
+    const m = fname.match(/(\d{2}-\d{2})/);
+    if(!m) continue;
+    const camp = m[1];
+    try{
+      setStatus(`Actualizando ${camp}...`, true);
+      const res = await fetch(`${RAW}/${fname}`, {cache:'no-store'});
+      if(!res.ok) continue;
+      const buf = await res.arrayBuffer();
       const wb = XLSX.read(buf,{cellStyles:true});
       allData[camp]={
         inv: parseSheet(wb,'Invierno',camp),
         ver: parseSheet(wb,'Verano',camp),
       };
       (allData[camp].inv||[]).forEach(d=>{HAS_REF[`${d.campo}|${d.lote}`]=d.has;});
-    }
-
-    const camps = Object.keys(allData).sort().reverse();
-    activeCamp = camps[0];
-    const activeFile = planillas[0].name;
-
-    // Show app
-    document.getElementById('splash').classList.add('hide');
-    setTimeout(()=>document.getElementById('splash').style.display='none',300);
-    document.getElementById('app').style.display='block';
-
-    const syncEl = document.getElementById('sync-ok');
-    document.getElementById('sync-txt').textContent = activeFile.replace('Planilla_labores_','').replace('.xlsx','');
-    syncEl.style.display='flex';
-
-    buildCampPills(camps);
-    render();
-
-  } catch(e){
-    console.error(e);
-    setStatus('',false);
-    const errEl=document.getElementById('sp-err');
-    errEl.textContent='Error: '+e.message+'. Verificá tu conexión a internet.';
-    errEl.style.display='block';
-    document.getElementById('sp-retry').style.display='block';
-
-    // Fall back to historic only
-    if(Object.keys(allData).length>0){
-      const camps=Object.keys(allData).sort().reverse();
-      activeCamp=camps[0];
-      document.getElementById('splash').classList.add('hide');
-      setTimeout(()=>document.getElementById('splash').style.display='none',300);
-      document.getElementById('app').style.display='block';
-      document.getElementById('sync-txt').textContent='sin conexión';
-      document.getElementById('sync-ok').style.display='flex';
-      buildCampPills(camps);
-      render();
-    }
+      loadedCamp = camp;
+      break;
+    } catch(e){ continue; }
   }
+
+  const camps = Object.keys(allData).sort().reverse();
+  activeCamp = camps[0];
+
+  document.getElementById('splash').classList.add('hide');
+  setTimeout(()=>document.getElementById('splash').style.display='none',300);
+  document.getElementById('app').style.display='block';
+  document.getElementById('sync-txt').textContent = loadedCamp || 'histórico';
+  document.getElementById('sync-ok').style.display='flex';
+
+  buildCampPills(camps);
+  render();
 }
 
 function setStatus(msg,showSpin){
