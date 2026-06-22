@@ -4,89 +4,54 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
 <title>Agricultura · Litoral Norte</title>
-
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#1a4a1a">
-<meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="LN Agro">
 <link rel="apple-touch-icon" href="LOGO.png">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
 html,body{background:#fff;color:#18180f;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:14px;min-height:100vh;}
 :root{
-  --brd:#e8e6de;--brd2:#ccc9be;
-  --tx:#18180f;--tx2:#6b6955;--tx3:#9e9c8a;
-  --surf:#fff;--surf2:#f8f7f3;--surf3:#f2f0eb;
-  --green:#1a8a5a;--gbg:#e8f5ee;
-  --amber:#c47a12;--abg:#fdf3e0;
-  --red:#b83030;--rbg:#fceaea;
-  --blue:#002060;--bbg:#e8eef8;
-  --purple:#534AB7;--pbg:#EEEDFE;
+  --brd:#e8e6de;--brd2:#ccc9be;--tx:#18180f;--tx2:#6b6955;--tx3:#9e9c8a;
+  --surf:#fff;--surf2:#f8f7f3;--green:#1a8a5a;--gbg:#e8f5ee;
+  --amber:#c47a12;--abg:#fdf3e0;--red:#b83030;--rbg:#fceaea;
+  --blue:#002060;--bbg:#e8eef8;--purple:#534AB7;--pbg:#EEEDFE;
   --r:12px;--rs:7px;
 }
-
-
-/* LOGO */
-.sp-logo-img{width:120px;height:auto;margin-bottom:4px;}
-.hdr-logo{height:28px;width:auto;}
-
-/* SPLASH */
-#splash{position:fixed;inset:0;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;z-index:200;transition:opacity .3s;}
-#splash.hide{opacity:0;pointer-events:none;}
-.sp-logo{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--tx3);}
-.sp-title{font-size:20px;font-weight:700;color:var(--tx);letter-spacing:-.01em;}
+#splash{position:fixed;inset:0;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:24px;z-index:200;}
+#splash.hide{display:none;}
+.sp-logo-img{width:120px;height:auto;}
 .sp-sub{font-size:12px;color:var(--tx3);}
-.sp-status{font-size:12px;color:var(--tx2);display:flex;align-items:center;gap:8px;}
-.spin{width:16px;height:16px;border:2px solid var(--brd);border-top-color:var(--purple);border-radius:50%;animation:spin .65s linear infinite;flex-shrink:0;}
-@keyframes spin{to{transform:rotate(360deg);}}
-.sp-err{background:var(--rbg);color:var(--red);padding:10px 16px;border-radius:8px;font-size:12px;max-width:320px;text-align:center;display:none;}
-.sp-retry{margin-top:4px;padding:8px 20px;background:var(--purple);color:#fff;border:none;border-radius:7px;font-size:13px;font-weight:600;cursor:pointer;display:none;}
-
-/* HEADER */
 .hdr{background:#fff;border-bottom:1px solid var(--brd);padding:11px 16px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:100;}
-.hdr-title{font-size:13px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;}
-.hdr-title span{color:var(--tx3);font-weight:500;}
+.hdr-logo{height:28px;width:auto;}
 .hdr-r{display:flex;gap:5px;align-items:center;margin-left:auto;}
-.cpill{font-size:11px;padding:3px 9px;border-radius:20px;border:1px solid var(--brd2);cursor:pointer;color:var(--tx2);font-weight:500;transition:all .15s;white-space:nowrap;}
+.cpill{font-size:11px;padding:3px 9px;border-radius:20px;border:1px solid var(--brd2);cursor:pointer;color:var(--tx2);font-weight:500;white-space:nowrap;}
 .cpill.on{background:var(--pbg);border-color:var(--purple);color:var(--purple);}
 .ibtn{padding:5px 6px;border-radius:7px;cursor:pointer;color:var(--tx2);font-size:16px;border:none;background:transparent;line-height:1;}
-.ibtn:hover{background:var(--surf2);}
 .sync-ok{font-size:10px;color:var(--green);display:flex;align-items:center;gap:3px;white-space:nowrap;}
-.sync-ok i{font-size:12px;}
-
-/* FILTERS */
-.fstrip{background:#fff;border-bottom:1px solid var(--brd);padding:7px 16px;display:flex;gap:5px;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;align-items:center;}
+.fstrip{background:#fff;border-bottom:1px solid var(--brd);padding:7px 16px;display:flex;gap:5px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;align-items:center;}
 .fstrip::-webkit-scrollbar{display:none;}
 .fl{font-size:9px;font-weight:700;color:var(--tx3);text-transform:uppercase;letter-spacing:.06em;margin-right:3px;white-space:nowrap;}
-.fchip{font-size:11px;padding:4px 10px;border-radius:20px;border:1px solid var(--brd2);cursor:pointer;color:var(--tx2);white-space:nowrap;font-weight:500;flex-shrink:0;transition:all .15s;}
+.fchip{font-size:11px;padding:4px 10px;border-radius:20px;border:1px solid var(--brd2);cursor:pointer;color:var(--tx2);white-space:nowrap;font-weight:500;flex-shrink:0;}
 .fchip.on{border-color:var(--tx);color:var(--tx);background:var(--surf2);}
 .fsep{width:1px;height:16px;background:var(--brd);margin:0 3px;flex-shrink:0;}
-
-/* ALERTS */
 .alerts{background:#fff;border-bottom:1px solid var(--brd);padding:6px 16px;min-height:34px;display:flex;flex-wrap:wrap;gap:5px;align-items:center;}
 .al{font-size:9px;font-weight:700;color:var(--tx3);text-transform:uppercase;letter-spacing:.06em;display:flex;align-items:center;gap:3px;margin-right:2px;white-space:nowrap;}
 .ap{font-size:11px;padding:2px 8px;border-radius:20px;display:flex;align-items:center;gap:4px;white-space:nowrap;font-weight:500;}
 .ap.urg{background:var(--rbg);color:var(--red);}
 .ap.info{background:var(--pbg);color:var(--purple);}
-.ap i{font-size:10px;}
 .no-al{font-size:11px;color:var(--tx3);display:flex;align-items:center;gap:4px;}
-
-/* METRICS */
-.mwrap{background:#fff;border-bottom:1px solid var(--brd);padding:9px 16px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+.mwrap{background:#fff;border-bottom:1px solid var(--brd);padding:9px 16px;overflow-x:auto;scrollbar-width:none;}
 .mwrap::-webkit-scrollbar{display:none;}
 .metrics{display:flex;gap:7px;min-width:max-content;}
 .metric{background:var(--surf2);border-radius:var(--rs);padding:8px 11px;min-width:88px;flex-shrink:0;}
 .ml{font-size:9px;color:var(--tx3);margin-bottom:3px;display:flex;align-items:center;gap:3px;white-space:nowrap;font-weight:600;text-transform:uppercase;letter-spacing:.04em;}
-.ml i{font-size:11px;}
-.mv{font-size:18px;font-weight:600;line-height:1.1;color:var(--tx);}
+.mv{font-size:18px;font-weight:600;line-height:1.1;}
 .ms{font-size:9px;color:var(--tx3);margin-top:2px;white-space:nowrap;}
 .mbar{width:100%;height:3px;border-radius:2px;background:var(--brd);margin-top:5px;}
 .mfill{height:3px;border-radius:2px;}
-
-/* CAMPOS */
 .campos{padding:10px 12px;display:flex;flex-direction:column;gap:8px;padding-bottom:56px;}
 .ccard{background:#fff;border:1px solid var(--brd);border-radius:var(--r);overflow:hidden;}
 .chdr{padding:11px 14px;cursor:pointer;display:flex;align-items:center;gap:10px;user-select:none;-webkit-user-select:none;}
@@ -98,8 +63,6 @@ html,body{background:#fff;color:#18180f;font-family:-apple-system,BlinkMacSystem
 .abadge{font-size:10px;background:var(--rbg);color:var(--red);padding:2px 7px;border-radius:20px;display:flex;align-items:center;gap:3px;font-weight:600;}
 .chev{font-size:13px;color:var(--tx3);transition:transform .2s;margin-left:2px;}
 .chev.open{transform:rotate(90deg);}
-
-/* LOTES */
 .llist{border-top:1px solid var(--brd);display:none;}
 .llist.open{display:block;}
 .lrow{border-bottom:1px solid var(--brd);}
@@ -109,14 +72,14 @@ html,body{background:#fff;color:#18180f;font-family:-apple-system,BlinkMacSystem
 .lnum{font-size:11px;font-weight:600;color:var(--tx2);min-width:24px;margin-top:2px;}
 .lhas{font-size:11px;color:var(--tx3);min-width:42px;margin-top:2px;}
 .cbadge{font-size:11px;font-weight:600;padding:2px 7px;border-radius:4px;white-space:nowrap;}
-.b-Tr{background:#E6F1FB;color:#185FA5;}.b-Cz{background:#FAEEDA;color:#633806;}.b-Ceb{background:#EAF3DE;color:#3B6D11;}
-.b-Cobertura,.b-CC{background:#F1EFE8;color:#5F5E5A;}.b-Carinata{background:#F3E8F5;color:#5A1E63;}
+.b-Tr{background:#E6F1FB;color:#185FA5;}.b-Cz{background:#FAEEDA;color:#633806;}
+.b-Ceb{background:#EAF3DE;color:#3B6D11;}.b-Cobertura,.b-CC{background:#F1EFE8;color:#5F5E5A;}
+.b-Carinata{background:#F3E8F5;color:#5A1E63;}
 .b-Sj1{background:#EEEDFE;color:#3C3489;}.b-Sj2{background:#E1EAFC;color:#2A4A8A;}
 .b-Mz1{background:#FAECE7;color:#712B13;}.b-Mz2{background:#F5E0D8;color:#5C1E0A;}
 .re-tag{font-size:10px;background:var(--abg);color:var(--amber);padding:1px 6px;border-radius:3px;font-weight:600;white-space:nowrap;}
 .lrow-al{display:flex;gap:4px;flex-wrap:wrap;width:100%;margin-top:4px;}
 .la{font-size:10px;padding:2px 7px;border-radius:3px;display:flex;align-items:center;gap:3px;white-space:nowrap;font-weight:500;}
-.la i{font-size:10px;}
 .la.urg{background:var(--rbg);color:var(--red);}.la.info{background:var(--pbg);color:var(--purple);}
 .rot{display:flex;gap:2px;align-items:center;margin-left:auto;}
 .ri{display:flex;flex-direction:column;align-items:center;gap:1px;}
@@ -124,15 +87,15 @@ html,body{background:#fff;color:#18180f;font-family:-apple-system,BlinkMacSystem
 .ri.cur .rl{color:var(--purple);font-weight:700;}
 .rb{font-size:10px;padding:1px 4px;border-radius:3px;font-weight:500;}
 .rarr{font-size:9px;color:var(--brd2);margin-top:7px;}
-
-/* DETAIL */
 .ldet{display:none;background:var(--surf2);border-top:1px solid var(--brd);}
 .ldet.open{display:block;}
 .dbanner{padding:9px 14px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;border-bottom:1px solid var(--brd);background:#fff;}
 .dvar{font-size:12px;font-weight:600;}
 .re-pb{display:flex;align-items:center;gap:8px;padding:6px 14px 0;}
-.re-pbl{font-size:10px;color:var(--tx3);}.re-pbg{flex:1;height:4px;border-radius:2px;background:var(--brd);}
-.re-pf{height:4px;border-radius:2px;background:var(--amber);}.re-pv{font-size:11px;font-weight:600;color:var(--amber);min-width:28px;text-align:right;}
+.re-pbl{font-size:10px;color:var(--tx3);}
+.re-pbg{flex:1;height:4px;border-radius:2px;background:var(--brd);}
+.re-pf{height:4px;border-radius:2px;background:var(--amber);}
+.re-pv{font-size:11px;font-weight:600;color:var(--amber);min-width:28px;text-align:right;}
 .sgrid{display:grid;grid-template-columns:1fr 1fr 1fr;border-bottom:1px solid var(--brd);}
 @media(max-width:480px){.sgrid{grid-template-columns:1fr;}}
 .sec{padding:11px 13px;border-right:1px solid var(--brd);}
@@ -147,7 +110,8 @@ html,body{background:#fff;color:#18180f;font-family:-apple-system,BlinkMacSystem
 .ln{font-size:11px;font-weight:600;display:flex;align-items:center;gap:4px;flex-wrap:wrap;}
 .ld{font-size:10px;color:var(--tx2);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .lf{font-size:10px;color:var(--green);margin-top:1px;}
-.ff{display:inline-flex;align-items:center;vertical-align:middle;margin-left:3px;}.ff img{width:14px;height:14px;object-fit:contain;opacity:.85;}
+.ff{display:inline-flex;align-items:center;vertical-align:middle;margin-left:3px;}
+.ff img{width:14px;height:14px;object-fit:contain;opacity:.85;}
 .fsec{padding:11px 13px;}
 .ftit{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--tx3);margin-bottom:9px;display:flex;align-items:center;gap:4px;}
 .fgrp{margin-bottom:10px;}
@@ -155,39 +119,42 @@ html,body{background:#fff;color:#18180f;font-family:-apple-system,BlinkMacSystem
 .frow{display:grid;grid-template-columns:repeat(auto-fill,minmax(98px,1fr));gap:5px;}
 .fc{border-radius:var(--rs);padding:7px 9px;background:#fff;}
 .fc.done{border-left:2px solid var(--green);}.fc.pend{border-left:2px solid var(--brd);opacity:.38;}
-.fc.finn{border-left:2px solid var(--blue);background:var(--bbg);}.fc.total{background:var(--pbg);border-left:2px solid var(--purple);}
+.fc.finn{border-left:2px solid var(--blue);background:var(--bbg);}
+.fc.total{background:var(--pbg);border-left:2px solid var(--purple);}
 .fcl{font-size:9px;color:var(--tx3);margin-bottom:2px;font-weight:600;text-transform:uppercase;letter-spacing:.03em;display:flex;align-items:center;gap:3px;}
-.fc.total .fcl{color:var(--purple);}.fcv{font-size:14px;font-weight:600;color:var(--tx);}
-.fc.total .fcv{color:var(--purple);}.fcu{font-size:9px;font-weight:400;color:var(--tx3);margin-left:1px;}
-.fc.total .fcu{color:var(--purple);}.fcd{font-size:9px;color:var(--green);margin-top:2px;}.fcs{font-size:9px;color:var(--tx3);margin-top:1px;}
-.hbar{width:100%;height:3px;border-radius:2px;background:var(--brd);margin-top:4px;}.hbarf{height:3px;border-radius:2px;background:var(--green);}
+.fc.total .fcl{color:var(--purple);}
+.fcv{font-size:14px;font-weight:600;color:var(--tx);}
+.fc.total .fcv{color:var(--purple);}
+.fcu{font-size:9px;font-weight:400;color:var(--tx3);margin-left:1px;}
+.fc.total .fcu{color:var(--purple);}
+.fcd{font-size:9px;color:var(--green);margin-top:2px;}
+.hbar{width:100%;height:3px;border-radius:2px;background:var(--brd);margin-top:4px;}
+.hbarf{height:3px;border-radius:2px;background:var(--green);}
 .empty{padding:36px 16px;text-align:center;color:var(--tx3);font-size:13px;}
 .empty i{font-size:30px;display:block;margin-bottom:8px;}
 </style>
 </head>
 <body>
 
-<!-- SPLASH / LOADING -->
 <div id="splash">
-  <img src="LOGO.png" class="sp-logo-img" alt="Agricultura Litoral Norte">
+  <img src="LOGO.png" class="sp-logo-img" alt="LN Agro">
   <div class="sp-sub">Seguimiento de labores · Ceibos Group</div>
 </div>
 
-<!-- APP -->
 <div id="app" style="display:none;">
   <div class="hdr">
     <img src="LOGO.png" class="hdr-logo" alt="LN Agro">
     <div class="hdr-r">
       <div id="camp-pills" style="display:flex;gap:4px;flex-wrap:nowrap;"></div>
       <div class="sync-ok" id="sync-ok" style="display:none;"><i class="ti ti-cloud-check"></i><span id="sync-txt"></span></div>
-      <button class="ibtn" title="Sincronizar" onclick="initApp(true)"><i class="ti ti-refresh"></i></button>
+      <button class="ibtn" onclick="initApp(true)"><i class="ti ti-refresh"></i></button>
     </div>
   </div>
   <div class="fstrip">
     <span class="fl">Cultivo</span>
     <div id="cult-chips" style="display:flex;gap:5px;"></div>
     <div class="fsep"></div>
-    <span class="fl">Estación</span>
+    <span class="fl">Estacion</span>
     <div class="fchip on" onclick="setSeason('inv',this)">Invierno</div>
     <div class="fchip" onclick="setSeason('ver',this)">Verano</div>
   </div>
@@ -197,419 +164,454 @@ html,body{background:#fff;color:#18180f;font-family:-apple-system,BlinkMacSystem
 </div>
 
 <script>
-// ── EMBEDDED HISTORIC DATA ────────────────────────────────────
 const HISTORIC = {"26-27":{"inv":[{"campo":"Malacara","lote":"1","has":203.49,"cult":"Cz","antec":"Sj1","barb":{"prod":"Glifo 3L + Cletodim 1L + Starane 0.45L","fecha":"16/05/2026","finn":true,"done":true},"dg":{},"rep":{},"siem":{"var":"Nuola300","fecha":"25/05/2026","finn":true},"re1":{},"fert_bas":{"spt":90.0,"kcl":100.0,"origen_p":"Cargill"},"urea_siem":{"kg":98.0},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Malacara","lote":"2","has":215.0,"cult":"Cobertura","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{"var":"Avena","fecha":"25/04/2026","finn":true},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Malacara","lote":"3","has":46.12,"cult":"Cobertura","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{"var":"Avena","fecha":"25/04/2026","finn":true},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Malacara","lote":"7","has":24.03,"cult":"Cobertura","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{"var":"Avena","fecha":"25/04/2026","finn":true},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Malacara","lote":"8","has":22.55,"cult":"Cobertura","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{"var":"Avena","fecha":"25/04/2026","finn":true},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Malacara","lote":"9","has":62.73,"cult":"Cobertura","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{"var":"Avena","fecha":"25/04/2026","finn":true},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Malacara","lote":"10","has":29.7,"cult":"Cobertura","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{"var":"Avena","fecha":"25/04/2026","finn":true},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Malacara","lote":"11","has":270.44,"cult":"Cobertura","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{"var":"Avena","fecha":"25/04/2026","finn":true},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Malacara","lote":"12","has":64.25,"cult":"Cobertura","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{"var":"Avena","fecha":"25/04/2026","finn":true},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Malacara","lote":"13","has":29.89,"cult":"Cobertura","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{"var":"Avena","fecha":"25/04/2026","finn":true},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Montecristo","lote":"6","has":52.63,"cult":"Cobertura","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{"var":"Avena","fecha":"27/04/2026","finn":true},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Montecristo","lote":"7","has":60.61,"cult":"Tr","antec":"Sj2","barb":{"prod":"Glifo 3L + Pixaro 0.35L","fecha":"01/06/2026","finn":true,"done":true},"dg":{},"rep":{},"siem":{"var":"Catalpa","fecha":"03/06/2026","finn":true},"re1":{},"fert_bas":{"spt":80.0,"kcl":100.0,"origen_p":"Cargill"},"urea_siem":{"kg":94.0},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Montecristo","lote":"11","has":56.69,"cult":"Tr","antec":"Sj2","barb":{"prod":"Glifo 3L + Pixaro 0.35L","fecha":"01/06/2026","finn":true,"done":true},"dg":{},"rep":{},"siem":{"var":"Catalpa","fecha":"30/05/2026","finn":true},"re1":{},"fert_bas":{"spt":80.0,"kcl":100.0,"origen_p":"Cargill"},"urea_siem":{"kg":94.0},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Montecristo","lote":"12","has":49.78,"cult":"Tr","antec":"Sj2","barb":{"prod":"Glifo 3L + Pixaro 0.35L","fecha":"01/06/2026","finn":true,"done":true},"dg":{},"rep":{},"siem":{"var":"Catalpa","fecha":"31/05/2026","finn":true},"re1":{},"fert_bas":{"spt":80.0,"kcl":100.0,"origen_p":"Cargill"},"urea_siem":{"kg":94.0},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Montecristo","lote":"13","has":26.67,"cult":"Tr","antec":"Sj2","barb":{"prod":"Glifo 3L + Pixaro 0.35L","fecha":"01/06/2026","finn":true,"done":true},"dg":{},"rep":{},"siem":{"var":"Catalpa","fecha":"01/06/2026","finn":true},"re1":{},"fert_bas":{"spt":80.0,"kcl":100.0,"origen_p":"Cargill"},"urea_siem":{"kg":94.0},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Montecristo","lote":"14","has":33.96,"cult":"Tr","antec":"Sj2","barb":{"prod":"Glifo 3L + Pixaro 0.35L","fecha":"01/06/2026","finn":true,"done":true},"dg":{"prod":"Diquat 2,5 (10ha)L","fecha":"22/05/2026","finn":true,"done":true},"rep":{},"siem":{"var":"Aromo","fecha":"02/06/2026","finn":true},"re1":{},"fert_bas":{"spt":80.0,"kcl":100.0,"origen_p":"Cargill"},"urea_siem":{"kg":94.0},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Montecristo","lote":"16","has":91.46,"cult":"Tr","antec":"Sj2","barb":{"prod":"Glifo 3L + Pixaro 0.35L","fecha":"01/06/2026","finn":true,"done":true},"dg":{"prod":"Diquat 2.5L","fecha":"22/05/2026","finn":true,"done":true},"rep":{},"siem":{"var":"Catalpa. Aromo (melgas contra 15) ","fecha":"03/06/2026","finn":true},"re1":{},"fert_bas":{"spt":80.0,"kcl":100.0,"origen_p":"Cargill"},"urea_siem":{"kg":94.0},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Campana","lote":"1","has":58.59,"cult":"Cz","antec":"Sj1","barb":{"prod":"Glifo 3L + Cletodim 1L + Starane 0.45L","fecha":"17/05/2026","finn":true,"done":true},"dg":{},"rep":{},"siem":{"var":"Nuola300","fecha":"18/05/2026","finn":true},"re1":{},"fert_bas":{"spt":70.0,"spt_finn":true,"kcl":150.0,"kcl_finn":true,"fosz_finn":true,"caso4_finn":true,"origen_p":"Cargill","fecha_p":"30/05/2026","fecha_k":"30/05/2026"},"urea_siem":{"kg":110.0,"fecha":"30/05/2026","finn":true},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Campana","lote":"2","has":40.99,"cult":"Cz","antec":"Sj1","barb":{"prod":"Glifo 3L + Cletodim 1L + Starane 0.45L","fecha":"17/05/2026","finn":true,"done":true},"dg":{},"rep":{},"siem":{"var":"Nuola300","fecha":"20/05/2026","finn":true},"re1":{},"fert_bas":{"spt":70.0,"spt_finn":true,"kcl":150.0,"kcl_finn":true,"fosz_finn":true,"caso4_finn":true,"origen_p":"Cargill","fecha_p":"30/05/2026","fecha_k":"30/05/2026"},"urea_siem":{"kg":110.0,"fecha":"30/05/2026","finn":true},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Campana","lote":"3","has":63.11,"cult":"Cz","antec":"Sj1","barb":{"prod":"Glifo 3L + Cletodim 1L + Starane 0.45L","fecha":"17/05/2026","finn":true,"done":true},"dg":{},"rep":{},"siem":{"var":"Nuola300 y cabecera Hyola","fecha":"18/05/2026","finn":true},"re1":{},"fert_bas":{"spt":70.0,"spt_finn":true,"kcl":150.0,"kcl_finn":true,"fosz_finn":true,"caso4_finn":true,"origen_p":"Cargill","fecha_p":"30/05/2026","fecha_k":"30/05/2026"},"urea_siem":{"kg":110.0,"fecha":"30/05/2026","finn":true},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Campana","lote":"4","has":71.48,"cult":"Cz","antec":"Sj1","barb":{"prod":"Glifo 3L + Cletodim 1L + Starane 0.45L","fecha":"17/05/2026","finn":true,"done":true},"dg":{},"rep":{},"siem":{"var":"Hyola575","fecha":"16/05/2026","finn":true},"re1":{},"fert_bas":{"spt":70.0,"spt_finn":true,"kcl":150.0,"kcl_finn":true,"fosz_finn":true,"caso4_finn":true,"origen_p":"Cargill","fecha_p":"30/05/2026","fecha_k":"30/05/2026"},"urea_siem":{"kg":110.0,"fecha":"30/05/2026","finn":true},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Campana","lote":"5","has":67.74,"cult":"Cobertura","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{"var":"Avena","fecha":"23/04/2026","finn":true},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Campana","lote":"6","has":24.52,"cult":"Cobertura","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{"var":"Avena","fecha":"23/04/2026","finn":true},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Campana","lote":"11","has":31.0,"cult":"Cz","antec":"Sj1","barb":{"prod":"Glifo 3L + Cletodim 1L + Starane 0.45L","fecha":"17/05/2026","finn":true,"done":true},"dg":{},"rep":{},"siem":{"var":"Hyola575","fecha":"17/05/2026","finn":true},"re1":{},"fert_bas":{"spt":70.0,"spt_finn":true,"kcl":150.0,"kcl_finn":true,"fosz_finn":true,"caso4_finn":true,"origen_p":"Cargill","fecha_p":"30/05/2026","fecha_k":"30/05/2026"},"urea_siem":{"kg":110.0,"fecha":"30/05/2026","finn":true},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Campana","lote":"12","has":67.0,"cult":"Cobertura","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{"var":"Avena","fecha":"23/04/2026","finn":true},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"San Luis","lote":"1","has":138.88,"cult":"Cz","antec":"Mz1","barb":{"prod":"Glifo 3L + Cletodim 1L + Starane 0.45L","fecha":"04/02/2026","finn":true,"done":true},"dg":{"prod":"Glifo 3L","fecha":"22/05/2026","finn":true,"done":true},"rep":{},"siem":{"var":"Hyola575","fecha":"01/05/2026","finn":true},"re1":{"var":"Nuola300","fecha":"20/05/2026","finn":true},"fert_bas":{"kcl":145.9,"fosz":107.2,"origen_p":"Cofco","fecha_p":"02/06/2026","fecha_k":"02/06/2026"},"urea_siem":{"kg":100.0,"fecha":"02/06/2026"},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"San Luis","lote":"2","has":141.7,"cult":"Cobertura","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{"var":"Avena","fecha":"22/04/2026","finn":true},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Blanqueada","lote":"1","has":101.74,"cult":"Cobertura","antec":"Mz2","barb":{},"dg":{},"rep":{},"siem":{"var":"Estanzuela 284","fecha":"28/05/2026","finn":true},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Blanqueada","lote":"2","has":34.99,"cult":"Cz","antec":"Mz1","barb":{"prod":"Glifo 3L + Cletodim 1L + Starane 0.45L","fecha":"31/03/2026","finn":true,"done":true},"dg":{"prod":"Glifo 3.5L + Diquat 2.5L","fecha":"24/04/2026","finn":true,"done":true},"rep":{},"siem":{"var":"Curry","fecha":"27/04/2026","finn":true},"re1":{"var":"45Y95 (puente) y Floriana","fecha":"29/05/2026","finn":true},"fert_bas":{"kcl":120.0,"kcl_finn":true,"fosz":50.0,"origen_p":"Cofco","fecha_k":"28/05/2026"},"urea_siem":{"kg":95.0,"fecha":"01/05/2026","finn":true},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Blanqueada","lote":"3","has":301.24,"cult":"Cz","antec":"Mz1","barb":{"prod":"Glifo 3L + Cletodim 1L + Starane 0.45L","fecha":"31/03/2026","finn":true,"done":true},"dg":{"prod":"Glifo 3.5L + Diquat 2.5L","fecha":"24/04/2026","finn":true,"done":true},"rep":{},"siem":{"var":"Curry","fecha":"20/04/2026","finn":true},"re1":{"var":"45Y95 (Bajo derecha camino) y Floriana","fecha":"30/05/2026","finn":true},"fert_bas":{"kcl":113.3,"kcl_finn":true,"fosz":72.3,"origen_p":"Cofco","fecha_k":"28/05/2026"},"urea_siem":{"kg":95.0,"fecha":"01/05/2026","finn":true},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Blanqueada","lote":"4","has":180.2,"cult":"Cz","antec":"Mz1","barb":{"prod":"Glifo 3L + Cletodim 1L + Starane 0.45L","fecha":"31/03/2026","finn":true,"done":true},"dg":{"prod":"Glifo 3.5L + Diquat 2.5L","fecha":"24/04/2026","finn":true,"done":true},"rep":{},"siem":{"var":"curry/Hyola575 (lado chico camino)","fecha":"29/04/2026","finn":true},"re1":{"var":"Nuola300 (lado grande del camino) y Floriana","fecha":"30/05/2026","finn":true},"fert_bas":{"kcl":120.7,"kcl_finn":true,"fosz":92.5,"origen_p":"Cofco","fecha_k":"28/05/2026"},"urea_siem":{"kg":95.0,"fecha":"01/05/2026","finn":true},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Blanqueada","lote":"5","has":59.08,"cult":"Cobertura","antec":"Mz2","barb":{},"dg":{},"rep":{},"siem":{"var":"Estanzuela 284","fecha":"28/05/2026","finn":true},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Blanqueada","lote":"7","has":46.79,"cult":"Cobertura","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{"var":"Estanzuela 284","fecha":"22/04/2026","finn":true},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Blanqueada","lote":"8","has":59.05,"cult":"Cobertura","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{"var":"Estanzuela 284","fecha":"22/04/2026","finn":true},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Blanqueada","lote":"9","has":103.45,"cult":"Cobertura","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{"var":"Estanzuela 284","fecha":"20/04/2026","finn":true},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Blanqueada","lote":"10","has":101.88,"cult":"Cz","antec":"Mz1","barb":{"prod":"Glifo 3L + Cletodim 1L + Starane 0.45L","fecha":"31/03/2026","finn":true,"done":true},"dg":{"prod":"Glifo 3.5L + Diquat 2.5L","fecha":"24/04/2026","finn":true,"done":true},"rep":{},"siem":{"var":"Curry","fecha":"27/04/2026","finn":true},"re1":{"var":"Nuola300","fecha":"29/05/2026","finn":true},"fert_bas":{"kcl":97.9,"kcl_finn":true,"fosz":83.7,"origen_p":"Cofco","fecha_p":"03/06/2026","fecha_k":"28/05/2026"},"urea_siem":{"kg":95.0,"fecha":"01/05/2026","finn":true},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Blanqueada","lote":"11","has":53.38,"cult":"Cobertura","antec":"Mz2","barb":{},"dg":{},"rep":{},"siem":{"var":"Estanzuela 284","fecha":"28/05/2026","finn":true},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Blanqueada","lote":"12","has":102.7,"cult":"Cobertura","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{"var":"Estanzuela 284","fecha":"14/04/2026","finn":true},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Blanqueada","lote":"13","has":87.11,"cult":"Cobertura","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{"var":"Estanzuela 284","fecha":"23/04/2026","finn":true},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Blanqueada","lote":"14","has":59.42,"cult":"Cobertura","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{"var":"Estanzuela 284","fecha":"23/04/2026","finn":true},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Blanqueada","lote":"15","has":35.96,"cult":"Cobertura","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{"var":"Estanzuela 284","fecha":"24/04/2026","finn":true},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Santa Rafaela","lote":"Bellaco","has":386.2,"cult":"Ceb","antec":"Sj2","barb":{"prod":"Glifo 3L + Pixaro 0.35L","fecha":"25/05/2026","finn":true,"done":true},"dg":{},"rep":{},"siem":{"var":"Osiris","fecha":"23/05/2026","finn":true},"re1":{},"fert_bas":{"kcl":61.5,"kcl_finn":true,"fosz":107.3,"origen_p":"Cofco","fecha_p":"03/06/2026","fecha_k":"30/05/2026"},"urea_siem":{"kg":93.0},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Santa Rafaela","lote":"Chaniar norte","has":120.0,"cult":"Cobertura","antec":"Mz2","barb":{},"dg":{},"rep":{},"siem":{"var":"Estanzuela 284","fecha":"02/06/2026","finn":true},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Santa Rafaela","lote":"Chaniar sur","has":163.0,"cult":"Ceb","antec":"Sj2","barb":{"prod":"Glifo 3L + Pixaro 0.35L","fecha":"25/05/2026","finn":true,"done":true},"dg":{},"rep":{},"siem":{"var":"Osiris","fecha":"27/05/2026","finn":true},"re1":{},"fert_bas":{"kcl":93.9,"kcl_finn":true,"fosz":108.1,"origen_p":"Cofco","fecha_p":"03/06/2026","fecha_k":"30/05/2026"},"urea_siem":{"kg":93.0},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Santa Rafaela","lote":"Los Juanes","has":189.75,"cult":"Ceb","antec":"Sj2","barb":{"prod":"Glifo 3L + Pixaro 0.35L","fecha":"25/05/2026","finn":true,"done":true},"dg":{},"rep":{},"siem":{"var":"Osiris","fecha":"20/05/2026","finn":true},"re1":{},"fert_bas":{"kcl":78.8,"kcl_finn":true,"fosz":110.8,"origen_p":"Cofco","fecha_p":"02/06/2026","fecha_k":"30/05/2026"},"urea_siem":{"kg":93.0},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Santa Rafaela","lote":"Manguera E","has":169.61,"cult":"Ceb","antec":"Sj2","barb":{"prod":"Glifo 3L + Pixaro 0.35L","fecha":"25/05/2026","finn":true,"done":true},"dg":{},"rep":{},"siem":{"var":"Osiris","fecha":"30/05/2026","finn":true},"re1":{},"fert_bas":{"kcl":91.0,"kcl_finn":true,"fosz":142.7,"origen_p":"Cofco","fecha_p":"03/06/2026","fecha_k":"30/05/2026"},"urea_siem":{"kg":93.0},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Santa Rafaela","lote":"Manguera w","has":118.35,"cult":"Ceb","antec":"Sj2","barb":{"prod":"Glifo 3L + Pixaro 0.35L","fecha":"25/05/2026","finn":true,"done":true},"dg":{},"rep":{},"siem":{"var":"Olimpia","fecha":"24/05/2026","finn":true},"re1":{},"fert_bas":{"kcl":84.8,"kcl_finn":true,"fosz":105.9,"origen_p":"Cofco","fecha_p":"02/06/2026","fecha_k":"30/05/2026"},"urea_siem":{"kg":93.0},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Santa Rafaela","lote":"Nianiez","has":243.29,"cult":"Ceb","antec":"Sj2","barb":{"prod":"Glifo 3L + Pixaro 0.35L","fecha":"25/05/2026","finn":true,"done":true},"dg":{},"rep":{},"siem":{"var":"Olimpia","fecha":"21/05/2026","finn":true},"re1":{},"fert_bas":{"kcl":105.1,"kcl_finn":true,"fosz":88.1,"origen_p":"Cofco","fecha_p":"01/06/2026","fecha_k":"30/05/2026"},"urea_siem":{"kg":93.0},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Santa Rafaela","lote":"Trillo","has":201.78,"cult":"Cobertura","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{"var":"Estanzuela 284","fecha":"01/05/2026","finn":true},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Santa Rafaela","lote":"Entrada","has":150.52,"cult":"Cobertura","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{"var":"Estanzuela 284","fecha":"01/05/2026","finn":true},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Santa Rafaela","lote":"Puesto","has":225.15,"cult":"Cobertura","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{"var":"Estanzuela 284","fecha":"01/05/2026","finn":true},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}}],"ver":[{"campo":"Malacara","lote":"1","has":203.49,"cult":"Sj2","antec":"Cz","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{},"v4":{},"v8":{}},{"campo":"Malacara","lote":"2","has":215.0,"cult":"Sj1","antec":"Cobertura","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{},"v4":{},"v8":{}},{"campo":"Malacara","lote":"3","has":46.12,"cult":"Sj1","antec":"Cobertura","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{},"v4":{},"v8":{}},{"campo":"Malacara","lote":"7","has":24.03,"cult":"Sj1","antec":"Cobertura","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{},"v4":{},"v8":{}},{"campo":"Malacara","lote":"8","has":22.55,"cult":"Sj1","antec":"Cobertura","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{},"v4":{},"v8":{}},{"campo":"Malacara","lote":"9","has":62.73,"cult":"Sj1","antec":"Cobertura","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{},"v4":{},"v8":{}},{"campo":"Malacara","lote":"10","has":29.7,"cult":"Sj1","antec":"Cobertura","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{},"v4":{},"v8":{}},{"campo":"Malacara","lote":"11","has":270.44,"cult":"Sj1","antec":"Cobertura","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{},"v4":{},"v8":{}},{"campo":"Malacara","lote":"12","has":64.25,"cult":"Sj1","antec":"Cobertura","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{},"v4":{},"v8":{}},{"campo":"Malacara","lote":"13","has":29.89,"cult":"Sj1","antec":"Cobertura","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{},"v4":{},"v8":{}},{"campo":"Montecristo","lote":"6","has":52.63,"cult":"Sj1","antec":"Cobertura","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{},"v4":{},"v8":{}},{"campo":"Montecristo","lote":"7","has":60.61,"cult":"Sj2","antec":"Tr","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{},"v4":{},"v8":{}},{"campo":"Montecristo","lote":"11","has":56.69,"cult":"Sj2","antec":"Tr","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{},"v4":{},"v8":{}},{"campo":"Montecristo","lote":"12","has":49.78,"cult":"Sj2","antec":"Tr","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{},"v4":{},"v8":{}},{"campo":"Montecristo","lote":"13","has":26.67,"cult":"Sj2","antec":"Tr","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{},"v4":{},"v8":{}},{"campo":"Montecristo","lote":"14","has":33.96,"cult":"Sj2","antec":"Tr","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{},"v4":{},"v8":{}},{"campo":"Montecristo","lote":"16","has":91.46,"cult":"Sj2","antec":"Tr","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{},"v4":{},"v8":{}},{"campo":"La Campana","lote":"1","has":58.59,"cult":"Sj2","antec":"Cz","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{},"v4":{},"v8":{}},{"campo":"La Campana","lote":"2","has":40.99,"cult":"Sj2","antec":"Cz","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{},"v4":{},"v8":{}},{"campo":"La Campana","lote":"3","has":63.11,"cult":"Sj2","antec":"Cz","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{},"v4":{},"v8":{}},{"campo":"La Campana","lote":"4","has":71.48,"cult":"Sj2","antec":"Cz","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{},"v4":{},"v8":{}},{"campo":"La Campana","lote":"5","has":67.74,"cult":"Sj1","antec":"Cobertura","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{},"v4":{},"v8":{}},{"campo":"La Campana","lote":"6","has":24.52,"cult":"Sj1","antec":"Cobertura","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{},"v4":{},"v8":{}},{"campo":"La Campana","lote":"11","has":31.0,"cult":"Sj2","antec":"Cz","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{},"v4":{},"v8":{}},{"campo":"La Campana","lote":"12","has":67.0,"cult":"Sj1","antec":"Cobertura","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{},"v4":{},"v8":{}},{"campo":"San Luis","lote":"1","has":138.88,"cult":"Sj2","antec":"Cz","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{},"v4":{},"v8":{}},{"campo":"San Luis","lote":"2","has":141.7,"cult":"Mz1","antec":"Cobertura","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{},"v4":{},"v8":{}},{"campo":"La Blanqueada","lote":"1","has":101.74,"cult":"Sj1","antec":"Cobertura","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{},"v4":{},"v8":{}},{"campo":"La Blanqueada","lote":"2","has":34.99,"cult":"Sj2","antec":"Cz","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{},"v4":{},"v8":{}},{"campo":"La Blanqueada","lote":"3","has":301.24,"cult":"Sj2","antec":"Cz","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{},"v4":{},"v8":{}},{"campo":"La Blanqueada","lote":"4","has":180.2,"cult":"Sj2","antec":"Cz","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{},"v4":{},"v8":{}},{"campo":"La Blanqueada","lote":"5","has":59.08,"cult":"Sj1","antec":"Cobertura","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{},"v4":{},"v8":{}},{"campo":"La Blanqueada","lote":"7","has":46.79,"cult":"Sj1","antec":"Cobertura","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{},"v4":{},"v8":{}},{"campo":"La Blanqueada","lote":"8","has":59.05,"cult":"Sj1","antec":"Cobertura","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{},"v4":{},"v8":{}},{"campo":"La Blanqueada","lote":"9","has":103.45,"cult":"Mz1","antec":"Cobertura","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{},"v4":{},"v8":{}},{"campo":"La Blanqueada","lote":"10","has":101.88,"cult":"Sj2","antec":"Cz","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{},"v4":{},"v8":{}},{"campo":"La Blanqueada","lote":"11","has":53.38,"cult":"Sj1","antec":"Cobertura","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{},"v4":{},"v8":{}},{"campo":"La Blanqueada","lote":"12","has":102.7,"cult":"Mz1","antec":"Cobertura","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{},"v4":{},"v8":{}},{"campo":"La Blanqueada","lote":"13","has":87.11,"cult":"Mz1","antec":"Cobertura","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{},"v4":{},"v8":{}},{"campo":"La Blanqueada","lote":"14","has":59.42,"cult":"Sj1","antec":"Cobertura","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{},"v4":{},"v8":{}},{"campo":"La Blanqueada","lote":"15","has":35.96,"cult":"Sj1","antec":"Cobertura","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{},"v4":{},"v8":{}},{"campo":"Santa Rafaela","lote":"Bellaco","has":386.2,"cult":"Mz2","antec":"Ceb","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{},"v4":{},"v8":{}},{"campo":"Santa Rafaela","lote":"Chaniar norte","has":120.0,"cult":"Sj1","antec":"Cobertura","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{},"v4":{},"v8":{}},{"campo":"Santa Rafaela","lote":"Chaniar sur","has":163.0,"cult":"Sj2","antec":"Ceb","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{},"v4":{},"v8":{}},{"campo":"Santa Rafaela","lote":"Los Juanes","has":189.75,"cult":"Sj2","antec":"Ceb","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{},"v4":{},"v8":{}},{"campo":"Santa Rafaela","lote":"Manguera E","has":169.61,"cult":"Sj2","antec":"Ceb","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{},"v4":{},"v8":{}},{"campo":"Santa Rafaela","lote":"Manguera w","has":118.35,"cult":"Mz2","antec":"Ceb","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{},"v4":{},"v8":{}},{"campo":"Santa Rafaela","lote":"Nianiez","has":243.29,"cult":"Sj2","antec":"Ceb","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{},"v4":{},"v8":{}},{"campo":"Santa Rafaela","lote":"Trillo","has":201.78,"cult":"Mz1","antec":"Cobertura","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{},"v4":{},"v8":{}},{"campo":"Santa Rafaela","lote":"Entrada","has":150.52,"cult":"Mz1","antec":"Cobertura","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{},"v4":{},"v8":{}},{"campo":"Santa Rafaela","lote":"Puesto","has":225.15,"cult":"Mz1","antec":"Cobertura","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{},"v4":{},"v8":{}}]},"25-26":{"inv":[{"campo":"Malacara","lote":"1","has":203.49,"cult":"Cobertura","barb":{},"dg":{},"rep":{},"siem":{"fecha":"10/04/2025","finn":true},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Malacara","lote":"2","has":215.0,"cult":"Tr","barb":{"prod":"Glifo 3L + Azugro 1.2L + Diquat 2.5L","fecha":"14/05/2025","finn":true,"done":true},"dg":{},"rep":{"prod":"Axial 0.8L + Tronador 10.75L","fecha":"25/07/2025","finn":true,"done":true},"siem":{"var":"Pehuen, Aromo, B525","fecha":"12/06/2025","finn":true},"re1":{},"fert_bas":{"spt_finn":true,"kcl":100.0,"kcl_finn":true,"fosz":150.0,"fosz_finn":true,"fecha_p":"04/07/2025"},"urea_siem":{"kg":120.0,"fecha":"26/06/2025","finn":true},"z22":{"kg":100.0,"fecha":"08/08/2025","finn":true},"z30":{"kg":122.2,"finn":true},"z33":{},"znf":{"dosis":2.5,"fecha":"29/08/2025","finn":true},"hum":{},"f1":{"prod":"Cripton","fecha":"09/09/2025","finn":true},"f2":{"prod":"Unico max","fecha":"04/10/2025","finn":true},"f3":{}},{"campo":"Malacara","lote":"3","has":46.12,"cult":"Tr","barb":{"prod":"Glifo 3L + Azugro 1.2L + Diquat 2.5L","fecha":"14/05/2025","finn":true,"done":true},"dg":{},"rep":{"prod":"Axial 0.6L + Tronador 2.306L","fecha":"25/07/2025","finn":true,"done":true},"siem":{"var":"B525","fecha":"13/06/2025","finn":true},"re1":{},"fert_bas":{"spt_finn":true,"kcl":100.0,"kcl_finn":true,"fosz":150.0,"fosz_finn":true,"fecha_p":"04/07/2025"},"urea_siem":{"kg":120.0,"fecha":"26/06/2025","finn":true},"z22":{"kg":100.0,"fecha":"08/08/2025","finn":true},"z30":{"kg":102.1,"finn":true},"z33":{},"znf":{"dosis":2.5,"fecha":"29/08/2025","finn":true},"hum":{},"f1":{"prod":"Cripton","fecha":"09/09/2025","finn":true},"f2":{"prod":"Unico max","fecha":"04/10/2025","finn":true},"f3":{}},{"campo":"Malacara","lote":"7","has":24.03,"cult":"Tr","barb":{"prod":"Glifo 3L + Azugro 1.2L + Diquat 2.5L","fecha":"15/05/2025","finn":true,"done":true},"dg":{},"rep":{"prod":"Axial 0.6L + Tronador 1.2015L","fecha":"25/07/2025","finn":true,"done":true},"siem":{"var":"B525","fecha":"12/06/2025","finn":true},"re1":{},"fert_bas":{"spt_finn":true,"kcl":100.0,"kcl_finn":true,"fosz":150.0,"fosz_finn":true,"fecha_p":"03/07/2025"},"urea_siem":{"kg":120.0,"fecha":"26/06/2025","finn":true},"z22":{"kg":100.0,"fecha":"08/08/2025","finn":true},"z30":{"kg":122.6,"finn":true},"z33":{},"znf":{"dosis":2.5,"fecha":"29/08/2025","finn":true},"hum":{},"f1":{"prod":"Cripton","fecha":"09/09/2025","finn":true},"f2":{"prod":"Unico max","fecha":"04/10/2025","finn":true},"f3":{}},{"campo":"Malacara","lote":"8","has":22.55,"cult":"Tr","barb":{"prod":"Glifo 3L + Azugro 1.2L + Diquat 2.5L","fecha":"15/05/2025","finn":true,"done":true},"dg":{},"rep":{"prod":"Axial 0.8L + Tronador 1.1275L","fecha":"25/07/2025","finn":true,"done":true},"siem":{"var":"B525","fecha":"12/06/2025","finn":true},"re1":{},"fert_bas":{"spt_finn":true,"kcl":100.0,"kcl_finn":true,"fosz":150.0,"fosz_finn":true,"fecha_p":"03/07/2025"},"urea_siem":{"kg":120.0,"fecha":"26/06/2025","finn":true},"z22":{"kg":100.0,"fecha":"08/08/2025","finn":true},"z30":{"kg":103.7,"finn":true},"z33":{},"znf":{"dosis":2.5,"fecha":"29/08/2025","finn":true},"hum":{"dosis":5.0,"fecha":"25/07/2025","finn":true},"f1":{"prod":"Cripton","fecha":"09/09/2025","finn":true},"f2":{"prod":"Unico max","fecha":"04/10/2025","finn":true},"f3":{}},{"campo":"Malacara","lote":"9","has":62.73,"cult":"Tr","barb":{"prod":"Glifo 3L + Azugro 1.2L + Diquat 2.5L","fecha":"15/05/2025","finn":true,"done":true},"dg":{},"rep":{"prod":"Axial 0.6L + Tronador 3.1365L","fecha":"25/07/2025","finn":true,"done":true},"siem":{"var":"B525","fecha":"12/06/2025","finn":true},"re1":{},"fert_bas":{"spt_finn":true,"kcl":100.0,"kcl_finn":true,"fosz":150.0,"fosz_finn":true,"fecha_p":"03/07/2025"},"urea_siem":{"kg":120.0,"fecha":"25/06/2025","finn":true},"z22":{"kg":100.0,"fecha":"08/08/2025","finn":true},"z30":{"kg":103.3,"finn":true},"z33":{},"znf":{"dosis":2.5,"fecha":"29/08/2025","finn":true},"hum":{"dosis":5.0,"fecha":"25/07/2025","finn":true},"f1":{"prod":"Cripton","fecha":"09/09/2025","finn":true},"f2":{"prod":"Cripton xpro","fecha":"04/10/2025","finn":true},"f3":{}},{"campo":"Malacara","lote":"10","has":29.7,"cult":"Tr","barb":{"prod":"Glifo 3L + Piroxasulfone 0.12L + Diquat 2.5L","fecha":"05/06/2025","finn":true,"done":true},"dg":{},"rep":{"prod":"Tronador 1.4849999999999999L","fecha":"25/07/2025","finn":true,"done":true},"siem":{"var":"B525","fecha":"11/06/2025","finn":true},"re1":{},"fert_bas":{"spt_finn":true,"kcl":100.0,"kcl_finn":true,"fosz":120.0,"fosz_finn":true,"fecha_p":"27/06/2025"},"urea_siem":{"kg":120.0,"fecha":"25/06/2025","finn":true},"z22":{"kg":100.0,"fecha":"08/08/2025","finn":true},"z30":{"kg":122.6,"finn":true},"z33":{},"znf":{"dosis":2.5,"fecha":"29/08/2025","finn":true},"hum":{},"f1":{"prod":"Cripton","fecha":"09/09/2025","finn":true},"f2":{"prod":"Cripton xpro","fecha":"04/10/2025","finn":true},"f3":{}},{"campo":"Malacara","lote":"11","has":270.44,"cult":"Tr","barb":{"prod":"Glifo 3L + Piroxasulfone 0.12L + Diquat 2.5L","fecha":"24/05/2025","finn":true,"done":true},"dg":{},"rep":{"prod":"Axial 0.8L + Tronador 13.522L","fecha":"25/07/2025","finn":true,"done":true},"siem":{"var":"Araucaria/B525","fecha":"15/5 - 10/6","finn":true},"re1":{},"fert_bas":{"spt_finn":true,"kcl":100.0,"kcl_finn":true,"fosz":120.0,"fosz_finn":true,"fecha_p":"25/06/2025"},"urea_siem":{"kg":110.0,"fecha":"12/06/2025","finn":true},"z22":{"kg":100.0,"fecha":"08/08/2025","finn":true},"z30":{"kg":122.3,"finn":true},"z33":{},"znf":{"dosis":2.5,"fecha":"29/08/2025","finn":true},"hum":{"dosis":5.0,"fecha":"25/07/2025","finn":true},"f1":{"prod":"Cripton","fecha":"09/09/2025","finn":true},"f2":{"prod":"Orion","fecha":"04/10/2025","finn":true},"f3":{}},{"campo":"Malacara","lote":"12","has":64.25,"cult":"Tr","barb":{"prod":"Glifo 3L + Piroxasulfone 0.12L + Diquat 2.5L","fecha":"05/06/2025","finn":true,"done":true},"dg":{},"rep":{"prod":"Tronador 3.2125L","fecha":"25/07/2025","finn":true,"done":true},"siem":{"var":"Araucaria","fecha":"07/06/2025","finn":true},"re1":{},"fert_bas":{"spt_finn":true,"kcl":110.0,"kcl_finn":true,"fosz":140.0,"fosz_finn":true,"fecha_p":"25/06/2025"},"urea_siem":{"kg":120.0,"fecha":"25/06/2025","finn":true},"z22":{"kg":100.0,"fecha":"08/08/2025","finn":true},"z30":{"kg":103.0,"finn":true},"z33":{},"znf":{"dosis":2.5,"fecha":"29/08/2025","finn":true},"hum":{},"f1":{"prod":"Cripton","fecha":"09/09/2025","finn":true},"f2":{"prod":"Orion","fecha":"04/10/2025","finn":true},"f3":{}},{"campo":"Malacara","lote":"13","has":29.89,"cult":"Tr","barb":{"prod":"Glifo 3L + Piroxasulfone 0.12L + Diquat 2.5L","fecha":"05/06/2025","finn":true,"done":true},"dg":{},"rep":{"prod":"Tronador 1.4945L","fecha":"25/07/2025","finn":true,"done":true},"siem":{"var":"B525","fecha":"11/06/2025","finn":true},"re1":{},"fert_bas":{"spt_finn":true,"kcl":110.0,"kcl_finn":true,"fosz":140.0,"fosz_finn":true,"fecha_p":"25/06/2025"},"urea_siem":{"kg":120.0,"fecha":"25/06/2025","finn":true},"z22":{"kg":100.0,"fecha":"08/08/2025","finn":true},"z30":{"kg":100.0,"finn":true},"z33":{},"znf":{"dosis":2.5,"fecha":"29/08/2025","finn":true},"hum":{},"f1":{"prod":"Cripton","fecha":"09/09/2025","finn":true},"f2":{"prod":"Orion","fecha":"04/10/2025","finn":true},"f3":{}},{"campo":"Montecristo","lote":"6","has":52.63,"cult":"Tr","barb":{"prod":"Glifo 3.5L + Diquat 2.5L","fecha":"16/05/2025","finn":true,"done":true},"dg":{},"rep":{"fecha":"Organizado","finn":true},"siem":{"var":"Nuvette","fecha":"16/05/2025","finn":true},"re1":{"var":"Hyola 130","fecha":"11/06/2025","finn":true},"fert_bas":{"spt_finn":true,"kcl":120.0,"kcl_finn":true,"fosz":120.0,"fosz_finn":true,"fecha_p":"05/06/2025"},"urea_siem":{"kg":150.0,"fecha":"06/06/2025","finn":true},"z22":{"kg":250.0,"fecha":"28/08/2025","finn":true},"z30":{},"z33":{},"znf":{"dosis":2.5,"fecha":"29/08/2025","finn":true},"hum":{},"f1":{"prod":"Cripton","fecha":"09/09/2025","finn":true},"f2":{"prod":"Orion","fecha":"04/10/2025","finn":true},"f3":{}},{"campo":"Montecristo","lote":"7","has":60.61,"cult":"Cz","barb":{"prod":"Glifo 3.5L + Diquat 2.5L","fecha":"16/05/2025","finn":true,"done":true},"dg":{},"rep":{"prod":"Lontrel 0.1L + Tordon 0.1L","fecha":"24/07/2025","finn":true,"done":true},"siem":{"var":"Nuvette","fecha":"16/05/2025","finn":true},"re1":{},"fert_bas":{"spt_finn":true,"kcl":120.0,"kcl_finn":true,"fosz":120.0,"fosz_finn":true,"fecha_p":"05/06/2025"},"urea_siem":{"kg":150.0,"fecha":"06/06/2025","finn":true},"z22":{"kg":90.0,"finn":true},"z30":{},"z33":{},"znf":{"dosis":2.5,"fecha":"24/07/2025","finn":true},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Montecristo","lote":"11","has":56.69,"cult":"Cz","barb":{"prod":"Glifo 3.5L + Diquat 2.5L","fecha":"16/05/2025","finn":true,"done":true},"dg":{},"rep":{"prod":"Lontrel 0.1L + Tordon 0.1L","fecha":"24/07/2025","finn":true,"done":true},"siem":{"var":"Nuvette","fecha":"14/05/2025","finn":true},"re1":{},"fert_bas":{"spt_finn":true,"kcl":120.0,"kcl_finn":true,"fosz":120.0,"fosz_finn":true,"fecha_p":"05/06/2025"},"urea_siem":{"kg":150.0,"fecha":"06/06/2025","finn":true},"z22":{"kg":90.0,"finn":true},"z30":{},"z33":{},"znf":{"dosis":2.5,"fecha":"24/07/2025","finn":true},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Montecristo","lote":"12","has":49.78,"cult":"Cz","barb":{"prod":"Glifo 3.5L + Diquat 2.5L","fecha":"16/05/2025","finn":true,"done":true},"dg":{},"rep":{"prod":"Lontrel 0.1L + Tordon 0.1L","fecha":"24/07/2025","finn":true,"done":true},"siem":{"var":"Nuvette","fecha":"13/05/2025","finn":true},"re1":{},"fert_bas":{"spt_finn":true,"kcl":120.0,"kcl_finn":true,"fosz":120.0,"fosz_finn":true,"fecha_p":"05/06/2025"},"urea_siem":{"kg":150.0,"fecha":"06/06/2025","finn":true},"z22":{"kg":90.0,"finn":true},"z30":{},"z33":{},"znf":{"dosis":2.5,"fecha":"24/07/2025","finn":true},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Montecristo","lote":"13","has":26.67,"cult":"Cz","barb":{"prod":"Glifo 3.5L + Diquat 2.5L","fecha":"16/05/2025","finn":true,"done":true},"dg":{},"rep":{"prod":"Lontrel 0.1L + Tordon 0.1L","fecha":"24/07/2025","finn":true,"done":true},"siem":{"var":"Nuvette","fecha":"15/05/2025","finn":true},"re1":{},"fert_bas":{"spt_finn":true,"kcl":120.0,"kcl_finn":true,"fosz":120.0,"fosz_finn":true,"fecha_p":"04/06/2025"},"urea_siem":{"kg":150.0,"fecha":"06/06/2025","finn":true},"z22":{"kg":90.0,"finn":true},"z30":{},"z33":{},"znf":{"dosis":2.5,"fecha":"24/07/2025","finn":true},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Montecristo","lote":"14","has":33.96,"cult":"Cz","barb":{"prod":"Glifo 3.5L + Diquat 2.5L","fecha":"16/05/2025","finn":true,"done":true},"dg":{},"rep":{"prod":"Lontrel 0.1L + Tordon 0.1L","fecha":"24/07/2025","finn":true,"done":true},"siem":{"var":"Nuvette","fecha":"15/05/2025","finn":true},"re1":{},"fert_bas":{"spt_finn":true,"kcl":120.0,"kcl_finn":true,"fosz":120.0,"fosz_finn":true,"fecha_p":"04/06/2025"},"urea_siem":{"kg":150.0,"fecha":"06/06/2025","finn":true},"z22":{"kg":90.0,"finn":true},"z30":{},"z33":{},"znf":{"dosis":2.5,"fecha":"24/07/2025","finn":true},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Montecristo","lote":"16","has":91.46,"cult":"Cz","barb":{"prod":"Glifo 3.5L + Diquat 2.5L","fecha":"16/05/2025","finn":true,"done":true},"dg":{},"rep":{"prod":"Lontrel 0.1L + Tordon 0.1L","fecha":"24/07/2025","finn":true,"done":true},"siem":{"var":"Nuvette","fecha":"15/05/2025","finn":true},"re1":{"var":"Hyola 130 y Floriana","fecha":"12/06/2025","finn":true},"fert_bas":{"spt_finn":true,"kcl":120.0,"kcl_finn":true,"fosz":120.0,"fosz_finn":true,"fecha_p":"04/06/2025"},"urea_siem":{"kg":150.0,"fecha":"06/06/2025","finn":true},"z22":{"kg":90.0,"finn":true},"z30":{},"z33":{},"znf":{"dosis":2.5,"fecha":"24/07/2025","finn":true},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Pereira","lote":"Frente","has":112.0,"cult":"Cz","barb":{"prod":"Glifo 3L + Diquat 2.5L","fecha":"07/04/2025","finn":true,"done":true},"dg":{},"rep":{"prod":"Cletodim 0.8L + Arsenal 0.4L","fecha":"24/05/2025","finn":true,"done":true},"siem":{"var":"Curry CL","fecha":"16/04/2025","finn":true},"re1":{},"fert_bas":{"spt_finn":true,"kcl":100.0,"kcl_finn":true,"fosz_finn":true},"urea_siem":{"kg":190.0,"fecha":"10/06/2025","finn":true},"z22":{"kg":100.0,"finn":true},"z30":{},"z33":{},"znf":{"dosis":2.5,"fecha":"09/08/2025","finn":true},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Pereira","lote":"Fondo","has":190.0,"cult":"Cz","barb":{"prod":"Glifo 3L + Diquat 2.5L","fecha":"07/04/2025","finn":true,"done":true},"dg":{},"rep":{"prod":"Cletodim 0.8L + Arsenal 0.4L","fecha":"30/05/2025","finn":true,"done":true},"siem":{"var":"Curry CL","fecha":"18/04/2025","finn":true},"re1":{"var":"Hyola 575 CL y Hyola 130 (noCL) melgas fondo","fecha":"08/06/2025","finn":true},"fert_bas":{"spt_finn":true,"kcl":100.0,"kcl_finn":true,"fosz_finn":true},"urea_siem":{"kg":190.0,"fecha":"10/06/2025","finn":true},"z22":{"kg":100.0,"finn":true},"z30":{},"z33":{},"znf":{"dosis":2.5,"fecha":"09/08/2025","finn":true},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Campana","lote":"1","has":58.59,"cult":"Cobertura","barb":{},"dg":{},"rep":{"prod":"Tronador 1pq/20haL","fecha":"16/05/2025","finn":true,"done":true},"siem":{"fecha":"10/04/2025","finn":true},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Campana","lote":"2","has":40.99,"cult":"Cobertura","barb":{},"dg":{},"rep":{"prod":"Tronador 1pq/20haL","fecha":"16/05/2025","finn":true,"done":true},"siem":{"fecha":"10/04/2025","finn":true},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Campana","lote":"3","has":63.11,"cult":"Cobertura","barb":{},"dg":{},"rep":{"prod":"Tronador 1pq/20haL","fecha":"16/05/2025","finn":true,"done":true},"siem":{"fecha":"10/04/2025","finn":true},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Campana","lote":"4","has":71.48,"cult":"Cobertura","barb":{},"dg":{},"rep":{"prod":"Tronador 1pq/20haL","fecha":"16/05/2025","finn":true,"done":true},"siem":{"fecha":"10/04/2025","finn":true},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Campana","lote":"5","has":67.74,"cult":"Tr","barb":{"prod":"Glifo 3.5L + Amina 0.8L","fecha":"15/05/2025","finn":true,"done":true},"dg":{},"rep":{"prod":"Hussar 0.22L + Paradigm 0.025L + Vitagrow 0.15L","fecha":"05/07/2025","finn":true,"done":true},"siem":{"var":"Araucaria","fecha":"15/05/2025","finn":true},"re1":{},"fert_bas":{"spt_finn":true,"kcl":100.0,"kcl_finn":true,"fosz":110.0,"fosz_finn":true,"fecha_p":"04/06/2025"},"urea_siem":{"kg":200.0,"fecha":"06/06/2025","finn":true},"z22":{"finn":true},"z30":{"kg":95.0,"fecha":"Muestreo 5/8","finn":true},"z33":{"kg":109.8,"finn":true},"znf":{"dosis":2.5,"fecha":"09/08/2025","finn":true},"hum":{},"f1":{"prod":"Cripton","fecha":"11/09/2025","finn":true},"f2":{"prod":"Cripton xpro","fecha":"02/10/2025","finn":true},"f3":{}},{"campo":"La Campana","lote":"6","has":24.52,"cult":"Tr","barb":{"prod":"Glifo 3.5L + Amina 0.8L","fecha":"15/05/2025","finn":true,"done":true},"dg":{},"rep":{"prod":"Hussar 0.22L + Paradigm 0.025L + Vitagrow 0.15L","fecha":"05/07/2025","finn":true,"done":true},"siem":{"var":"Araucaria","fecha":"16/05/2025","finn":true},"re1":{},"fert_bas":{"spt_finn":true,"kcl":100.0,"kcl_finn":true,"fosz":110.0,"fosz_finn":true,"fecha_p":"04/06/2025"},"urea_siem":{"kg":200.0,"fecha":"06/06/2025","finn":true},"z22":{"finn":true},"z30":{"kg":91.0,"fecha":"Muestreo 5/8","finn":true},"z33":{"kg":109.5,"finn":true},"znf":{"dosis":2.5,"fecha":"09/08/2025","finn":true},"hum":{},"f1":{"prod":"Cripton","fecha":"11/09/2025","finn":true},"f2":{"prod":"Cripton xpro","fecha":"02/10/2025","finn":true},"f3":{}},{"campo":"La Campana","lote":"11","has":31.0,"cult":"Cobertura","barb":{},"dg":{},"rep":{"prod":"Tronador 1pq/20haL","fecha":"16/05/2025","finn":true,"done":true},"siem":{"fecha":"10/04/2025","finn":true},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Campana","lote":"12","has":67.0,"cult":"Tr","barb":{"prod":"Glifo 3.5L + Amina 0.8L","fecha":"15/05/2025","finn":true,"done":true},"dg":{},"rep":{"prod":"Hussar 0.22L + Paradigm 0.025L + Vitagrow 0.15L","fecha":"05/07/2025","finn":true,"done":true},"siem":{"var":"Araucaria","fecha":"13/05/2025","finn":true},"re1":{},"fert_bas":{"spt_finn":true,"kcl":100.0,"kcl_finn":true,"fosz":110.0,"fosz_finn":true,"fecha_p":"04/06/2025"},"urea_siem":{"kg":200.0,"fecha":"06/06/2025","finn":true},"z22":{"finn":true},"z30":{"kg":91.0,"fecha":"Muestreo 5/8","finn":true},"z33":{"kg":84.8,"finn":true},"znf":{"dosis":2.5,"fecha":"09/08/2025","finn":true},"hum":{},"f1":{"prod":"Cripton","fecha":"11/09/2025","finn":true},"f2":{"prod":"Cripton xpro","fecha":"02/10/2025","finn":true},"f3":{}},{"campo":"San Luis","lote":"1","has":138.88,"cult":"Cobertura","barb":{},"dg":{},"rep":{},"siem":{"fecha":"10/04/2025","finn":true},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"San Luis","lote":"2","has":141.7,"cult":"Tr","barb":{"prod":"Glifo 2.5L + Diquat 2.5L","fecha":"14/05/2025","finn":true,"done":true},"dg":{},"rep":{"prod":"Hussar 0.22L + Paradigm 0.025L + Vitagrow 0.15L","fecha":"06/07/2025","finn":true,"done":true},"siem":{"var":"Araucaria","fecha":"13/05/2025","finn":true},"re1":{},"fert_bas":{"spt_finn":true,"kcl":100.0,"kcl_finn":true,"fosz":110.0,"fosz_finn":true,"fecha_p":"10/06/2025"},"urea_siem":{"kg":200.0,"fecha":"11/06/2025","finn":true},"z22":{"finn":true},"z30":{"kg":97.0,"fecha":"Muestreo 5/8","finn":true},"z33":{"kg":100.6,"finn":true},"znf":{"dosis":2.5,"fecha":"09/08/2025","finn":true},"hum":{},"f1":{"prod":"Cripton xpro","fecha":"09/09/2025","finn":true},"f2":{"prod":"Cripton xpro","fecha":"03/10/2025","finn":true},"f3":{}},{"campo":"La Blanqueada","lote":"1","has":101.74,"cult":"Cz","barb":{"prod":"Glifo 3L + Diquat 2.5L","fecha":"15/05/2025","finn":true,"done":true},"dg":{},"rep":{},"siem":{"var":"Floriana","fecha":"16/05/2025","finn":true},"re1":{},"fert_bas":{"spt":97.0,"spt_finn":true,"kcl":118.0,"kcl_finn":true,"fosz_finn":true,"fecha_p":"01/07/2025"},"urea_siem":{"kg":100.0,"fecha":"25/06/2025","finn":true},"z22":{"kg":100.0,"fecha":"08/08/2025","finn":true},"z30":{},"z33":{},"znf":{"dosis":2.5,"fecha":"16/08/2025","finn":true},"hum":{},"f1":{"prod":"Unico max","fecha":"16/08/2025","finn":true},"f2":{},"f3":{}},{"campo":"La Blanqueada","lote":"2","has":34.99,"cult":"Cobertura","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Blanqueada","lote":"3","has":301.24,"cult":"Cobertura","barb":{},"dg":{},"rep":{},"siem":{"fecha":"10/04/2025","finn":true},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Blanqueada","lote":"4","has":180.2,"cult":"Cobertura","barb":{},"dg":{},"rep":{},"siem":{"fecha":"10/04/2025","finn":true},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Blanqueada","lote":"5","has":59.08,"cult":"Ceb","barb":{"prod":"Glifo 3L + Diquat 2.5L","fecha":"26/06/2025","finn":true,"done":true},"dg":{},"rep":{"prod":"Tronador 2.3632L","fecha":"06/08/2025","finn":true,"done":true},"siem":{"var":"Osiris","fecha":"26/06/2025","finn":true},"re1":{},"fert_bas":{"spt":109.0,"spt_finn":true,"kcl":85.0,"kcl_finn":true,"fosz_finn":true,"fecha_p":"02/07/2025"},"urea_siem":{"kg":100.0,"fecha":"26/06/2025","finn":true},"z22":{"kg":100.0,"fecha":"08/08/2025","finn":true},"z30":{"kg":122.2,"fecha":"02/09/2025","finn":true},"z33":{},"znf":{"dosis":2.5,"fecha":"16/08/2025","finn":true},"hum":{},"f1":{"prod":"Unico max","fecha":"16/08/2025","finn":true},"f2":{"prod":"Xhanto","fecha":"12/09/2025","finn":true},"f3":{"prod":"Unico max","fecha":"02/10/2025","finn":true}},{"campo":"La Blanqueada","lote":"7","has":46.79,"cult":"Ceb","barb":{"prod":"Glifo 3L + Diquat 2.5L","fecha":"26/06/2025","finn":true,"done":true},"dg":{},"rep":{"prod":"Tronador 1.8716L","fecha":"06/08/2025","finn":true,"done":true},"siem":{"var":"Osiris","fecha":"24/06/2025","finn":true},"re1":{},"fert_bas":{"spt":67.0,"spt_finn":true,"kcl":84.0,"kcl_finn":true,"fosz_finn":true,"fecha_p":"02/07/2025"},"urea_siem":{"kg":100.0,"fecha":"25/06/2025","finn":true},"z22":{"kg":100.0,"fecha":"08/08/2025","finn":true},"z30":{"kg":105.7,"fecha":"02/09/2025","finn":true},"z33":{},"znf":{"dosis":2.5,"fecha":"16/08/2025","finn":true},"hum":{},"f1":{"prod":"Unico max","fecha":"16/08/2025","finn":true},"f2":{"prod":"Xhanto","fecha":"12/09/2025","finn":true},"f3":{"prod":"Unico max","fecha":"02/10/2025","finn":true}},{"campo":"La Blanqueada","lote":"8","has":59.05,"cult":"Ceb","barb":{"prod":"Glifo 3L + Diquat 2.5L","fecha":"26/06/2025","finn":true,"done":true},"dg":{},"rep":{"prod":"Tronador 2.362L","fecha":"06/08/2025","finn":true,"done":true},"siem":{"var":"Osiris","fecha":"24/06/2025","finn":true},"re1":{},"fert_bas":{"spt":68.0,"spt_finn":true,"kcl":84.0,"kcl_finn":true,"fosz_finn":true,"fecha_p":"02/07/2025"},"urea_siem":{"kg":100.0,"fecha":"25/06/2025","finn":true},"z22":{"kg":100.0,"fecha":"08/08/2025","finn":true},"z30":{"kg":122.2,"fecha":"02/09/2025","finn":true},"z33":{},"znf":{"dosis":2.5,"fecha":"16/08/2025","finn":true},"hum":{"dosis":5.0,"fecha":"06/08/2025","finn":true},"f1":{"prod":"Unico max","fecha":"16/08/2025","finn":true},"f2":{"prod":"Xhanto","fecha":"12/09/2025","finn":true},"f3":{"prod":"Unico max","fecha":"02/10/2025","finn":true}},{"campo":"La Blanqueada","lote":"9","has":103.45,"cult":"Ceb","barb":{"prod":"Glifo 3L + Pixaro 0.4L","fecha":"18/06/2025","finn":true,"done":true},"dg":{},"rep":{"prod":"Tronador 4.138L","fecha":"06/08/2025","finn":true,"done":true},"siem":{"var":"Osiris","fecha":"12/06/2025","finn":true},"re1":{},"fert_bas":{"spt":56.0,"spt_finn":true,"kcl":85.0,"kcl_finn":true,"fosz_finn":true,"fecha_p":"02/07/2025"},"urea_siem":{"kg":100.0,"fecha":"25/06/2025","finn":true},"z22":{"kg":100.0,"fecha":"08/08/2025","finn":true},"z30":{"kg":117.7,"fecha":"02/09/2025","finn":true},"z33":{},"znf":{"dosis":2.5,"fecha":"16/08/2025","finn":true},"hum":{},"f1":{"prod":"Unico max","fecha":"16/08/2025","finn":true},"f2":{"prod":"Xhanto","fecha":"12/09/2025","finn":true},"f3":{"prod":"Unico max","fecha":"02/10/2025","finn":true}},{"campo":"La Blanqueada","lote":"10","has":101.88,"cult":"Cobertura","barb":{},"dg":{},"rep":{},"siem":{"fecha":"10/04/2025","finn":true},"re1":{},"fert_bas":{},"urea_siem":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Blanqueada","lote":"11","has":53.38,"cult":"Cz","barb":{"prod":"Glifo 3L + Diquat 2.5L","fecha":"15/05/2025","finn":true,"done":true},"dg":{},"rep":{"prod":"Cletodim 0,45 (Cabeceras)L","fecha":"10/08/2025","finn":true,"done":true},"siem":{"var":"Floriana","fecha":"14/05/2025","finn":true},"re1":{"var":"Floriana","fecha":"13/06/2025","finn":true},"fert_bas":{"spt":64.0,"spt_finn":true,"kcl":126.0,"kcl_finn":true,"fosz_finn":true,"fecha_p":"02/07/2025"},"urea_siem":{"kg":100.0,"fecha":"25/06/2025","finn":true},"z22":{"kg":100.0,"fecha":"08/08/2025","finn":true},"z30":{},"z33":{},"znf":{"dosis":2.5,"fecha":"16/08/2025","finn":true},"hum":{},"f1":{"prod":"Unico max","fecha":"16/08/2025","finn":true},"f2":{},"f3":{}},{"campo":"La Blanqueada","lote":"12","has":102.7,"cult":"Ceb","barb":{"prod":"Glifo 3L + Pixaro 0.4L","fecha":"18/06/2025","finn":true,"done":true},"dg":{},"rep":{"prod":"Tronador 4.1080000000000005L","fecha":"06/08/2025","finn":true,"done":true},"siem":{"var":"Olimpia","fecha":"13/06/2025","finn":true},"re1":{},"fert_bas":{"spt":76.0,"spt_finn":true,"kcl":85.0,"kcl_finn":true,"fosz_finn":true,"fecha_p":"02/07/2025"},"urea_siem":{"kg":100.0,"fecha":"26/06/2025","finn":true},"z22":{"kg":100.0,"fecha":"08/08/2025","finn":true},"z30":{"kg":112.1,"fecha":"02/09/2025","finn":true},"z33":{},"znf":{"dosis":2.5,"fecha":"16/08/2025","finn":true},"hum":{"dosis":5.0,"fecha":"06/08/2025","finn":true},"f1":{"prod":"Unico max","fecha":"16/08/2025","finn":true},"f2":{"prod":"Xhanto","fecha":"12/09/2025","finn":true},"f3":{"prod":"Unico max","fecha":"02/10/2025","finn":true}},{"campo":"La Blanqueada","lote":"13","has":87.11,"cult":"Ceb","barb":{"prod":"Glifo 3L + Diquat 2.5L","fecha":"26/06/2025","finn":true,"done":true},"dg":{},"rep":{"prod":"Axial 0,8 (del camino al 14)L + Tronador 3.4844L","fecha":"06/08/2025","finn":true,"done":true},"siem":{"var":"Olimpia","fecha":"24/06/2025","finn":true},"re1":{},"fert_bas":{"spt":148.0,"spt_finn":true,"kcl":85.0,"kcl_finn":true,"fosz_finn":true,"fecha_p":"01/07/2025"},"urea_siem":{"kg":100.0,"fecha":"26/06/2025","finn":true},"z22":{"kg":100.0,"fecha":"08/08/2025","finn":true},"z30":{"kg":117.2,"fecha":"02/09/2025","finn":true},"z33":{},"znf":{"dosis":2.5,"fecha":"16/08/2025","finn":true},"hum":{"dosis":5.0,"fecha":"06/08/2025","finn":true},"f1":{"prod":"Unico max","fecha":"16/08/2025","finn":true},"f2":{"prod":"Xhanto","fecha":"12/09/2025","finn":true},"f3":{"prod":"Unico max","fecha":"02/10/2025","finn":true}},{"campo":"La Blanqueada","lote":"14","has":59.42,"cult":"Ceb","barb":{"prod":"Glifo 3L + Pixaro 0.4L","fecha":"26/06/2025","finn":true,"done":true},"dg":{},"rep":{"prod":"Tronador 2.3768000000000002L","fecha":"06/08/2025","finn":true,"done":true},"siem":{"var":"Osiris","fecha":"26/06/2025","finn":true},"re1":{},"fert_bas":{"spt":113.0,"spt_finn":true,"kcl":84.0,"kcl_finn":true,"fosz_finn":true,"fecha_p":"01/07/2025"},"urea_siem":{"kg":100.0,"fecha":"26/06/2025","finn":true},"z22":{"kg":100.0,"fecha":"08/08/2025","finn":true},"z30":{"kg":140.0,"fecha":"02/09/2025","finn":true},"z33":{},"znf":{"dosis":2.5,"fecha":"16/08/2025","finn":true},"hum":{"dosis":5.0,"fecha":"06/08/2025","finn":true},"f1":{"prod":"Unico max","fecha":"16/08/2025","finn":true},"f2":{"prod":"Xhanto","fecha":"12/09/2025","finn":true},"f3":{"prod":"Unico max","fecha":"02/10/2025","finn":true}},{"campo":"La Blanqueada","lote":"15","has":35.96,"cult":"Ceb","barb":{"prod":"Glifo 3L + Pixaro 0.4L","fecha":"26/06/2025","finn":true,"done":true},"dg":{},"rep":{"prod":"Tronador 1.4384000000000001L","fecha":"06/08/2025","finn":true,"done":true},"siem":{"var":"Osiris","fecha":"26/06/2025","finn":true},"re1":{},"fert_bas":{"spt":181.0,"spt_finn":true,"kcl":103.0,"kcl_finn":true,"fosz_finn":true,"fecha_p":"03/07/2025"},"urea_siem":{"kg":100.0,"fecha":"26/06/2025","finn":true},"z22":{"kg":100.0,"fecha":"08/08/2025","finn":true},"z30":{"kg":121.8,"fecha":"02/09/2025","finn":true},"z33":{},"znf":{"dosis":2.5,"fecha":"16/08/2025","finn":true},"hum":{},"f1":{"prod":"Unico max","fecha":"16/08/2025","finn":true},"f2":{"prod":"Xhanto","fecha":"12/09/2025","finn":true},"f3":{"prod":"Unico max","fecha":"02/10/2025","finn":true}},{"campo":"Santa Rafaela","lote":"Bellaco","has":386.2,"cult":"Cz","barb":{"prod":"Glifo 3L + Diquat 2.5L","fecha":"06/04/2025","finn":true,"done":true},"dg":{},"rep":{"prod":"Cletodim 0.8L + Arsenal 0.4L","fecha":"24/05/2025","finn":true,"done":true},"siem":{"var":"Curry CL","fecha":"18/04/2025","finn":true},"re1":{"var":"Floriana (cabeceras varias)","fecha":"10/06/2025","finn":true},"fert_bas":{"spt":0.0,"spt_finn":true,"kcl":100.0,"kcl_finn":true,"fosz_finn":true},"urea_siem":{"kg":100.0,"fecha":"24/04/2025","finn":true},"z22":{"kg":100.0,"finn":true},"z30":{"kg":100.0,"fecha":"04/07/2025","finn":true},"z33":{},"znf":{"dosis":2.5,"fecha":"28/06/2025","finn":true},"hum":{},"f1":{"prod":"Unico max","fecha":"28/06/2025","finn":true},"f2":{},"f3":{}},{"campo":"Santa Rafaela","lote":"Chaniar norte","has":120.0,"cult":"Cz","barb":{"prod":"Glifo 3L + Diquat 2.5L","fecha":"07/06/2025","finn":true,"done":true},"dg":{},"rep":{"prod":"Cletodim 0.8L + Lontrel 0.1L + Tordon 0.1L","fecha":"23/08/2025","finn":true,"done":true},"siem":{"var":"Floriana","fecha":"06/06/2025","finn":true},"re1":{},"fert_bas":{"spt_finn":true,"kcl":122.0,"kcl_finn":true,"fosz":30.0,"fosz_finn":true,"fecha_p":"03/07/2025"},"urea_siem":{"kg":100.0,"fecha":"25/06/2025","finn":true},"z22":{"kg":120.0,"fecha":"28/08/2025","finn":true},"z30":{},"z33":{},"znf":{"fecha":"No lleva","finn":true},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Santa Rafaela","lote":"Chaniar sur","has":163.0,"cult":"Cz","barb":{"prod":"Glifo 3L + Amina 0.8L","fecha":"13/05/2025","finn":true,"done":true},"dg":{},"rep":{"prod":"Cletodim 0.8L + Lontrel 0.1L + Tordon 0.1L","fecha":"17/08/2025","finn":true,"done":true},"siem":{"var":"Floriana","fecha":"05/06/2025","finn":true},"re1":{"var":"Floriana","fecha":"12/06/2025","finn":true},"fert_bas":{"spt_finn":true,"kcl":119.0,"kcl_finn":true,"fosz":30.0,"fosz_finn":true,"fecha_p":"03/07/2025"},"urea_siem":{"kg":100.0,"fecha":"05/06/2025","finn":true},"z22":{"kg":120.0,"fecha":"28/08/2025","finn":true},"z30":{},"z33":{},"znf":{"fecha":"No lleva","finn":true},"hum":{"dosis":5.0,"fecha":"17/08/2025","finn":true},"f1":{},"f2":{},"f3":{}},{"campo":"Santa Rafaela","lote":"Los Juanes","has":189.75,"cult":"Carinata","barb":{"prod":"Glifo 2L + Diquat 2.5L","fecha":"06/04/2025","finn":true,"done":true},"dg":{},"rep":{},"siem":{"var":"Nujet 350","fecha":"28/4 - 13/5","finn":true},"re1":{},"fert_bas":{"spt_finn":true,"kcl":132.0,"kcl_finn":true,"fosz":30.0,"fosz_finn":true,"fecha_p":"04/07/2025"},"urea_siem":{"kg":130.0,"fecha":"04/06/2025","finn":true},"z22":{"kg":140.0,"finn":true},"z30":{},"z33":{},"znf":{"dosis":2.5,"fecha":"28/06/2025","finn":true},"hum":{},"f1":{"prod":"Unico max","fecha":"28/06/2025","finn":true},"f2":{},"f3":{}},{"campo":"Santa Rafaela","lote":"Manguera E","has":169.61,"cult":"Cz","barb":{"prod":"Glifo 3L + Diquat 2.5L","fecha":"07/04/2025","finn":true,"done":true},"dg":{},"rep":{"prod":"Lontrel 0.1L + Tordon 0.1L","fecha":"08/06/2025","finn":true,"done":true},"siem":{"var":"Curry CL","fecha":"17/04/2025","finn":true},"re1":{"var":"Floriana (cabecera contra puesto)","fecha":"10/06/2025","finn":true},"fert_bas":{"spt":0.0,"spt_finn":true,"kcl":100.0,"kcl_finn":true,"fosz_finn":true},"urea_siem":{"kg":100.0,"fecha":"24/04/2025","finn":true},"z22":{"kg":100.0,"finn":true},"z30":{"kg":107.0,"fecha":"03/07/2025","finn":true},"z33":{},"znf":{"dosis":2.5,"fecha":"08/06/2025","finn":true},"hum":{},"f1":{"prod":"Cripton","fecha":"08/06/2025","finn":true},"f2":{"prod":"Unico max","fecha":"13/08/2025","finn":true},"f3":{}},{"campo":"Santa Rafaela","lote":"Manguera w","has":118.35,"cult":"Cz","barb":{"prod":"Glifo 3L + Diquat 2.5L","fecha":"07/06/2025","finn":true,"done":true},"dg":{},"rep":{"prod":"Cletodim 0.8L + Lontrel 0.1L + Tordon 0.1L","fecha":"23/08/2025","finn":true,"done":true},"siem":{"var":"Floriana","fecha":"08/06/2025","finn":true},"re1":{"var":"Nuvette","fecha":"11/07/2025","finn":true},"fert_bas":{"spt_finn":true,"kcl":128.0,"kcl_finn":true,"fosz":30.0,"fosz_finn":true,"fecha_p":"03/07/2025"},"urea_siem":{"kg":100.0,"fecha":"12/06/2025","finn":true},"z22":{"kg":120.0,"fecha":"28/08/2025","finn":true},"z30":{},"z33":{},"znf":{"fecha":"10/09/2025","finn":true},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Santa Rafaela","lote":"Nianiez","has":243.29,"cult":"Cz","barb":{"prod":"Glifo 3L + Diquat 2.5L","fecha":"05/04/2025","finn":true,"done":true},"dg":{},"rep":{"prod":"Lontrel 0.1L + Tordon 0.1L","fecha":"08/06/2025","finn":true,"done":true},"siem":{"var":"Curry CL","fecha":"16/04/2025","finn":true},"re1":{},"fert_bas":{"spt":0.0,"spt_finn":true,"kcl":100.0,"kcl_finn":true,"fosz_finn":true},"urea_siem":{"kg":100.0,"fecha":"24/04/2025","finn":true},"z22":{"kg":100.0,"finn":true},"z30":{"kg":117.0,"fecha":"03/07/2025","finn":true},"z33":{},"znf":{"dosis":2.5,"fecha":"08/06/2025","finn":true},"hum":{},"f1":{"prod":"Cripton","fecha":"08/06/2025","finn":true},"f2":{},"f3":{}},{"campo":"Santa Rafaela","lote":"Trillo","has":201.78,"cult":"Ceb","barb":{"prod":"Glifo 3L + Pixaro 0.4L","fecha":"04/06/2025","finn":true,"done":true},"dg":{},"rep":{"prod":"Tronador 10.089L","fecha":"25/07/2025","finn":true,"done":true},"siem":{"var":"Osiris","fecha":"03/06/2025","finn":true},"re1":{},"fert_bas":{"spt_finn":true,"kcl":92.0,"kcl_finn":true,"fosz":30.0,"fosz_finn":true,"fecha_p":"03/07/2025"},"urea_siem":{"kg":100.0,"fecha":"12/06/2025","finn":true},"z22":{"kg":100.0,"fecha":"08/08/2025","finn":true},"z30":{"kg":122.3,"fecha":"02/09/2025","finn":true},"z33":{},"znf":{"dosis":2.5,"fecha":"12/08/2025","finn":true},"hum":{},"f1":{"prod":"Unico max","fecha":"12/08/2025","finn":true},"f2":{"prod":"Xhanto","fecha":"11/09/2025","finn":true},"f3":{"prod":"Unico max","fecha":"04/10/2025","finn":true}},{"campo":"Santa Rafaela","lote":"Entrada","has":150.52,"cult":"Ceb","barb":{"prod":"Glifo 3L + Pixaro 0.4L","fecha":"04/06/2025","finn":true,"done":true},"dg":{},"rep":{"prod":"Tronador 6.0208L","fecha":"11/08/2025","finn":true,"done":true},"siem":{"var":"Osiris","fecha":"10/06/2025","finn":true},"re1":{"var":"Osiris","fecha":"11/07/2025","finn":true},"fert_bas":{"spt_finn":true,"kcl":100.0,"kcl_finn":true,"fosz":30.0,"fosz_finn":true,"fecha_p":"03/07/2025"},"urea_siem":{"kg":100.0,"fecha":"12/06/2025","finn":true},"z22":{"kg":100.0,"fecha":"08/08/2025","finn":true},"z30":{"kg":102.9,"fecha":"02/09/2025","finn":true},"z33":{},"znf":{"dosis":2.5,"fecha":"11/08/2025","finn":true},"hum":{},"f1":{"prod":"Unico max","fecha":"11/08/2025","finn":true},"f2":{"prod":"Xhanto","fecha":"11/09/2025","finn":true},"f3":{"prod":"Unico max","fecha":"04/10/2025","finn":true}},{"campo":"Santa Rafaela","lote":"Puesto","has":225.15,"cult":"Ceb","barb":{"prod":"Glifo 3L + Diquat 2.5L","fecha":"06/06/2025","finn":true,"done":true},"dg":{},"rep":{"prod":"Axial 0,8 (cabecera bellaco)L + Tronador 9.006L","fecha":"25/07/2025","finn":true,"done":true},"siem":{"var":"Osiris","fecha":"10/06/2025","finn":true},"re1":{},"fert_bas":{"spt":105.0,"spt_finn":true,"kcl":92.0,"kcl_finn":true,"fosz_finn":true,"fecha_p":"02/07/2025"},"urea_siem":{"kg":100.0,"fecha":"24/06/2025","finn":true},"z22":{"kg":100.0,"fecha":"08/08/2025","finn":true},"z30":{"kg":122.1,"fecha":"02/09/2025","finn":true},"z33":{},"znf":{"dosis":2.5,"fecha":"11/08/2025","finn":true},"hum":{},"f1":{"prod":"Unico max","fecha":"11/08/2025","finn":true},"f2":{"prod":"Xhanto","fecha":"11/09/2025","finn":true},"f3":{"prod":"Unico max","fecha":"04/10/2025","finn":true}}],"ver":[{"campo":"Malacara","lote":"1","has":203.49,"cult":"Sj1","antec":"Sj1","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Malacara","lote":"2","has":215.0,"cult":"Sj2","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Malacara","lote":"3","has":46.12,"cult":"Sj2","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Malacara","lote":"7","has":24.03,"cult":"Sj2","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Malacara","lote":"8","has":22.55,"cult":"Sj2","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Malacara","lote":"9","has":62.73,"cult":"Sj2","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Malacara","lote":"10","has":29.7,"cult":"Sj2","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Malacara","lote":"11","has":270.44,"cult":"Sj2","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Malacara","lote":"12","has":64.25,"cult":"Sj2","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Malacara","lote":"13","has":29.89,"cult":"Sj2","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Montecristo","lote":"6","has":52.63,"cult":"Sj2","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Montecristo","lote":"7","has":60.61,"cult":"Sj2","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Montecristo","lote":"11","has":56.69,"cult":"Sj2","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Montecristo","lote":"12","has":49.78,"cult":"Sj2","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Montecristo","lote":"13","has":26.67,"cult":"Sj2","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Montecristo","lote":"14","has":33.96,"cult":"Sj2","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Montecristo","lote":"16","has":91.46,"cult":"Sj2","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Pereira","lote":"Frente","has":112.0,"cult":"Sj2","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Pereira","lote":"Fondo","has":190.0,"cult":"Sj2","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Campana","lote":"1","has":58.59,"cult":"Sj1","antec":"Sj1","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Campana","lote":"2","has":40.99,"cult":"Sj1","antec":"Sj1","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Campana","lote":"3","has":63.11,"cult":"Sj1","antec":"Sj1","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Campana","lote":"4","has":71.48,"cult":"Sj1","antec":"Sj1","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Campana","lote":"5","has":67.74,"cult":"Sj2","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Campana","lote":"6","has":24.52,"cult":"Sj2","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Campana","lote":"11","has":31.0,"cult":"Sj1","antec":"Sj1","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Campana","lote":"12","has":67.0,"cult":"Sj2","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"San Luis","lote":"1","has":138.88,"cult":"Mz1","antec":"Mz1","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"San Luis","lote":"2","has":141.7,"cult":"Sj2","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Blanqueada","lote":"1","has":101.74,"cult":"Mz2","antec":"Mz2","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Blanqueada","lote":"2","has":34.99,"cult":"Mz1","antec":"Mz1","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Blanqueada","lote":"3","has":301.24,"cult":"Mz1","antec":"Mz1","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Blanqueada","lote":"4","has":180.2,"cult":"Mz1","antec":"Mz1","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Blanqueada","lote":"5","has":59.08,"cult":"Mz2","antec":"Mz2","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Blanqueada","lote":"7","has":46.79,"cult":"Sj2","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Blanqueada","lote":"8","has":59.05,"cult":"Sj2","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Blanqueada","lote":"9","has":103.45,"cult":"Sj2","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Blanqueada","lote":"10","has":101.88,"cult":"Mz1","antec":"Mz1","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Blanqueada","lote":"11","has":53.38,"cult":"Mz2","antec":"Mz2","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Blanqueada","lote":"12","has":102.7,"cult":"Sj2","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Blanqueada","lote":"13","has":87.11,"cult":"Sj2","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Blanqueada","lote":"14","has":59.42,"cult":"Sj2","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Blanqueada","lote":"15","has":35.96,"cult":"Sj2","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Santa Rafaela","lote":"Bellaco","has":386.2,"cult":"Sj2","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Santa Rafaela","lote":"Chaniar norte","has":120.0,"cult":"Mz2","antec":"Mz2","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Santa Rafaela","lote":"Chaniar sur","has":163.0,"cult":"Sj2","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Santa Rafaela","lote":"Los Juanes","has":189.75,"cult":"Sj2","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Santa Rafaela","lote":"Manguera E","has":169.61,"cult":"Sj2","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Santa Rafaela","lote":"Manguera w","has":118.35,"cult":"Sj2","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Santa Rafaela","lote":"Nianiez","has":243.29,"cult":"Sj2","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Santa Rafaela","lote":"Trillo","has":201.78,"cult":"Sj2","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Santa Rafaela","lote":"Entrada","has":150.52,"cult":"Sj2","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Santa Rafaela","lote":"Puesto","has":225.15,"cult":"Sj2","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}}]},"24-25":{"inv":[{"campo":"Malacara","lote":"1","has":203.49,"cult":"Tr","barb":{"prod":"1 Glifo+PixaroL + 2 Paraquat+BravoL + Repaso Tronador+AxialL","done":true},"dg":{},"rep":{},"siem":{"fecha":"20/06/2024","finn":true},"re1":{},"fert_bas":{},"urea_siem":{"kg":150.0,"fecha":"20/06/2024","finn":true},"z22":{"kg":80.0,"fecha":"12/07/2024","finn":true},"z30":{"kg":100.0,"fecha":"14/08/2024","finn":true},"z33":{"fecha":"03/09/2024","finn":true},"znf":{},"hum":{},"f1":{"prod":"Cripton","fecha":"08/09/2024","finn":true},"f2":{"prod":"Cripton xpro","fecha":"28/09/2024","finn":true},"f3":{}},{"campo":"La Blanqueada","lote":"1","has":101.74,"cult":"Tr","barb":{"prod":"1 Glifo+PixaroL + Repaso Paradigm+axialL","done":true},"dg":{},"rep":{},"siem":{"fecha":"13/06/2024","finn":true},"re1":{},"fert_bas":{},"urea_siem":{"kg":115.0,"fecha":"13/06/2024","finn":true},"z22":{"kg":80.0,"fecha":"12/07/2024","finn":true},"z30":{"kg":150.0,"fecha":"13/08/2024","finn":true},"z33":{},"znf":{},"hum":{},"f1":{"prod":"Cripton","fecha":"07/09/2024","finn":true},"f2":{"prod":"Cripton xpro","fecha":"29/09/2024","finn":true},"f3":{}},{"campo":"La Blanqueada","lote":"2","has":34.99,"cult":"Tr","barb":{"prod":"1 Glifo+PixaroL + Repaso Paradigm+axialL","done":true},"dg":{},"rep":{},"siem":{"fecha":"20/06/2024","finn":true},"re1":{},"fert_bas":{},"urea_siem":{"kg":150.0,"fecha":"20/06/2024","finn":true},"z22":{"kg":150.0,"fecha":"10/08/2024","finn":true},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{"prod":"Cripton","fecha":"07/09/2024","finn":true},"f2":{"prod":"Cripton xpro","fecha":"29/09/2024","finn":true},"f3":{}},{"campo":"La Blanqueada","lote":"3","has":301.24,"cult":"Cz","barb":{"prod":"1 Glifo+StaraneL + Repaso Korvetto+cletodimL","done":true},"dg":{},"rep":{},"siem":{"fecha":"15/06/2024","finn":true},"re1":{},"fert_bas":{},"urea_siem":{"kg":100.0,"fecha":"15/06/2024","finn":true},"z22":{"kg":80.0,"fecha":"10/08/2024","finn":true},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{"prod":"Cripton","fecha":"19/09/2024","finn":true},"f2":{},"f3":{}},{"campo":"La Blanqueada","lote":"4","has":180.2,"cult":"Cz","barb":{"prod":"1 Glifo+StaraneL + 2 Glifo+ParaquatL + Repaso Korvetto+cletodimL","done":true},"dg":{},"rep":{},"siem":{"fecha":"15/06/2024","finn":true},"re1":{},"fert_bas":{},"urea_siem":{"kg":100.0,"fecha":"15/06/2024","finn":true},"z22":{"kg":80.0,"fecha":"10/08/2024","finn":true},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{"prod":"Cripton","fecha":"19/09/2024","finn":true},"f2":{},"f3":{}},{"campo":"La Blanqueada","lote":"5","has":59.08,"cult":"Cz","barb":{"prod":"1 Glifo+StaraneL + Repaso Korvetto+cletodimL","done":true},"dg":{},"rep":{},"siem":{"fecha":"15/06/2024","finn":true},"re1":{},"fert_bas":{},"urea_siem":{"kg":100.0,"fecha":"15/06/2024","finn":true},"z22":{"kg":80.0,"fecha":"10/08/2024","finn":true},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{"prod":"Cripton","fecha":"18/09/2024","finn":true},"f2":{},"f3":{}},{"campo":"La Blanqueada","lote":"7","has":46.79,"cult":"Cz","barb":{"prod":"1 Glifo+Cleto+StaraneL + 2 Glifo+ParaquatL + Repaso Korvetto+cletodimL","done":true},"dg":{},"rep":{},"siem":{"fecha":"15/06/2024","finn":true},"re1":{},"fert_bas":{},"urea_siem":{"kg":100.0,"fecha":"15/06/2024","finn":true},"z22":{"kg":80.0,"fecha":"12/07/2024","finn":true},"z30":{"kg":50.0,"fecha":"10/08/2024","finn":true},"z33":{},"znf":{},"hum":{},"f1":{"prod":"Cripton","fecha":"17/09/2024","finn":true},"f2":{},"f3":{}},{"campo":"La Blanqueada","lote":"8","has":59.05,"cult":"Cz","barb":{"prod":"1 Glifo+Cleto+StaraneL + 2 Glifo+ParaquatL + Repaso Korvetto+cletodimL","done":true},"dg":{},"rep":{},"siem":{"fecha":"15/06/2024","finn":true},"re1":{},"fert_bas":{},"urea_siem":{"kg":100.0,"fecha":"15/06/2024","finn":true},"z22":{"kg":80.0,"fecha":"12/07/2024","finn":true},"z30":{"kg":50.0,"fecha":"10/08/2024","finn":true},"z33":{},"znf":{},"hum":{},"f1":{"prod":"Cripton","fecha":"17/09/2024","finn":true},"f2":{},"f3":{}},{"campo":"La Blanqueada","lote":"9","has":103.45,"cult":"Cz","barb":{"prod":"1 Glifo+Cleto+StaraneL + 2 Glifo+ParaquatL + Repaso Korvetto+cletodimL","done":true},"dg":{},"rep":{},"siem":{"fecha":"15/06/2024","finn":true},"re1":{},"fert_bas":{},"urea_siem":{"kg":100.0,"fecha":"15/06/2024","finn":true},"z22":{"kg":80.0,"fecha":"12/07/2024","finn":true},"z30":{"kg":60.4,"fecha":"10/08/2024","finn":true},"z33":{},"znf":{},"hum":{},"f1":{"prod":"Cripton","fecha":"17/09/2024","finn":true},"f2":{},"f3":{}},{"campo":"La Blanqueada","lote":"10","has":101.88,"cult":"Tr","barb":{"prod":"1 Glifo+PixaroL + Repaso Paradigm+axialL","done":true},"dg":{},"rep":{},"siem":{"fecha":"14/06/2024","finn":true},"re1":{},"fert_bas":{},"urea_siem":{"kg":115.0,"fecha":"14/06/2024","finn":true},"z22":{"kg":80.0,"fecha":"12/07/2024","finn":true},"z30":{"kg":150.0,"fecha":"13/08/2024","finn":true},"z33":{"fecha":"26/08/2024"},"znf":{},"hum":{},"f1":{"prod":"Cripton","fecha":"07/09/2024","finn":true},"f2":{"prod":"Cripton xpro","fecha":"29/09/2024","finn":true},"f3":{}},{"campo":"La Blanqueada","lote":"11","has":53.38,"cult":"Tr","barb":{"prod":"1 Glifo+PixaroL + Repaso Paradigm+axialL","done":true},"dg":{},"rep":{},"siem":{"fecha":"14/06/2024","finn":true},"re1":{},"fert_bas":{},"urea_siem":{"kg":115.0,"fecha":"14/06/2024","finn":true},"z22":{"kg":80.0,"fecha":"12/07/2024","finn":true},"z30":{"kg":150.0,"fecha":"13/08/2024","finn":true},"z33":{"fecha":"26/08/2024"},"znf":{},"hum":{},"f1":{"prod":"Cripton","fecha":"07/09/2024","finn":true},"f2":{"prod":"Cripton xpro","fecha":"29/09/2024","finn":true},"f3":{}},{"campo":"La Blanqueada","lote":"12","has":102.7,"cult":"Cz","barb":{"prod":"1 Glifo+Cleto+StaraneL + 2 Glifo+ParaquatL + Repaso Korvetto+cletodimL","done":true},"dg":{},"rep":{},"siem":{"fecha":"14/06/2024","finn":true},"re1":{},"fert_bas":{},"urea_siem":{"kg":100.0,"fecha":"14/06/2024","finn":true},"z22":{"kg":80.0,"fecha":"12/07/2024","finn":true},"z30":{"kg":86.0,"fecha":"10/08/2024","finn":true},"z33":{},"znf":{},"hum":{},"f1":{"prod":"Cripton","fecha":"17/09/2024","finn":true},"f2":{},"f3":{}},{"campo":"La Blanqueada","lote":"13","has":87.11,"cult":"Cz","barb":{"prod":"1 Glifo+Cleto+StaraneL + 2 Glifo+ParaquatL + Repaso Korvetto+cletodimL","done":true},"dg":{},"rep":{},"siem":{"fecha":"14/06/2024","finn":true},"re1":{},"fert_bas":{},"urea_siem":{"kg":100.0,"fecha":"14/06/2024","finn":true},"z22":{"kg":80.0,"fecha":"12/07/2024","finn":true},"z30":{"kg":73.2,"fecha":"10/08/2024","finn":true},"z33":{},"znf":{},"hum":{},"f1":{"prod":"Cripton","fecha":"17/09/2024","finn":true},"f2":{},"f3":{}},{"campo":"La Blanqueada","lote":"14","has":59.42,"cult":"Cz","barb":{"prod":"1 Glifo+Cleto+StaraneL + 2 Glifo+ParaquatL + Repaso Korvetto+cletodimL","done":true},"dg":{},"rep":{},"siem":{"fecha":"14/06/2024","finn":true},"re1":{},"fert_bas":{},"urea_siem":{"kg":100.0,"fecha":"14/06/2024","finn":true},"z22":{"kg":100.0,"fecha":"12/07/2024","finn":true},"z30":{"kg":65.3,"fecha":"10/08/2024","finn":true},"z33":{},"znf":{},"hum":{},"f1":{"prod":"Cripton","fecha":"17/09/2024","finn":true},"f2":{},"f3":{}},{"campo":"La Blanqueada","lote":"15","has":35.96,"cult":"Cz","barb":{"prod":"1 Glifo+Cleto+StaraneL + 2 Glifo+ParaquatL + Repaso Korvetto+cletodimL","done":true},"dg":{},"rep":{},"siem":{"fecha":"14/06/2024","finn":true},"re1":{},"fert_bas":{},"urea_siem":{"kg":100.0,"fecha":"14/06/2024","finn":true},"z22":{"kg":100.0,"fecha":"12/07/2024","finn":true},"z30":{"kg":85.5,"fecha":"10/08/2024","finn":true},"z33":{},"znf":{},"hum":{},"f1":{"prod":"Cripton","fecha":"17/09/2024","finn":true},"f2":{},"f3":{}},{"campo":"La Campana","lote":"1","has":58.59,"cult":"Tr","barb":{"prod":"1 Glifo+PixaroL + Repaso Tronador+AxialL","done":true},"dg":{},"rep":{},"siem":{"fecha":"28/06/2024","finn":true},"re1":{},"fert_bas":{},"urea_siem":{"kg":115.0,"fecha":"28/06/2024","finn":true},"z22":{"kg":115.0,"fecha":"12/07/2024","finn":true},"z30":{"kg":65.0,"fecha":"10/08/2024","finn":true},"z33":{},"znf":{},"hum":{},"f1":{"prod":"Cripton","fecha":"06/09/2024","finn":true},"f2":{"prod":"Cripton xpro","fecha":"27/09/2024","finn":true},"f3":{}},{"campo":"La Campana","lote":"2","has":40.99,"cult":"Tr","barb":{"prod":"1 Glifo+PixaroL + Repaso Tronador+AxialL","done":true},"dg":{},"rep":{},"siem":{"fecha":"28/06/2024","finn":true},"re1":{},"fert_bas":{},"urea_siem":{"kg":115.0,"fecha":"28/06/2024","finn":true},"z22":{"kg":115.0,"fecha":"12/07/2024","finn":true},"z30":{"kg":50.0,"fecha":"10/08/2024","finn":true},"z33":{},"znf":{},"hum":{},"f1":{"prod":"Cripton","fecha":"06/09/2024","finn":true},"f2":{"prod":"Cripton xpro","fecha":"27/09/2024","finn":true},"f3":{}},{"campo":"La Campana","lote":"3","has":63.11,"cult":"Tr","barb":{"prod":"1 Glifo+PixaroL + 2 Glifo+ParaquatL + Repaso Tronador+AxialL","done":true},"dg":{},"rep":{},"siem":{"fecha":"28/06/2024","finn":true},"re1":{},"fert_bas":{},"urea_siem":{"kg":115.0,"fecha":"28/06/2024","finn":true},"z22":{"kg":115.0,"fecha":"12/07/2024","finn":true},"z30":{"kg":65.0,"fecha":"10/08/2024","finn":true},"z33":{},"znf":{},"hum":{},"f1":{"prod":"Cripton","fecha":"06/09/2024","finn":true},"f2":{"prod":"Cripton xpro","fecha":"27/09/2024","finn":true},"f3":{}},{"campo":"La Campana","lote":"4","has":71.48,"cult":"Tr","barb":{"prod":"1 Glifo+PixaroL + 2 Glifo+ParaquatL + Repaso Tronador+AxialL","done":true},"dg":{},"rep":{},"siem":{"fecha":"28/06/2024","finn":true},"re1":{},"fert_bas":{},"urea_siem":{"kg":115.0,"fecha":"28/06/2024","finn":true},"z22":{"kg":115.0,"fecha":"12/07/2024","finn":true},"z30":{"kg":65.0,"fecha":"10/08/2024","finn":true},"z33":{},"znf":{},"hum":{},"f1":{"prod":"Cripton","fecha":"06/09/2024","finn":true},"f2":{"prod":"Cripton xpro","fecha":"27/09/2024","finn":true},"f3":{}},{"campo":"La Campana","lote":"11","has":31.0,"cult":"Tr","barb":{"prod":"1 Glifo+PixaroL + 2 Glifo+ParaquatL + Repaso Tronador+AxialL","done":true},"dg":{},"rep":{},"siem":{"fecha":"28/06/2024","finn":true},"re1":{},"fert_bas":{},"urea_siem":{"kg":115.0,"fecha":"28/06/2024","finn":true},"z22":{"kg":80.0,"fecha":"12/07/2024","finn":true},"z30":{"kg":50.0,"fecha":"10/08/2024","finn":true},"z33":{},"znf":{},"hum":{},"f1":{"prod":"Cripton","fecha":"06/09/2024","finn":true},"f2":{"prod":"Cripton xpro","fecha":"27/09/2024","finn":true},"f3":{}},{"campo":"Pereira","lote":"Fondo","has":190.0,"cult":"Tr","barb":{"prod":"1 Glifo+PixaroL + 2 Glifo+diquatL + Repaso Tronador+AxialL","done":true},"dg":{},"rep":{},"siem":{"fecha":"17/06/2024","finn":true},"re1":{},"fert_bas":{},"urea_siem":{"kg":150.0,"fecha":"17/06/2024","finn":true},"z22":{"kg":80.0,"fecha":"12/07/2024","finn":true},"z30":{"kg":100.0,"fecha":"13/08/2024","finn":true},"z33":{"fecha":"04/09/2024","finn":true},"znf":{},"hum":{},"f1":{"prod":"Cripton","fecha":"05/09/2024","finn":true},"f2":{"prod":"Cripton xpro","fecha":"02/10/2024","finn":true},"f3":{}},{"campo":"San Luis","lote":"1","has":138.88,"cult":"Cz","barb":{"prod":"1 Glifo+Cleto+StaraneL + Repaso Korvetto+cletodimL","done":true},"dg":{},"rep":{},"siem":{"fecha":"25/06/2024","finn":true},"re1":{},"fert_bas":{},"urea_siem":{"kg":100.0,"fecha":"25/06/2024","finn":true},"z22":{"kg":115.0,"fecha":"12/07/2024","finn":true},"z30":{"kg":100.0,"fecha":"10/08/2024","finn":true},"z33":{},"znf":{},"hum":{},"f1":{"prod":"Cripton","fecha":"08/09/2024","finn":true},"f2":{},"f3":{}},{"campo":"San Luis","lote":"2","has":141.7,"cult":"Cz","barb":{"prod":"1 Glifo+Cleto+StaraneL + Repaso Korvetto+cletodimL","done":true},"dg":{},"rep":{},"siem":{"fecha":"25/06/2024","finn":true},"re1":{},"fert_bas":{},"urea_siem":{"kg":100.0,"fecha":"25/06/2024","finn":true},"z22":{"kg":115.0,"finn":true},"z30":{"kg":100.0,"fecha":"10/08/2024","finn":true},"z33":{},"znf":{},"hum":{},"f1":{"prod":"Cripton","fecha":"08/09/2024","finn":true},"f2":{},"f3":{}},{"campo":"Santa Rafaela","lote":"Bellaco","has":386.2,"cult":"Ceb","barb":{"prod":"1 Glifo+PixaroL + Repaso Paradigm+axialL","done":true},"dg":{},"rep":{},"siem":{"fecha":"15/06/2024","finn":true},"re1":{},"fert_bas":{},"urea_siem":{"kg":120.0,"fecha":"15/06/2024","finn":true},"z22":{"kg":100.0,"finn":true},"z30":{"kg":130.0,"fecha":"26/08/2024","finn":true},"z33":{},"znf":{},"hum":{},"f1":{"prod":"Cripton","fecha":"05/09/2024","finn":true},"f2":{"prod":"Cripton xpro","fecha":"27/09/2024","finn":true},"f3":{}},{"campo":"Santa Rafaela","lote":"Manguera W","has":118.0,"cult":"Ceb","barb":{"prod":"1 Glifo+PixaroL + 2 Glifo+ParaquatL + Repaso Paradigm+axialL","done":true},"dg":{},"rep":{},"siem":{"fecha":"12/06/2024","finn":true},"re1":{},"fert_bas":{},"urea_siem":{"kg":120.0,"fecha":"12/06/2024","finn":true},"z22":{"kg":100.0,"fecha":"12/07/2024","finn":true},"z30":{"kg":150.0,"fecha":"13/08/2024","finn":true},"z33":{},"znf":{},"hum":{},"f1":{"prod":"Cripton","fecha":"05/09/2024","finn":true},"f2":{"prod":"Cripton xpro","fecha":"28/09/2024","finn":true},"f3":{}},{"campo":"Santa Rafaela","lote":"Chaniar Norte","has":120.0,"cult":"Tr","barb":{"prod":"1 Glifo+PixaroL + Repaso Paradigm+axialL","done":true},"dg":{},"rep":{},"siem":{"fecha":"12/06/2024","finn":true},"re1":{},"fert_bas":{},"urea_siem":{"kg":120.0,"fecha":"12/06/2024","finn":true},"z22":{"kg":80.0,"fecha":"12/07/2024","finn":true},"z30":{"kg":100.0,"fecha":"13/08/2024","finn":true},"z33":{},"znf":{},"hum":{},"f1":{"prod":"Cripton","fecha":"05/09/2024","finn":true},"f2":{"prod":"Cripton xpro","fecha":"28/09/2024","finn":true},"f3":{}},{"campo":"Santa Rafaela","lote":"Puesto","has":225.15,"cult":"Cz","barb":{"prod":"1 Glifo+StaraneL + Repaso Korvetto+cletodimL","done":true},"dg":{},"rep":{},"siem":{"fecha":"16/06/2024","finn":true},"re1":{},"fert_bas":{},"urea_siem":{"kg":100.0,"fecha":"16/06/2024","finn":true},"z22":{"kg":80.0,"fecha":"10/08/2024","finn":true},"z30":{"kg":100.0,"fecha":"26/08/2024","finn":true},"z33":{},"znf":{},"hum":{},"f1":{"prod":"Cripton","fecha":"16/09/2024","finn":true},"f2":{},"f3":{}},{"campo":"Santa Rafaela","lote":"Trillo","has":201.78,"cult":"Cz","barb":{"prod":"1 Glifo+Cleto+StaraneL + Repaso Korvetto+cletodimL","done":true},"dg":{},"rep":{},"siem":{"fecha":"12/06/2024","finn":true},"re1":{},"fert_bas":{},"urea_siem":{"kg":100.0,"fecha":"12/06/2024","finn":true},"z22":{"kg":80.0,"fecha":"05/07/2024","finn":true},"z30":{"kg":100.0,"fecha":"10/08/2024","finn":true},"z33":{},"znf":{},"hum":{},"f1":{"prod":"Cripton","fecha":"16/09/2024","finn":true},"f2":{},"f3":{}},{"campo":"Santa Rafaela","lote":"Entrada","has":150.52,"cult":"Cz","barb":{"prod":"1 Glifo+Cleto+StaraneL + 2 Glifo+ParaquatL + Repaso Korvetto+cletodimL","done":true},"dg":{},"rep":{},"siem":{"fecha":"21/06/2024","finn":true},"re1":{},"fert_bas":{},"urea_siem":{"kg":100.0,"fecha":"21/06/2024","finn":true},"z22":{"kg":80.0,"fecha":"10/08/2024","finn":true},"z30":{"kg":110.0,"fecha":"26/08/2024","finn":true},"z33":{},"znf":{},"hum":{},"f1":{"prod":"Cripton","fecha":"16/09/2024","finn":true},"f2":{},"f3":{}}],"ver":[{"campo":"Malacara","lote":"1","has":203.49,"cult":"Sj2","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Malacara","lote":"2","has":215.0,"cult":"Sj1","antec":"Sj1","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Malacara","lote":"3","has":46.12,"cult":"Sj1","antec":"Sj1","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Malacara","lote":"7","has":24.03,"cult":"Sj1","antec":"Sj1","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Malacara","lote":"8","has":22.55,"cult":"Sj1","antec":"Sj1","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Malacara","lote":"9","has":62.73,"cult":"Sj1","antec":"Sj1","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Malacara","lote":"10","has":29.7,"cult":"Sj1","antec":"Sj1","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Malacara","lote":"11","has":270.44,"cult":"Sj1","antec":"Sj1","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Malacara","lote":"12","has":64.25,"cult":"Sj1","antec":"Sj1","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Malacara","lote":"13","has":29.89,"cult":"Sj1","antec":"Sj1","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Campana","lote":"1","has":58.59,"cult":"Sj2","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Campana","lote":"2","has":40.99,"cult":"Sj2","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Campana","lote":"3","has":63.11,"cult":"Sj2","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Campana","lote":"4","has":71.48,"cult":"Sj2","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Campana","lote":"5","has":67.74,"cult":"Sj1","antec":"Sj1","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Campana","lote":"6","has":24.52,"cult":"Sj1","antec":"Sj1","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Campana","lote":"11","has":31.0,"cult":"Sj2","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Campana","lote":"12","has":67.0,"cult":"Sj1","antec":"Sj1","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Montecristo","lote":"6","has":52.63,"cult":"Sj1","antec":"Sj1","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Montecristo","lote":"7","has":60.61,"cult":"Sj1","antec":"Sj1","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Montecristo","lote":"11","has":56.69,"cult":"Sj1","antec":"Sj1","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Montecristo","lote":"12","has":49.78,"cult":"Sj1","antec":"Sj1","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Montecristo","lote":"13","has":26.67,"cult":"Sj1","antec":"Sj1","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Montecristo","lote":"14","has":33.96,"cult":"Sj1","antec":"Sj1","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Montecristo","lote":"16","has":91.46,"cult":"Sj1","antec":"Sj1","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Pereira","lote":"Entrada","has":112.0,"cult":"Sj1","antec":"Sj1","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Pereira","lote":"Fondo","has":190.0,"cult":"Sj2","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Blanqueada","lote":"1","has":101.74,"cult":"Sj2","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Blanqueada","lote":"2","has":34.99,"cult":"Sj2","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Blanqueada","lote":"3","has":301.24,"cult":"Sj2","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Blanqueada","lote":"4","has":180.2,"cult":"Sj2","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Blanqueada","lote":"5","has":59.08,"cult":"Sj2","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Blanqueada","lote":"7","has":46.79,"cult":"Sj2","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Blanqueada","lote":"8","has":59.05,"cult":"Sj2","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Blanqueada","lote":"9","has":103.45,"cult":"Sj2","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Blanqueada","lote":"10","has":101.88,"cult":"Sj2","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Blanqueada","lote":"11","has":53.38,"cult":"Sj2","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Blanqueada","lote":"12","has":102.7,"cult":"Sj2","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Blanqueada","lote":"13","has":87.11,"cult":"Sj2","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Blanqueada","lote":"14","has":59.42,"cult":"Sj2","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"La Blanqueada","lote":"15","has":35.96,"cult":"Sj2","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"San Luis","lote":"1","has":138.88,"cult":"Sj2","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"San Luis","lote":"2","has":141.7,"cult":"Sj2","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Santa Rafaela","lote":"Bellaco","has":386.2,"cult":"Sj2","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Santa Rafaela","lote":"Chaniar norte","has":120.0,"cult":"Sj2","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Santa Rafaela","lote":"Chaniar sur","has":163.0,"cult":"Sj1","antec":"Sj1","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Santa Rafaela","lote":"Entrada","has":150.52,"cult":"Sj2","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Santa Rafaela","lote":"Los Juanes","has":189.75,"cult":"Sj1","antec":"Sj1","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Santa Rafaela","lote":"Manguera E","has":169.61,"cult":"Sj1","antec":"Sj1","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Santa Rafaela","lote":"Manguera w","has":118.35,"cult":"Sj2","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Santa Rafaela","lote":"Nianiez","has":243.29,"cult":"Sj1","antec":"Sj1","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Santa Rafaela","lote":"Puesto","has":225.15,"cult":"Sj2","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}},{"campo":"Santa Rafaela","lote":"Trillo","has":201.78,"cult":"Sj2","antec":"Sj2","barb":{},"dg":{},"rep":{},"siem":{},"re1":{},"fert_bas":{},"urea_siem":{},"v4":{},"v8":{},"z22":{},"z30":{},"z33":{},"znf":{},"hum":{},"f1":{},"f2":{},"f3":{}}]}};
-
-// ── CONFIG ────────────────────────────────────────────────────
-const RAW_BASE = 'https://raw.githubusercontent.com/CeibosGroup/Agricultura-Litoral-Norte/main';
 const FINN_COLOR = 'FF002060';
-const CULT_NORM = {CC:'Cobertura',cc:'Cobertura',Car:'Carinata',car:'Carinata','sj 1':'Sj1','sj 2':'Sj2'};
+const CULT_NORM = {CC:'Cobertura',cc:'Cobertura',Car:'Carinata',car:'Carinata'};
 const SKIP_CAMPOS = new Set(['Don Juan Del Tala','Don Juan del Tala']);
 const INI = {Malacara:'ML','La Blanqueada':'LB','La Campana':'LC',Montecristo:'MC','Santa Rafaela':'SR','San Luis':'SL',Pereira:'PE'};
 const CL_INV = {Tr:'Trigo',Cz:'Colza',Ceb:'Cebada',Cobertura:'Cob.',Carinata:'Carinata'};
-const CL_VER = {Sj1:'Soja 1',Sj2:'Soja 2',Mz1:'Maíz 1',Mz2:'Maíz 2',Cobertura:'Cob.'};
+const CL_VER = {Sj1:'Soja 1',Sj2:'Soja 2',Mz1:'Maiz 1',Mz2:'Maiz 2',Cobertura:'Cob.'};
 const CB = {Tr:'b-Tr',Cz:'b-Cz',Ceb:'b-Ceb',Cobertura:'b-Cobertura',Carinata:'b-Carinata',
             Sj1:'b-Sj1',Sj2:'b-Sj2',Mz1:'b-Mz1',Mz2:'b-Mz2'};
+const FINN_IMG = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAIuUlEQVR4nO2Za4xdVRXHf2vvfc6dR9tppzOd6TADrbwfiQhosCl8MAEBNSQmCFQtBglGjQb9gOEDkuAHYiQxQgCRSiLKBzUGEBOkEq0BFFB5iKCgPFvbDsN0+prHvefstfxwzszcaWfu3M4M4Af+k5ubM+fctdZ/7/Xa64iZGUuFOkkqjR8VQDhUtdXdnbyWuuvDEY7IwEP1zIV5jG/8oDWhYBoLI3CYQjAMkWLFzAxBEDncwMk1nd34+pWfvG68GgsjIAYohfMpURVBMIEYFUMJEsBmKhcBM8M5BzgKJ5q8tpKw8K7sQIwFgRASgq8T6JqXkWeKqiLJ7LvVDORIgzjGiPfTFmfR2DMywo6dQ+z47y6G3n6LkZF9VCcmiHnEiZCmKW3trXR3ddPb08tRA32sWb2SjuWt02TyiPeuJKKT5rFIF5qZFVQV7z2q8OjjT7H1d9t4+ulnePFfLzE8sp88M1QhizmoMuXxUnzSlgoYtLW1sf7oXs447Xg2btzAhRecT0/v6lKH4VzzbtRgBwo/xxQ1iOpJguP+rY9y8/du5+m/Ps/4gf34SkqSpPgQcOJwhaMTPeAEDLTUYGbFPVU0r5GPjhKShP6+PjZtuoRrvv5FuruWFzElOSIewdcF/oIIGFkWCWmFm39wF9dedyNIQnv7CpIkUKtlh+QOLcJQrE6xKwK6zgqH4H2AaGS1KmP7R9hwzkf4xc9/RG9PF6Y1vPcIAS0kzIoGIVf4n5qQJBXeGhzmzju20JK20LGyA1ykllcxiURyVCImERNDxXAGQcEZeFW8RVz58RrBlCyPRDNCmrC6t4c/PfYYt9+2BS+CqSGNzCsxbxYSHAZ476ikKTErVlxN0KiE4FEzij8Bk2KhrdwRq/Nmmy5SCkQM8R7THLPCXTtWrCifBVNB5uHQ4HaRCcQJMVe6ulbx7eu/xYplrewdGoLcqCQpTjxeAmIeUVeumiOKI+JRccUHwbzHfCCKxwdPGhwaJxgb28eetwf5zGWX8NWvXImqEUI6r/HQKAbMyoLlMJvMQI5/vPBvvn/LFh7e+kd27tqF5ZG0vR0RISSVMnDLvC5FgTIrMlLUHDMjRiWvjkFeZdmK5Zx6yklcfdVmNn/2Erwrgx3DIeCkYQw0IACIAkKMiogjRiVJihrw2htD/GHbNp588hme+/tzvLl9B/sPjlHLIjEvChQGzoH3HueFlpYE54Se3h5OPeUkTj/tZM45dyNnn30WFV+k0CnjnUMoAn+RBCBqXqRHHKZFMQshIG5a7ESm7Ng5yODgIHv2jJBXqxw8MMbExDhpmrBsWTu9a9fS19dLd/cq2ttap5KSqqIaSx0gIhiCE7cIAnVMTGPpToYZOJcCsH/fBC/880V27R5ieO8+JqpVnA90dnbS19PJ+nXrOfqorlmlqioxRpyTqcJlVhgvIpjJ4nbAMKRsxswMtaxsITxP/OV5fvqzX7Jt22MMvjXM8NsjEHW68scIaSudq1ey7gN9XHThx9h02ac5+dh1VGsZDsP7gPPzRGlZSBa5A5DnGYhQy5Trb7iJO++6h9GD46QtrSRphRAqWLn9Vu4UEWKeMVEdQ7Nx+vp7ufGG67hy86XktQznBB+a6GQWS8Aottq7hGuuvYFbbr6DZV29EMBi2fKIm+yWpuJGxGMKoTSyNjHKxNg+7r3nh2y69GKq1SqVSmXRBObdQ9VI8IHtg7v59YMP09bZh7qUiCMzh5aFbmbrr6gpOCHLjTx3JMkygm/hri0/YaKakyQJS3Gabbp7dyKIk6mGTGOR252frLwzjZHyZDZ17WSKpAnlIWbxmEeK4Fwgjzn9PT186hPnMT6ykyA5qTcqQRCNYHbIgcSVvaARPHgfqdUOoPk4V191Ba1poFarLfgQU48meiFBDKJGbvrO9aQh4bbb72a8mhFCQmtbOz6kZT/kMfGA4syhMWf0wDCqGb1ru7jp1tu4/NKLiXnhlkuBJtOoopYjIjiX8OennuXHd9/LE08+w39efZ3q6ASEZJJx4U4G3Wu6OPa4Ac47byNXbL6cY/v7iKpQHlpkPjdadBaaaicVJUcVnARc3ZHy5Vfe4OWXXufNN7YzNjaGc46Ojg76B9bS39/LCSceR1Jqz2IkcQ6knFzM50JLQwDUauU0IQWD+3/zCA9t3Uqe1Tjz9A/x+c9dzorlc6fEGCNOHOKO0OebIIA1ghZfWVa1GHPbd3DcvnD1NZa2rzfcgJEMGLLG+o853R75/eNmZjY6dtCybMLyPLMYo6lqQxXN6I8NHmmKQC2rmZnZjd+91XDdtrz7DOtcu8E61nzYOteeZa5lwNafcJbt2DVoUaNVs1FTW6TxTRKYO4rqDuI+JOwdm+CBBx/CtXWAc4xn49Rixngto6Ozm9de2c6v7vtt0UFaQHAzfNyWcARbj3lzmZnhRBjeM8zQ0DAhbSFqBpIVzT6OLCqSVHj5pVcLoRLKznJazlLk/NkwbzmcnCBXkgppEiAqTgwhx1AULapsntHS2gKUh7l3xNzDMT8BEVRzelav4piBfmItw+OBgBBw4jEUSTwbPnpm+avJodY7j7kJyPS3oSTB842vfZlgNcZHD+IIOANR5eDuXXzyoo9zwfnnYhoRl5cHoKVBw91sJhVoVMvz3MzM7rvvATvlgxutsvJEa111nK3qOdGu/NI3bffgsJma5bXcYp7bYhPQTMydh5o60KgqVqRcQgjs2TfO3559nr0jeznt1BM4+fh1Re8WI1LGhIifb+2OAHMPF5smAJQjkUiSpjPEZXmOCHhXjFCKc20yp9KlRFMEJh+xcuQRY3E9eQqbbBGKaUIxEnTOzyrriHDoK7NZcMTvB4Biblk2ZMXgoDAcyqxV1o5Fo96yOcQtiEBTGfJdKgQLfEfW4F6jYf6C0FjgggiUI66pa6n/lkP/uxiU7ygopoKzYVHnupkmNuGwC9Yyt7yFxcD/EZZmtvEe4n0C7zXeJ/Be438lMQsnJ1x8CwAAAABJRU5ErkJggg==';
 
-// ── STATE ─────────────────────────────────────────────────────
-let allData = {}, activeCamp = null, season = 'inv', filtCult = 'all';
-const openC = new Set(), openL = new Set();
-const HAS_REF = {};
+let allData={}, activeCamp=null, season='inv', filtCult='all';
+const openC=new Set(), openL=new Set(), HAS_REF={};
 
-// ── INIT ──────────────────────────────────────────────────────
 function initApp(manual=false){
-  try{
-    if(manual){
-      document.getElementById('splash').classList.remove('hide');
-      document.getElementById('app').style.display='none';
-    }
-
-    // Load historic data (embedded)
-    allData = JSON.parse(JSON.stringify(HISTORIC));
-    Object.values(allData).forEach(cd=>{
-      (cd.inv||[]).forEach(d=>{ HAS_REF[`${d.campo}|${d.lote}`]=d.has; });
-    });
-
-    const camps = Object.keys(allData).sort().reverse();
-    activeCamp = camps[0];
-
-    // Hide splash, show app
-    const splash = document.getElementById('splash');
-    const app = document.getElementById('app');
-    splash.style.display='none';
-    app.style.display='block';
-
-    document.getElementById('sync-txt').textContent = activeCamp;
-    document.getElementById('sync-ok').style.display='flex';
-
-    buildCampPills(camps);
-    render();
-
-    // Try GitHub update in background
-    updateFromGithub();
-
-  } catch(e){
-    // Show error on splash so we can debug
-    document.getElementById('splash').innerHTML += 
-      `<div style="color:red;font-size:12px;padding:16px;max-width:320px;word-break:break-all;">ERROR: ${e.message}<br>${e.stack||''}</div>`;
+  if(manual){
+    document.getElementById('splash').classList.remove('hide');
+    document.getElementById('app').style.display='none';
   }
+  allData=JSON.parse(JSON.stringify(HISTORIC));
+  Object.values(allData).forEach(cd=>{
+    (cd.inv||[]).forEach(d=>{ HAS_REF[d.campo+'|'+d.lote]=d.has; });
+  });
+  const camps=Object.keys(allData).sort().reverse();
+  activeCamp=camps[0];
+  document.getElementById('splash').classList.add('hide');
+  document.getElementById('app').style.display='block';
+  document.getElementById('sync-txt').textContent=activeCamp;
+  document.getElementById('sync-ok').style.display='flex';
+  buildCampPills(camps);
+  render();
+  updateBg();
 }
 
-async function updateFromGithub(){
-  const RAW = 'https://raw.githubusercontent.com/CeibosGroup/Agricultura-Litoral-Norte/main';
-  const now = new Date();
-  for(let y = now.getFullYear()+2; y >= 2024; y--){
-    const yy = String(y).slice(2);
-    const yp = String(y+1).slice(2);
-    const fname = `Planilla_labores_${yy}-${yp}.xlsx`;
-    const camp = `${yy}-${yp}`;
+async function updateBg(){
+  const RAW='https://raw.githubusercontent.com/CeibosGroup/Agricultura-Litoral-Norte/main';
+  const now=new Date();
+  for(let y=now.getFullYear()+2;y>=2024;y--){
+    const yy=String(y).slice(2), yp=String(y+1).slice(2);
+    const fname='Planilla_labores_'+yy+'-'+yp+'.xlsx';
+    const camp=yy+'-'+yp;
     try{
-      const ctrl = new AbortController();
-      const tid = setTimeout(()=>ctrl.abort(), 8000);
-      const res = await fetch(`${RAW}/${fname}`, {cache:'no-store', signal:ctrl.signal});
-      clearTimeout(tid);
+      const ctrl=new AbortController();
+      setTimeout(()=>ctrl.abort(),10000);
+      const res=await fetch(RAW+'/'+fname,{cache:'no-store',signal:ctrl.signal});
       if(!res.ok) continue;
-      const buf = await res.arrayBuffer();
-      const wb = XLSX.read(buf,{cellStyles:true});
-      allData[camp]={
-        inv: parseSheet(wb,'Invierno',camp),
-        ver: parseSheet(wb,'Verano',camp),
-      };
-      (allData[camp].inv||[]).forEach(d=>{HAS_REF[`${d.campo}|${d.lote}`]=d.has;});
-      const camps = Object.keys(allData).sort().reverse();
-      activeCamp = camps[0];
+      const buf=await res.arrayBuffer();
+      const wb=XLSX.read(buf,{cellStyles:true});
+      allData[camp]={inv:parseSheet(wb,'Invierno',camp),ver:parseSheet(wb,'Verano',camp)};
+      (allData[camp].inv||[]).forEach(d=>{ HAS_REF[d.campo+'|'+d.lote]=d.has; });
+      const camps=Object.keys(allData).sort().reverse();
+      activeCamp=camps[0];
       buildCampPills(camps);
       render();
-      document.getElementById('sync-txt').textContent = camp + ' ↑';
+      document.getElementById('sync-txt').textContent=camp+' sync';
       break;
-    } catch(e){ continue; }
+    }catch(e){ continue; }
   }
 }
 
-function setStatus(msg,showSpin){}
-
-// ── PARSER ────────────────────────────────────────────────────
-function isFinn(cell){ return cell?.s?.fgColor?.rgb===FINN_COLOR; }
-function normCult(v){ if(!v) return null; const s=String(v).trim(); return CULT_NORM[s]||s; }
+function isFinn(cell){ return cell&&cell.s&&cell.s.fgColor&&cell.s.fgColor.rgb===FINN_COLOR; }
+function normCult(v){ if(!v)return null; const s=String(v).trim(); return CULT_NORM[s]||s; }
 function fmtDate(v){
-  if(v==null) return null;
-  if(typeof v==='number'&&v>40000){
-    const d=XLSX.SSF.parse_date_code(v);
-    if(d) return `${String(d.d).padStart(2,'0')}/${String(d.m).padStart(2,'0')}/${d.y}`;
-  }
+  if(v==null)return null;
+  if(typeof v==='number'&&v>40000){ const d=XLSX.SSF.parse_date_code(v); if(d)return String(d.d).padStart(2,'0')+'/'+String(d.m).padStart(2,'0')+'/'+d.y; }
   const s=String(v).trim();
-  if(s.includes('/')&&s.length<=6){const p=s.split('/');if(p.length===2){try{return `${p[0].padStart(2,'0')}/${p[1].padStart(2,'0')}/2026`;}catch{}}}
+  if(s.includes('/')&&s.length<=6){ const p=s.split('/'); if(p.length===2){try{return p[0].padStart(2,'0')+'/'+p[1].padStart(2,'0')+'/2026';}catch(e){}} }
   return s||null;
 }
-function sfn(v){const n=parseFloat(v);return isNaN(n)?null:n;}
+function sfn(v){ const n=parseFloat(v); return isNaN(n)?null:n; }
 function findCol(h0,h1,grp,col){
   let cur=null;
   for(let i=0;i<h0.length;i++){
-    if(h0[i]) cur=String(h0[i]).toLowerCase();
-    if(cur&&cur.includes(grp.toLowerCase())&&h1[i]&&String(h1[i]).toLowerCase().includes(col.toLowerCase())) return i;
+    if(h0[i])cur=String(h0[i]).toLowerCase();
+    if(cur&&cur.includes(grp.toLowerCase())&&h1[i]&&String(h1[i]).toLowerCase().includes(col.toLowerCase()))return i;
   }
   return null;
 }
+function herbCols(h0,h1,grp){
+  const SKIP=['Fecha','Contratista','Ha','%','fecha','contratista'];
+  let cur=null,cols=[],fechaCol=null,finnCol=null;
+  for(let i=0;i<h0.length;i++){
+    if(h0[i])cur=String(h0[i]).trim();
+    if(cur===grp&&h1[i]){
+      const h=String(h1[i]).trim();
+      if(SKIP.includes(h)){if(h==='Fecha'&&!fechaCol)fechaCol=i;}
+      else{cols.push({idx:i,name:h});if(!finnCol)finnCol=i;}
+    }
+  }
+  return{cols,fechaCol,finnCol};
+}
+function herbProds(v,hc){
+  const parts=[];
+  hc.cols.forEach(function(c){
+    const val=c.idx<v.length?v[c.idx]:null;
+    if(val!=null&&val!==''&&!(val instanceof Date))parts.push(c.name+' '+val+'L');
+  });
+  return parts.join(' + ')||null;
+}
 
 function parseSheet(wb,sheetName,camp){
-  if(!wb.SheetNames.includes(sheetName)) return [];
+  if(!wb.SheetNames.includes(sheetName))return[];
   const ws=wb.Sheets[sheetName];
-  if(!ws||!ws['!ref']) return [];
+  if(!ws||!ws['!ref'])return[];
   const rng=XLSX.utils.decode_range(ws['!ref']);
   const maxR=rng.e.r,maxC=rng.e.c;
-  const gc=(r,c)=>ws[XLSX.utils.encode_cell({r,c})];
-  const gv=(r,c)=>gc(r,c)?.v;
+  const gc=(r,c)=>ws[XLSX.utils.encode_cell({r:r,c:c})];
+  const gv=(r,c)=>{ const cell=gc(r,c); return cell?cell.v:null; };
   const gf=(r,c)=>isFinn(gc(r,c));
   const h0=[],h1=[];
   for(let c=0;c<=maxC;c++){h0.push(gv(0,c));h1.push(gv(1,c));}
-  const fc=(g,c,fb=null)=>findCol(h0,h1,g,c)??fb;
+  const fc=(g,c,fb)=>{ const r=findCol(h0,h1,g,c); return r!=null?r:(fb!=null?fb:null); };
   const isInv=sheetName==='Invierno';
-
-  // Find herbicide product columns by group
-  // Returns {cols:[{idx,name}], fechaCol, finnCol}
-  function herbCols(groupName){
-    const SKIP_H2=['Fecha','Contratista','Ha','%','fecha','contratista'];
-    let cur=null, cols=[], fechaCol=null, firstProdCol=null;
+  const BARB=herbCols(h0,h1,'Barbecho');
+  const DG=herbCols(h0,h1,'Doble golpe');
+  const REP=herbCols(h0,h1,'Repaso');
+  const COL={
+    cult:isInv?4:4, antec:isInv?3:3,
+    siem_var:fc('siembra','variedad',null), siem_fecha:fc('siembra','fecha',null),
+    re1_var:fc('resiembra','variedad',null), re1_fecha:fc('resiembra','fecha resiembra',fc('resiembra','fecha',null)), re1_ha:fc('resiembra','ha',null),
+    bas_spt:fc('fertilización basal','spt',fc('fertilización basal','sps',null)),
+    bas_kcl:fc('fertilización basal','kcl',null),
+    bas_fosz:fc('fertilización basal','foszinc',null),
+    bas_caso4:fc('fertilización basal','caso4',null),
+    bas_fecha_p:fc('fertilización basal','fecha (p)',null),
+    bas_fecha_k:fc('fertilización basal','fecha (k)',null),
+    bas_fecha_s:fc('fertilización basal','fecha (s)',null),
+    urea_siem:fc('fertilización siembra','urea',null), urea_fecha:fc('fertilización siembra','fecha',null),
+    z22_kg:fc('fertilización z22','kg',null), z22_fecha:null,
+    z30_kg:fc('fertilización z30','kg prom',null), z30_fecha:null,
+    z33_kg:fc('fertilización z33','kg prom',null), z33_fecha:null,
+    znf_dosis:fc('zinc foliar','dosis',null), znf_fecha:fc('zinc foliar','fecha',null),
+    hum_dosis:fc('ácidos húmicos','dosis',null), hum_ha:fc('ácidos húmicos','ha',null), hum_fecha:fc('ácidos húmicos','fecha',null),
+    f1_prod:fc('fungicida 1','producto',null), f1_fecha:fc('fungicida 1','fecha',null),
+    f2_prod:fc('fungicida 2','producto',null), f2_fecha:fc('fungicida 2','fecha',null),
+    f3_prod:fc('fungicida 3','producto',null), f3_fecha:fc('fungicida 3','fecha',null),
+    v4_kg:fc('fertilización v4','kg',null), v4_fecha:fc('fertilización v4','fecha',null),
+    v8_kg:fc('fertilización v8','kg',null), v8_fecha:fc('fertilización v8','fecha',null),
+  };
+  // Fix z22/z30/z33 fecha - take second fecha col in each group
+  ['z22','z30','z33'].forEach(function(fn){
+    const fechas=[];
+    let cur=null;
     for(let i=0;i<=maxC;i++){
-      if(h0[i]) cur=String(h0[i]).trim();
-      if(cur===groupName && h1[i]){
-        const h=String(h1[i]).trim();
-        if(SKIP_H2.includes(h)){
-          if(h==='Fecha'&&!fechaCol) fechaCol=i;
-        } else {
-          cols.push({idx:i,name:h});
-          if(!firstProdCol) firstProdCol=i;
-        }
-      }
+      if(h0[i])cur=String(h0[i]).toLowerCase();
+      if(cur&&cur.includes(fn)&&h1[i]&&String(h1[i]).toLowerCase().includes('fecha'))fechas.push(i);
     }
-    return {cols, fechaCol, finnCol:firstProdCol};
+    if(fechas.length>=2)COL[fn+'_fecha']=fechas[1];
+    else if(fechas.length===1)COL[fn+'_fecha']=fechas[0];
+  });
+  // Detect cult col
+  for(let i=0;i<=maxC;i++){
+    const s=String(h1[i]||'').toLowerCase();
+    if(s.includes('cult invierno')||s.includes('cult verano'))COL.cult=i;
+    if(s.includes('antecesor'))COL.antec=i;
   }
-
-  const BARB=herbCols('Barbecho');
-  const DG=herbCols('Doble golpe');
-  const REP=herbCols('Repaso');
-
-  // Build product string from herb cols (only cols with values)
-  function herbProds(r, hc){
-    const parts=[];
-    hc.cols.forEach(({idx,name})=>{
-      const v=gv(r,idx);
-      if(v!=null&&v!=='') parts.push(`${name} ${v}L`);
-    });
-    return parts.join(' + ')||null;
-  }
-  function herbFecha(r,hc){ return fmtDate(hc.fechaCol!=null?gv(r,hc.fechaCol):null); }
-  function herbFinn(r,hc){ return hc.finnCol!=null?gf(r,hc.finnCol):false; }
-  function herbDone(r,hc){ return hc.cols.some(({idx})=>gv(r,idx)!=null); }
-
-  let COL={};
-  if(isInv){
-    COL={
-      siem_var:fc('siembra','variedad'),siem_fecha:fc('siembra','fecha siembra',fc('siembra','fecha')),
-      re1_var:fc('resiembra','variedad'),re1_fecha:fc('resiembra','fecha resiembra',fc('resiembra','fecha')),re1_ha:fc('resiembra','ha'),
-      bas_spt:fc('fertilización basal','spt',fc('fertilización basal','sps')),bas_kcl:fc('fertilización basal','kcl'),
-      bas_fosz:fc('fertilización basal','foszinc'),bas_caso4:fc('fertilización basal','caso4'),bas_fecha_p:fc('fertilización basal','fecha (p)'),bas_fecha_k:fc('fertilización basal','fecha (k)'),bas_fecha_s:fc('fertilización basal','fecha (s)'),
-      urea_siem:fc('fertilización siembra','urea'),urea_fecha:fc('fertilización siembra','fecha'),
-      z22_kg:fc('fertilización z22','kg'),z22_fecha:fc('fertilización z22','fecha'),
-      z30_kg:fc('fertilización z30','kg prom'),z30_fecha:fc('fertilización z30','fecha'),
-      z33_kg:fc('fertilización z33','kg prom'),z33_fecha:fc('fertilización z33','fecha'),
-      znf_dosis:fc('zinc foliar','dosis'),znf_fecha:fc('zinc foliar','fecha'),
-      hum_dosis:fc('ácidos húmicos','dosis'),hum_ha:fc('ácidos húmicos','ha'),hum_fecha:fc('ácidos húmicos','fecha'),
-      f1_prod:fc('fungicida 1','producto'),f1_fecha:fc('fungicida 1','fecha'),
-      f2_prod:fc('fungicida 2','producto'),f2_fecha:fc('fungicida 2','fecha'),
-      cult:3,antec:null
-    };
-    for(let i=0;i<=maxC;i++){const s=String(h1[i]||'').toLowerCase();if(s.includes('cult invierno'))COL.cult=i;if(s.includes('antecesor'))COL.antec=i;}
-  } else {
-    COL={
-      cult:3,
-      siem_var:fc('siembra','variedad'),siem_fecha:fc('siembra','fecha siembra',fc('siembra','fecha')),
-      re1_var:fc('resiembra','variedad'),re1_fecha:fc('resiembra','fecha'),re1_ha:fc('resiembra','ha'),
-      urea_siem:fc('fertilización siembra','urea'),urea_fecha:fc('fertilización siembra','fecha'),
-      v4_kg:fc('fertilización v4','kg'),v4_fecha:fc('fertilización v4','fecha'),
-      v8_kg:fc('fertilización v8','kg'),v8_fecha:fc('fertilización v8','fecha'),
-      znf_dosis:fc('zinc','dosis'),znf_fecha:fc('zinc','fecha'),
-      f1_prod:fc('fungicida 1','producto'),f1_fecha:fc('fungicida 1','fecha'),
-      f2_prod:fc('fungicida 2','producto'),f2_fecha:fc('fungicida 2','fecha'),
-    };
-    for(let i=0;i<=maxC;i++){const s=String(h1[i]||'').toLowerCase();if(s.includes('cultivo verano')||s==='cult')COL.cult=i;}
-  }
-
-  const G=(r,k)=>{const c=COL[k];return(c!=null&&c<=maxC)?gv(r,c):null;};
-  const GF=(r,k)=>{const c=COL[k];return(c!=null&&c<=maxC)?gf(r,c):false;};
-  const FA=(r,...ks)=>ks.some(k=>GF(r,k));
-  const lotes=[];let campo=null;
-
+  const G=(r,k)=>{ const c=COL[k]; return(c!=null&&c<=maxC)?gv(r,c):null; };
+  const GF=(r,k)=>{ const c=COL[k]; return(c!=null&&c<=maxC)?gf(r,c):false; };
+  const FA=(r,keys)=>keys.some(function(k){return GF(r,k);});
+  const FH=(r,hc)=>hc.finnCol!=null&&hc.finnCol<=maxC?gf(r,hc.finnCol):false;
+  const lotes=[];
+  let campo=null;
   for(let ri=2;ri<=maxR;ri++){
-    const v0=gv(ri,0);if(v0)campo=String(v0).trim();
+    const v0=gv(ri,0); if(v0)campo=String(v0).trim();
     if(!campo||SKIP_CAMPOS.has(campo))continue;
     if(gv(ri,1)==null)continue;
     const lote=String(gv(ri,1));
     const hasRaw=sfn(gv(ri,2))||0;
-    const hk=`${campo}|${lote}`;
+    const hk=campo+'|'+lote;
     const has=HAS_REF[hk]||hasRaw;
     const re1haRaw=G(ri,'re1_ha');
     const re1ha=(typeof re1haRaw==='number'&&re1haRaw<10000)?re1haRaw:null;
-
-    const barbProd=herbProds(ri,BARB);
-    const barbFecha=herbFecha(ri,BARB);
-    const barbDone=herbDone(ri,BARB);
-    const dgProd=herbProds(ri,DG);
-    const dgFecha=herbFecha(ri,DG);
-    const dgDone=herbDone(ri,DG);
-    const repProd=herbProds(ri,REP);
-    const repFecha=herbFecha(ri,REP);
-    const repDone=herbDone(ri,REP);
-
+    const bProd=herbProds(gv(ri,0)!=null?Array.from({length:maxC+1},function(_,c){return gv(ri,c);}):[], BARB);
+    const vArr=Array.from({length:maxC+1},function(_,c){return gv(ri,c);});
+    const barbProd=herbProds(vArr,BARB);
+    const dgProd=herbProds(vArr,DG);
+    const repProd=herbProds(vArr,REP);
+    const barbFecha=fmtDate(BARB.fechaCol!=null?gv(ri,BARB.fechaCol):null);
+    const dgFecha=fmtDate(DG.fechaCol!=null?gv(ri,DG.fechaCol):null);
+    const repFecha=fmtDate(REP.fechaCol!=null?gv(ri,REP.fechaCol):null);
     const d={
-      campo,lote,has:Math.round(has*100)/100,
-      cult:normCult(G(ri,'cult')),antec:normCult(G(ri,isInv?'antec':null)),
-      barb:{prod:barbProd,fecha:barbFecha,finn:herbFinn(ri,BARB),done:barbDone},
-      dg:{prod:dgProd,fecha:dgFecha,finn:herbFinn(ri,DG),done:dgDone},
-      rep:{prod:repProd,fecha:repFecha,finn:herbFinn(ri,REP),done:repDone},
-      siem:{var:G(ri,'siem_var')!=null?String(G(ri,'siem_var')):null,fecha:fmtDate(G(ri,'siem_fecha')),finn:FA(ri,'siem_var','siem_fecha')},
-      re1:{var:G(ri,'re1_var')!=null?String(G(ri,'re1_var')):null,fecha:fmtDate(G(ri,'re1_fecha')),ha:re1ha,finn:FA(ri,'re1_var','re1_fecha')},
-      fert_bas:{spt:sfn(G(ri,'bas_spt')),spt_finn:GF(ri,'bas_spt'),kcl:sfn(G(ri,'bas_kcl')),kcl_finn:GF(ri,'bas_kcl'),fosz:sfn(G(ri,'bas_fosz')),fosz_finn:GF(ri,'bas_fosz'),caso4:sfn(G(ri,'bas_caso4')),caso4_finn:GF(ri,'bas_caso4'),fecha_p:fmtDate(G(ri,'bas_fecha_p')),fecha_k:fmtDate(G(ri,'bas_fecha_k')),fecha_s:fmtDate(G(ri,'bas_fecha_s'))},
-      urea_siem:{kg:sfn(G(ri,'urea_siem')),fecha:fmtDate(G(ri,'urea_fecha')),finn:FA(ri,'urea_siem','urea_fecha')},
-      z22:{kg:sfn(G(ri,'z22_kg')),fecha:fmtDate(G(ri,'z22_fecha')),finn:FA(ri,'z22_kg','z22_fecha')},
-      z30:{kg:sfn(G(ri,'z30_kg')),fecha:fmtDate(G(ri,'z30_fecha')),finn:FA(ri,'z30_kg','z30_fecha')},
-      z33:{kg:sfn(G(ri,'z33_kg')),fecha:fmtDate(G(ri,'z33_fecha')),finn:FA(ri,'z33_kg','z33_fecha')},
-      znf:{dosis:sfn(G(ri,'znf_dosis')),fecha:fmtDate(G(ri,'znf_fecha')),finn:FA(ri,'znf_dosis','znf_fecha')},
-      hum:{dosis:sfn(G(ri,'hum_dosis')),ha:sfn(G(ri,'hum_ha')),fecha:fmtDate(G(ri,'hum_fecha')),finn:FA(ri,'hum_dosis','hum_ha')},
-      f1:{prod:G(ri,'f1_prod')!=null?String(G(ri,'f1_prod')):null,fecha:fmtDate(G(ri,'f1_fecha')),finn:FA(ri,'f1_prod','f1_fecha')},
-      f2:{prod:G(ri,'f2_prod')!=null?String(G(ri,'f2_prod')):null,fecha:fmtDate(G(ri,'f2_fecha')),finn:FA(ri,'f2_prod','f2_fecha')},
+      campo:campo,lote:lote,has:Math.round(has*100)/100,
+      cult:normCult(G(ri,'cult')),antec:normCult(G(ri,'antec')),
+      barb:{prod:barbProd,fecha:barbFecha,finn:FH(ri,BARB),done:barbProd!=null},
+      dg:{prod:dgProd,fecha:dgFecha,finn:FH(ri,DG),done:dgProd!=null},
+      rep:{prod:repProd,fecha:repFecha,finn:FH(ri,REP),done:repProd!=null},
+      siem:{var:G(ri,'siem_var')?String(G(ri,'siem_var')):null,fecha:fmtDate(G(ri,'siem_fecha')),finn:FA(ri,['siem_var','siem_fecha'])},
+      re1:{var:G(ri,'re1_var')?String(G(ri,'re1_var')):null,fecha:fmtDate(G(ri,'re1_fecha')),ha:re1ha,finn:FA(ri,['re1_var','re1_fecha'])},
+      fert_bas:{
+        spt:sfn(G(ri,'bas_spt')),spt_finn:GF(ri,'bas_spt'),
+        kcl:sfn(G(ri,'bas_kcl')),kcl_finn:GF(ri,'bas_kcl'),
+        fosz:sfn(G(ri,'bas_fosz')),fosz_finn:GF(ri,'bas_fosz'),
+        caso4:sfn(G(ri,'bas_caso4')),caso4_finn:GF(ri,'bas_caso4'),
+        fecha_p:fmtDate(G(ri,'bas_fecha_p')),fecha_k:fmtDate(G(ri,'bas_fecha_k')),fecha_s:fmtDate(G(ri,'bas_fecha_s'))
+      },
+      urea_siem:{kg:sfn(G(ri,'urea_siem')),fecha:fmtDate(G(ri,'urea_fecha')),finn:FA(ri,['urea_siem','urea_fecha'])},
+      z22:{kg:sfn(G(ri,'z22_kg')),fecha:fmtDate(G(ri,'z22_fecha')),finn:FA(ri,['z22_kg','z22_fecha'])},
+      z30:{kg:sfn(G(ri,'z30_kg')),fecha:fmtDate(G(ri,'z30_fecha')),finn:FA(ri,['z30_kg','z30_fecha'])},
+      z33:{kg:sfn(G(ri,'z33_kg')),fecha:fmtDate(G(ri,'z33_fecha')),finn:FA(ri,['z33_kg','z33_fecha'])},
+      znf:{dosis:sfn(G(ri,'znf_dosis')),fecha:fmtDate(G(ri,'znf_fecha')),finn:FA(ri,['znf_dosis','znf_fecha'])},
+      hum:{dosis:sfn(G(ri,'hum_dosis')),ha:sfn(G(ri,'hum_ha')),fecha:fmtDate(G(ri,'hum_fecha')),finn:FA(ri,['hum_dosis','hum_ha'])},
+      f1:{prod:G(ri,'f1_prod')?String(G(ri,'f1_prod')):null,fecha:fmtDate(G(ri,'f1_fecha')),finn:FA(ri,['f1_prod','f1_fecha'])},
+      f2:{prod:G(ri,'f2_prod')?String(G(ri,'f2_prod')):null,fecha:fmtDate(G(ri,'f2_fecha')),finn:FA(ri,['f2_prod','f2_fecha'])},
+      f3:{prod:G(ri,'f3_prod')?String(G(ri,'f3_prod')):null,fecha:fmtDate(G(ri,'f3_fecha')),finn:FA(ri,['f3_prod','f3_fecha'])},
+      v4:{kg:sfn(G(ri,'v4_kg')),fecha:fmtDate(G(ri,'v4_fecha')),finn:FA(ri,['v4_kg','v4_fecha'])},
+      v8:{kg:sfn(G(ri,'v8_kg')),fecha:fmtDate(G(ri,'v8_fecha')),finn:FA(ri,['v8_kg','v8_fecha'])},
     };
-    if(!isInv){
-      d.v4={kg:sfn(G(ri,'v4_kg')),fecha:fmtDate(G(ri,'v4_fecha')),finn:FA(ri,'v4_kg','v4_fecha')};
-      d.v8={kg:sfn(G(ri,'v8_kg')),fecha:fmtDate(G(ri,'v8_fecha')),finn:FA(ri,'v8_kg','v8_fecha')};
-    }
     lotes.push(d);
   }
   return lotes;
 }
 
-// ── CAMP PILLS ────────────────────────────────────────────────
-function buildCampPills(camps){
-  document.getElementById('camp-pills').innerHTML=camps.map(c=>
-    `<div class="cpill${c===activeCamp?' on':''}" onclick="setCamp('${c}',this)">${c}</div>`).join('');
-}
-function setCamp(c,el){activeCamp=c;document.querySelectorAll('.cpill').forEach(x=>x.classList.remove('on'));el.classList.add('on');render();}
-
-// ── ALERTS ────────────────────────────────────────────────────
 function getLoteAlerts(d){
   const a=[];
   if(season!=='inv'||d.cult!=='Cz')return a;
-  // Use resiembra date if re >= 50% of lote, else use siembra
-  let refFecha=d.siem?.fecha;
-  if(d.re1?.fecha&&d.re1?.ha&&d.has){
-    const rePct=Math.round(d.re1.ha/d.has*100);
-    if(rePct>=50) refFecha=d.re1.fecha;
-  }
-  if(!refFecha)return a;
-  const [dd,mm,yy]=refFecha.split('/').map(Number);
-  const sd=new Date(yy,mm-1,dd);
+  let ref=d.siem&&d.siem.fecha?d.siem.fecha:null;
+  if(d.re1&&d.re1.fecha&&d.re1.ha&&d.has&&Math.round(d.re1.ha/d.has*100)>=50)ref=d.re1.fecha;
+  if(!ref)return a;
+  const parts=ref.split('/');
+  const sd=new Date(+parts[2],+parts[1]-1,+parts[0]);
   const TODAY=new Date();
-  [40,60].forEach(n=>{
-    const dt=new Date(sd);dt.setDate(dt.getDate()+n);
+  [40,60].forEach(function(n){
+    const dt=new Date(sd); dt.setDate(dt.getDate()+n);
     const r=Math.round((dt-TODAY)/86400000);
-    if(r>=0&&r<=5)a.push({tipo:r<=2?'urg':'info',icon:'ti-microscope',msg:`Análisis N en ${r}d (d${n} · ${dt.getDate()}/${dt.getMonth()+1})`});
+    if(r>=0&&r<=5)a.push({tipo:r<=2?'urg':'info',icon:'ti-microscope',msg:'Analisis N en '+r+'d (d'+n+' - '+dt.getDate()+'/'+(dt.getMonth()+1)+')'});
   });
   return a;
 }
 
-// ── FILTERING ─────────────────────────────────────────────────
-function filtered(){const cd=allData[activeCamp];if(!cd)return[];const src=season==='inv'?cd.inv:cd.ver;return(src||[]).filter(d=>filtCult==='all'||d.cult===filtCult);}
+function filtered(){
+  const cd=allData[activeCamp]; if(!cd)return[];
+  const src=season==='inv'?cd.inv:cd.ver;
+  return(src||[]).filter(function(d){return filtCult==='all'||d.cult===filtCult;});
+}
 function isProd(d){return season==='inv'?['Tr','Cz','Ceb','Carinata'].includes(d.cult):['Sj1','Sj2','Mz1','Mz2'].includes(d.cult);}
 function isMz(d){return d.cult==='Mz1'||d.cult==='Mz2';}
-function totalUrea(d){return season==='inv'?(d.urea_siem?.kg||0)+(d.z22?.kg||0)+(d.z30?.kg||0)+(d.z33?.kg||0):(d.urea_siem?.kg||0)+(d.v4?.kg||0)+(d.v8?.kg||0);}
-function pctArea(rows,fn){const t=rows.reduce((a,r)=>a+r.has,0);return t?Math.round(rows.filter(fn).reduce((a,r)=>a+r.has,0)/t*100):0;}
+function totalUrea(d){
+  return season==='inv'
+    ?((d.urea_siem&&d.urea_siem.kg||0)+(d.z22&&d.z22.kg||0)+(d.z30&&d.z30.kg||0)+(d.z33&&d.z33.kg||0))
+    :((d.urea_siem&&d.urea_siem.kg||0)+(d.v4&&d.v4.kg||0)+(d.v8&&d.v8.kg||0));
+}
+function pctArea(rows,fn){
+  const t=rows.reduce(function(a,r){return a+r.has;},0);
+  return t?Math.round(rows.filter(fn).reduce(function(a,r){return a+r.has;},0)/t*100):0;
+}
 function colPct(p){return p>=70?'var(--green)':p>=40?'var(--amber)':'var(--red)';}
-function rotB(c){if(!c||c==='—')return`<span style="font-size:8px;color:var(--tx3)">—</span>`;return`<span class="rb ${CB[c]||'b-Cobertura'}">${CL_INV[c]||CL_VER[c]||c}</span>`;}
+function rotB(c){
+  if(!c||c==='—')return '<span style="font-size:8px;color:var(--tx3)">—</span>';
+  const cl=CL_INV[c]||CL_VER[c]||c;
+  return '<span class="rb '+(CB[c]||'b-Cobertura')+'">'+cl+'</span>';
+}
 
-// ── DETAIL ────────────────────────────────────────────────────
-const FS=()=>'<span class="ff"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAIuUlEQVR4nO2Za4xdVRXHf2vvfc6dR9tppzOd6TADrbwfiQhosCl8MAEBNSQmCFQtBglGjQb9gOEDkuAHYiQxQgCRSiLKBzUGEBOkEq0BFFB5iKCgPFvbDsN0+prHvefstfxwzszcaWfu3M4M4Af+k5ubM+fctdZ/7/Xa64iZGUuFOkkqjR8VQDhUtdXdnbyWuuvDEY7IwEP1zIV5jG/8oDWhYBoLI3CYQjAMkWLFzAxBEDncwMk1nd34+pWfvG68GgsjIAYohfMpURVBMIEYFUMJEsBmKhcBM8M5BzgKJ5q8tpKw8K7sQIwFgRASgq8T6JqXkWeKqiLJ7LvVDORIgzjGiPfTFmfR2DMywo6dQ+z47y6G3n6LkZF9VCcmiHnEiZCmKW3trXR3ddPb08tRA32sWb2SjuWt02TyiPeuJKKT5rFIF5qZFVQV7z2q8OjjT7H1d9t4+ulnePFfLzE8sp88M1QhizmoMuXxUnzSlgoYtLW1sf7oXs447Xg2btzAhRecT0/v6lKH4VzzbtRgBwo/xxQ1iOpJguP+rY9y8/du5+m/Ps/4gf34SkqSpPgQcOJwhaMTPeAEDLTUYGbFPVU0r5GPjhKShP6+PjZtuoRrvv5FuruWFzElOSIewdcF/oIIGFkWCWmFm39wF9dedyNIQnv7CpIkUKtlh+QOLcJQrE6xKwK6zgqH4H2AaGS1KmP7R9hwzkf4xc9/RG9PF6Y1vPcIAS0kzIoGIVf4n5qQJBXeGhzmzju20JK20LGyA1ykllcxiURyVCImERNDxXAGQcEZeFW8RVz58RrBlCyPRDNCmrC6t4c/PfYYt9+2BS+CqSGNzCsxbxYSHAZ476ikKTErVlxN0KiE4FEzij8Bk2KhrdwRq/Nmmy5SCkQM8R7THLPCXTtWrCifBVNB5uHQ4HaRCcQJMVe6ulbx7eu/xYplrewdGoLcqCQpTjxeAmIeUVeumiOKI+JRccUHwbzHfCCKxwdPGhwaJxgb28eetwf5zGWX8NWvXImqEUI6r/HQKAbMyoLlMJvMQI5/vPBvvn/LFh7e+kd27tqF5ZG0vR0RISSVMnDLvC5FgTIrMlLUHDMjRiWvjkFeZdmK5Zx6yklcfdVmNn/2Erwrgx3DIeCkYQw0IACIAkKMiogjRiVJihrw2htD/GHbNp588hme+/tzvLl9B/sPjlHLIjEvChQGzoH3HueFlpYE54Se3h5OPeUkTj/tZM45dyNnn30WFV+k0CnjnUMoAn+RBCBqXqRHHKZFMQshIG5a7ESm7Ng5yODgIHv2jJBXqxw8MMbExDhpmrBsWTu9a9fS19dLd/cq2ttap5KSqqIaSx0gIhiCE7cIAnVMTGPpToYZOJcCsH/fBC/880V27R5ieO8+JqpVnA90dnbS19PJ+nXrOfqorlmlqioxRpyTqcJlVhgvIpjJ4nbAMKRsxswMtaxsITxP/OV5fvqzX7Jt22MMvjXM8NsjEHW68scIaSudq1ey7gN9XHThx9h02ac5+dh1VGsZDsP7gPPzRGlZSBa5A5DnGYhQy5Trb7iJO++6h9GD46QtrSRphRAqWLn9Vu4UEWKeMVEdQ7Nx+vp7ufGG67hy86XktQznBB+a6GQWS8Aottq7hGuuvYFbbr6DZV29EMBi2fKIm+yWpuJGxGMKoTSyNjHKxNg+7r3nh2y69GKq1SqVSmXRBObdQ9VI8IHtg7v59YMP09bZh7qUiCMzh5aFbmbrr6gpOCHLjTx3JMkygm/hri0/YaKakyQJS3Gabbp7dyKIk6mGTGOR252frLwzjZHyZDZ17WSKpAnlIWbxmEeK4Fwgjzn9PT186hPnMT6ykyA5qTcqQRCNYHbIgcSVvaARPHgfqdUOoPk4V191Ba1poFarLfgQU48meiFBDKJGbvrO9aQh4bbb72a8mhFCQmtbOz6kZT/kMfGA4syhMWf0wDCqGb1ru7jp1tu4/NKLiXnhlkuBJtOoopYjIjiX8OennuXHd9/LE08+w39efZ3q6ASEZJJx4U4G3Wu6OPa4Ac47byNXbL6cY/v7iKpQHlpkPjdadBaaaicVJUcVnARc3ZHy5Vfe4OWXXufNN7YzNjaGc46Ojg76B9bS39/LCSceR1Jqz2IkcQ6knFzM50JLQwDUauU0IQWD+3/zCA9t3Uqe1Tjz9A/x+c9dzorlc6fEGCNOHOKO0OebIIA1ghZfWVa1GHPbd3DcvnD1NZa2rzfcgJEMGLLG+o853R75/eNmZjY6dtCybMLyPLMYo6lqQxXN6I8NHmmKQC2rmZnZjd+91XDdtrz7DOtcu8E61nzYOteeZa5lwNafcJbt2DVoUaNVs1FTW6TxTRKYO4rqDuI+JOwdm+CBBx/CtXWAc4xn49Rixngto6Ozm9de2c6v7vtt0UFaQHAzfNyWcARbj3lzmZnhRBjeM8zQ0DAhbSFqBpIVzT6OLCqSVHj5pVcLoRLKznJazlLk/NkwbzmcnCBXkgppEiAqTgwhx1AULapsntHS2gKUh7l3xNzDMT8BEVRzelav4piBfmItw+OBgBBw4jEUSTwbPnpm+avJodY7j7kJyPS3oSTB842vfZlgNcZHD+IIOANR5eDuXXzyoo9zwfnnYhoRl5cHoKVBw91sJhVoVMvz3MzM7rvvATvlgxutsvJEa111nK3qOdGu/NI3bffgsJma5bXcYp7bYhPQTMydh5o60KgqVqRcQgjs2TfO3559nr0jeznt1BM4+fh1Re8WI1LGhIifb+2OAHMPF5smAJQjkUiSpjPEZXmOCHhXjFCKc20yp9KlRFMEJh+xcuQRY3E9eQqbbBGKaUIxEnTOzyrriHDoK7NZcMTvB4Biblk2ZMXgoDAcyqxV1o5Fo96yOcQtiEBTGfJdKgQLfEfW4F6jYf6C0FjgggiUI66pa6n/lkP/uxiU7ygopoKzYVHnupkmNuGwC9Yyt7yFxcD/EZZmtvEe4n0C7zXeJ/Be438lMQsnJ1x8CwAAAABJRU5ErkJggg==" alt="F"></span>';
-function LI(done,finn,icon,name,det,fecha,extra=''){const cls=finn?'finn':done?'done':'pend';return`<div class="li ${cls} ${extra}"><i class="ti ${icon}"></i><div class="lb"><div class="ln">${name}${finn?FS():''}</div>${det?`<div class="ld">${det}</div>`:''}${fecha?`<div class="lf"><i class="ti ti-calendar" style="font-size:9px;vertical-align:-1px;"></i> ${fecha}</div>`:''}</div></div>`;}
-function FC(done,finn,label,val,unit,fecha,extra=''){const cls=finn?'finn':done?'done':'pend';return`<div class="fc ${cls} ${extra}"><div class="fcl">${label}${finn?FS():''}</div><div class="fcv">${val!=null?val:'—'}<span class="fcu">${val!=null?unit:''}</span></div>${fecha?`<div class="fcd"><i class="ti ti-calendar" style="font-size:9px;vertical-align:-1px;"></i> ${fecha}</div>`:''}</div>`;}
+const FS=function(){return '<span class="ff"><img src="'+FINN_IMG+'" alt="F"></span>';};
+
+function LI(done,finn,icon,name,det,fecha,extra){
+  extra=extra||'';
+  const cls=finn?'finn':done?'done':'pend';
+  return '<div class="li '+cls+' '+extra+'"><i class="ti '+icon+'"></i><div class="lb"><div class="ln">'+name+(finn?FS():'')+
+    '</div>'+(det?'<div class="ld">'+det+'</div>':'')+(fecha?'<div class="lf"><i class="ti ti-calendar" style="font-size:9px;vertical-align:-1px;"></i> '+fecha+'</div>':'')+
+    '</div></div>';
+}
+
+function FC(done,finn,label,val,unit,fecha,extra){
+  extra=extra||'';
+  const cls=finn?'finn':done?'done':'pend';
+  return '<div class="fc '+cls+' '+extra+'"><div class="fcl">'+label+(finn?FS():'')+
+    '</div><div class="fcv">'+(val!=null?val:'—')+'<span class="fcu">'+(val!=null?unit:'')+'</span></div>'+
+    (fecha?'<div class="fcd"><i class="ti ti-calendar" style="font-size:9px;vertical-align:-1px;"></i> '+fecha+'</div>':'')+
+    '</div>';
+}
 
 function renderDetail(d){
-  const isCz=d.cult==='Cz',isVer=season==='ver';
-  const hasRe=d.re1?.var||d.re1?.fecha;
-  const rePct=hasRe&&d.re1?.ha?Math.round(d.re1.ha/d.has*100):null;
+  const isCz=d.cult==='Cz', isVer=season==='ver';
+  const hasRe=d.re1&&(d.re1.var||d.re1.fecha);
+  const rePct=hasRe&&d.re1.ha?Math.round(d.re1.ha/d.has*100):null;
   const totU=totalUrea(d);
-  const humPct=d.hum?.ha?Math.round(d.hum.ha/d.has*100):null;
-  let h=`<div class="dbanner"><span class="dvar">${d.siem?.var||d.cult||'—'}</span>${hasRe?`<span class="re-tag"><i class="ti ti-refresh" style="font-size:10px;vertical-align:-1px;"></i> Resiembra · ${d.re1.var||''}${d.re1.ha?' · '+Math.round(d.re1.ha)+' ha':''}</span>`:''}</div>`;
-  if(hasRe&&rePct!=null)h+=`<div class="re-pb"><span class="re-pbl">Resiembra del lote:</span><div class="re-pbg"><div class="re-pf" style="width:${rePct}%;"></div></div><span class="re-pv">${rePct}%</span></div><div style="height:4px;"></div>`;
-  h+=`<div class="sgrid">
-    <div class="sec"><div class="st"><i class="ti ti-spray"></i>Herbicidas</div>
-      ${LI(d.barb?.done,d.barb?.finn,'ti-check-circle','Barbecho',d.barb?.prod,d.barb?.fecha)}
-      ${LI(d.dg?.done,d.dg?.finn,'ti-check-circle','Doble golpe',d.dg?.prod,d.dg?.fecha)}
-      ${LI(d.rep?.done,d.rep?.finn,'ti-check-circle','Repaso',d.rep?.prod,d.rep?.fecha)}
-    </div>
-    <div class="sec"><div class="st"><i class="ti ti-seeding"></i>Siembra</div>
-      ${LI(!!(d.siem?.var||d.siem?.fecha),d.siem?.finn,'ti-check-circle','Siembra base',d.siem?.var,d.siem?.fecha)}
-      ${LI(!!(d.re1?.var||d.re1?.fecha),d.re1?.finn,'ti-refresh','Resiembra 1',d.re1?.var,d.re1?.fecha,'re')}
-    </div>
-    <div class="sec"><div class="st"><i class="ti ti-shield-check"></i>Sanidad</div>
-      ${LI(!!d.f1?.prod,d.f1?.finn,'ti-check-circle','Fungicida 1',d.f1?.prod,d.f1?.fecha)}
-      ${LI(!!d.f2?.prod,d.f2?.finn,'ti-check-circle','Fungicida 2',d.f2?.prod,d.f2?.fecha)
-      ${LI(!!d.f3?.prod,d.f3?.finn,'ti-check-circle','Fungicida 3',d.f3?.prod,d.f3?.fecha)}}
-    </div>
-  </div>`;
+  const fb=d.fert_bas||{};
+  let h='<div class="dbanner"><span class="dvar">'+(d.siem&&d.siem.var?d.siem.var:d.cult||'—')+'</span>'+
+    (hasRe?'<span style="font-size:10px;background:var(--abg);color:var(--amber);padding:2px 7px;border-radius:4px;font-weight:600;">Resiembra · '+(d.re1.var||'')+(d.re1.ha?' · '+Math.round(d.re1.ha)+' ha':'')+'</span>':'')+
+    '</div>';
+  if(hasRe&&rePct!=null)h+='<div class="re-pb"><span class="re-pbl">Resiembra:</span><div class="re-pbg"><div class="re-pf" style="width:'+rePct+'%;"></div></div><span class="re-pv">'+rePct+'%</span></div><div style="height:6px;"></div>';
+  h+='<div class="sgrid"><div class="sec"><div class="st"><i class="ti ti-spray"></i>Herbicidas</div>'+
+    LI(d.barb&&d.barb.done,d.barb&&d.barb.finn,'ti-check-circle','Barbecho',d.barb&&d.barb.prod,d.barb&&d.barb.fecha)+
+    LI(d.dg&&d.dg.done,d.dg&&d.dg.finn,'ti-check-circle','Doble golpe',d.dg&&d.dg.prod,d.dg&&d.dg.fecha)+
+    LI(d.rep&&d.rep.done,d.rep&&d.rep.finn,'ti-check-circle','Repaso',d.rep&&d.rep.prod,d.rep&&d.rep.fecha)+
+    '</div><div class="sec"><div class="st"><i class="ti ti-seeding"></i>Siembra</div>'+
+    LI(d.siem&&(d.siem.var||d.siem.fecha),d.siem&&d.siem.finn,'ti-check-circle','Siembra base',d.siem&&d.siem.var,d.siem&&d.siem.fecha)+
+    LI(d.re1&&(d.re1.var||d.re1.fecha),d.re1&&d.re1.finn,'ti-refresh','Resiembra 1',d.re1&&d.re1.var,d.re1&&d.re1.fecha,'re')+
+    '</div><div class="sec"><div class="st"><i class="ti ti-shield-check"></i>Sanidad</div>'+
+    LI(d.f1&&d.f1.prod,d.f1&&d.f1.finn,'ti-check-circle','Fungicida 1',d.f1&&d.f1.prod,d.f1&&d.f1.fecha)+
+    LI(d.f2&&d.f2.prod,d.f2&&d.f2.finn,'ti-check-circle','Fungicida 2',d.f2&&d.f2.prod,d.f2&&d.f2.fecha)+
+    LI(d.f3&&d.f3.prod,d.f3&&d.f3.finn,'ti-check-circle','Fungicida 3',d.f3&&d.f3.prod,d.f3&&d.f3.fecha)+
+    '</div></div>';
   if(!isVer||isMz(d)){
-    h+=`<div class="fsec"><div class="ftit"><i class="ti ti-test-pipe"></i>Fertilizaciones</div>`;
-    if(!isVer)h+=`<div class="fgrp"><div class="fgl">Basal</div><div class="frow">`;
-  {
-    const fb=d.fert_bas||{};
-    const pSrc=fb.spt!=null?(fb.fosz!=null?`SPT ${fb.spt} + Fosz ${fb.fosz}`:`SPT ${fb.spt}`):fb.fosz!=null?`Foszinc ${fb.fosz}`:'—';
-    const pFinn=!!(fb.spt_finn||fb.fosz_finn);
-    const pDone=fb.spt!=null||fb.fosz!=null;
-    h+=`<div class="fc ${pFinn?'finn':pDone?'done':'pend'}">
-      <div class="fcl">Fósforo (P)${pFinn?FS():''}</div>
-      <div class="fcv" style="font-size:12px;">${pSrc}</div>
-      ${fb.fecha_p?`<div class="fcd"><i class="ti ti-calendar" style="font-size:9px;vertical-align:-1px;"></i> ${fb.fecha_p}</div>`:''}
-    </div>
-    ${FC(fb.kcl!=null,fb.kcl_finn,'Potasio (K)',fb.kcl,' kg/ha',fb.fecha_k)}
-    ${FC(fb.caso4!=null,fb.caso4_finn,'Azufre (S)',fb.caso4,' kg/ha',fb.fecha_s)}`;
-  }
-  h+=`</div></div>`;
+    h+='<div class="fsec"><div class="ftit"><i class="ti ti-test-pipe"></i>Fertilizaciones</div>';
+    if(!isVer){
+      const pSrc=fb.spt!=null?(fb.fosz!=null?'SPT '+fb.spt+' + Fosz '+fb.fosz:(fb.origen_p||'SPT')+' '+fb.spt):fb.fosz!=null?'Foszinc '+fb.fosz:'—';
+      const pFinn=!!(fb.spt_finn||fb.fosz_finn);
+      const pDone=fb.spt!=null||fb.fosz!=null;
+      h+='<div class="fgrp"><div class="fgl">Basal</div><div class="frow">'+
+        '<div class="fc '+(pFinn?'finn':pDone?'done':'pend')+'"><div class="fcl">Fosforo (P)'+(pFinn?FS():'')+
+        '</div><div class="fcv" style="font-size:12px;">'+pSrc+'</div>'+
+        (fb.fecha_p?'<div class="fcd"><i class="ti ti-calendar" style="font-size:9px;vertical-align:-1px;"></i> '+fb.fecha_p+'</div>':'')+
+        '</div>'+
+        FC(fb.kcl!=null,fb.kcl_finn,'Potasio (K)',fb.kcl,' kg/ha',fb.fecha_k)+
+        FC(fb.caso4!=null,fb.caso4_finn,'Azufre (S)',fb.caso4,' kg/ha',fb.fecha_s)+
+        '</div></div>';
+    }
     const uits=!isVer?[['Siembra',d.urea_siem],['Z22/B4',d.z22],['Z30/C1',d.z30],['Z33',d.z33]]:[['Siembra',d.urea_siem],['V4',d.v4],['V8',d.v8]];
-    h+=`<div class="fgrp"><div class="fgl">Urea azufrada (kg/ha)</div><div class="frow">${uits.map(([l,u])=>FC(u?.kg!=null,u?.finn,l,u?.kg,' kg/ha',u?.fecha)).join('')}<div class="fc total"><div class="fcl">Total</div><div class="fcv">${totU||'—'}<span class="fcu">${totU?' kg/ha':''}</span></div></div></div></div>`;
-    h+=`<div class="fgrp" style="margin-bottom:0;"><div class="fgl">Otros</div><div class="frow">${FC(d.znf?.dosis!=null,d.znf?.finn,'Zinc foliar',d.znf?.dosis,' L/ha',d.znf?.fecha)}${!isVer?`<div class="fc ${d.hum?.dosis!=null?(d.hum?.finn?'finn':'done'):'pend'}"><div class="fcl">Ác. húmicos${d.hum?.finn?FS():''}</div><div class="fcv">${d.hum?.dosis!=null?d.hum.dosis:'—'}<span class="fcu">${d.hum?.dosis!=null?' L/ha':''}</span></div>${d.hum?.fecha?`<div class="fcd"><i class="ti ti-calendar" style="font-size:9px;"></i> ${d.hum.fecha}</div>`:''}${humPct!=null?`<div style="margin-top:3px;"><div style="display:flex;justify-content:space-between;font-size:9px;color:var(--tx3);"><span>${Math.round(d.hum.ha)}/${Math.round(d.has)} ha</span><span style="font-weight:700;color:var(--green);">${humPct}%</span></div><div class="hbar"><div class="hbarf" style="width:${humPct}%;"></div></div></div>`:''}</div>`:''}</div></div></div>`;
+    h+='<div class="fgrp"><div class="fgl">Urea azufrada (kg/ha)</div><div class="frow">'+
+      uits.map(function(lu){return FC(lu[1]&&lu[1].kg!=null,lu[1]&&lu[1].finn,lu[0],lu[1]&&lu[1].kg,' kg/ha',lu[1]&&lu[1].fecha);}).join('')+
+      '<div class="fc total"><div class="fcl">Total</div><div class="fcv">'+(totU||'—')+'<span class="fcu">'+(totU?' kg/ha':'')+'</span></div></div>'+
+      '</div></div>';
+    h+='<div class="fgrp" style="margin-bottom:0;"><div class="fgl">Otros</div><div class="frow">'+
+      FC(d.znf&&d.znf.dosis!=null,d.znf&&d.znf.finn,'Zinc foliar',d.znf&&d.znf.dosis,' L/ha',d.znf&&d.znf.fecha);
+    if(!isVer){
+      const humPct=d.hum&&d.hum.ha?Math.round(d.hum.ha/d.has*100):null;
+      h+='<div class="fc '+(d.hum&&d.hum.dosis!=null?(d.hum.finn?'finn':'done'):'pend')+'">'+
+        '<div class="fcl">Ac. humicos'+(d.hum&&d.hum.finn?FS():'')+
+        '</div><div class="fcv">'+(d.hum&&d.hum.dosis!=null?d.hum.dosis:'—')+'<span class="fcu">'+(d.hum&&d.hum.dosis!=null?' L/ha':'')+'</span></div>'+
+        (d.hum&&d.hum.fecha?'<div class="fcd"><i class="ti ti-calendar" style="font-size:9px;"></i> '+d.hum.fecha+'</div>':'')+
+        (humPct!=null?'<div style="margin-top:3px;"><div style="display:flex;justify-content:space-between;font-size:9px;color:var(--tx3);"><span>'+Math.round(d.hum.ha)+'/'+Math.round(d.has)+' ha</span><span style="font-weight:700;color:var(--green);">'+humPct+'%</span></div><div class="hbar"><div class="hbarf" style="width:'+humPct+'%;"></div></div></div>':'')+
+        '</div>';
+    }
+    h+='</div></div></div>';
   }
   return h;
 }
 
-// ── RENDER ────────────────────────────────────────────────────
+function buildCampPills(camps){
+  document.getElementById('camp-pills').innerHTML=camps.map(function(c){
+    return '<div class="cpill'+(c===activeCamp?' on':'')+'" onclick="setCamp(''+c+'',this)">'+c+'</div>';
+  }).join('');
+}
+function setCamp(c,el){activeCamp=c;document.querySelectorAll('.cpill').forEach(function(x){x.classList.remove('on');});el.classList.add('on');render();}
+
 function render(){
   const rows=filtered();
   const CL=season==='inv'?CL_INV:CL_VER;
-  const cults=[...new Set(rows.map(d=>d.cult).filter(Boolean))].sort();
-  document.getElementById('cult-chips').innerHTML=[{v:'all',l:'Todos'},...cults.map(c=>{return{v:c,l:CL[c]||c};})]
-    .map(c=>`<div class="fchip${filtCult===c.v?' on':''}" onclick="setFilt('${c.v}',this)">${c.l}</div>`).join('');
+  const cults=[...new Set(rows.map(function(d){return d.cult;}).filter(Boolean))].sort();
+  document.getElementById('cult-chips').innerHTML=
+    [{v:'all',l:'Todos'}].concat(cults.map(function(c){return{v:c,l:CL[c]||c};}))
+    .map(function(c){return '<div class="fchip'+(filtCult===c.v?' on':'')+'" onclick="setFilt(''+c.v+'',this)">'+c.l+'</div>';}).join('');
   const prod=rows.filter(isProd);
-  const grp={};rows.forEach(d=>{(grp[d.campo]||(grp[d.campo]=[])).push(d);});
-  const aall=[];rows.forEach(d=>getLoteAlerts(d).forEach(a=>aall.push({...a,campo:d.campo,lote:d.lote})));
+  const grp={};
+  rows.forEach(function(d){if(!grp[d.campo])grp[d.campo]=[];grp[d.campo].push(d);});
+  const aall=[];
+  rows.forEach(function(d){getLoteAlerts(d).forEach(function(a){aall.push(Object.assign({},a,{campo:d.campo,lote:d.lote}));});});
   const ael=document.getElementById('alerts');
-  if(season!=='inv'||!aall.length){ael.innerHTML=`<span class="no-al"><i class="ti ti-circle-check" style="color:var(--green);font-size:13px;"></i>Sin alertas activas</span>`;}
-  else{ael.innerHTML=`<span class="al"><i class="ti ti-bell-ringing"></i>Alertas</span>`+aall.slice(0,6).map(a=>`<div class="ap ${a.tipo}"><i class="ti ${a.icon}"></i><strong>${a.campo} L${a.lote}</strong> · ${a.msg}</div>`).join('');}
-  const totH=rows.reduce((a,r)=>a+r.has,0);
-  const MC=(icon,lbl,val,sub,bar,col)=>`<div class="metric"><div class="ml"><i class="ti ${icon}"></i>${lbl}</div><div class="mv">${val}</div>${sub?`<div class="ms">${sub}</div>`:''}</div>`;
+  if(season!=='inv'||!aall.length){
+    ael.innerHTML='<span class="no-al"><i class="ti ti-circle-check" style="color:var(--green);font-size:13px;"></i>Sin alertas activas</span>';
+  } else {
+    ael.innerHTML='<span class="al"><i class="ti ti-bell-ringing"></i>Alertas</span>'+
+      aall.slice(0,6).map(function(a){return '<div class="ap '+a.tipo+'"><i class="ti '+a.icon+'"></i><strong>'+a.campo+' L'+a.lote+'</strong> - '+a.msg+'</div>';}).join('');
+  }
+  const totH=rows.reduce(function(a,r){return a+r.has;},0);
+  const MC=function(icon,lbl,val,sub,bar,col){
+    return '<div class="metric"><div class="ml"><i class="ti '+icon+'"></i>'+lbl+'</div><div class="mv">'+val+'</div>'+
+      (sub?'<div class="ms">'+sub+'</div>':'')+
+      (bar!=null?'<div class="mbar"><div class="mfill" style="width:'+bar+'%;background:'+col+';"></div></div>':'')+
+      '</div>';
+  };
   const urows=season==='ver'?rows.filter(isMz):prod;
-  const conU=urows.filter(d=>totalUrea(d)>0);
-  const promU=conU.length?Math.round(conU.reduce((a,d)=>a+totalUrea(d)*d.has,0)/conU.reduce((a,d)=>a+d.has,0)):0;
-  
-  const pR=pctArea(prod,d=>d.rep?.fecha),pF1=pctArea(prod,d=>d.f1?.prod),pF2=pctArea(prod,d=>d.f2?.prod),pZn=pctArea(prod,d=>d.znf?.dosis);
+  const conU=urows.filter(function(d){return totalUrea(d)>0;});
+  const promU=conU.length?Math.round(conU.reduce(function(a,d){return a+totalUrea(d)*d.has;},0)/conU.reduce(function(a,d){return a+d.has;},0)):0;
+  const pR=pctArea(prod,function(d){return d.rep&&d.rep.fecha;});
+  const pF1=pctArea(prod,function(d){return d.f1&&d.f1.prod;});
+  const pF2=pctArea(prod,function(d){return d.f2&&d.f2.prod;});
+  const pZn=pctArea(prod,function(d){return d.znf&&d.znf.dosis;});
   document.getElementById('metrics').innerHTML=
-    MC('ti-map','Has',Math.round(totH).toLocaleString('es'),`${rows.length} lotes`,null,null)+
-    MC('ti-flask',season==='ver'?'Urea maíz':'Urea az.',promU?promU+' kg/ha':'—',`${conU.length} lotes`,null,null)+
-    MC('ti-repeat','Repaso',pR+'%','% área',pR,colPct(pR))+
-    MC('ti-shield','Fung 1',pF1+'%','% área',pF1,colPct(pF1))+
-    MC('ti-shield-check','Fung 2',pF2+'%','% área',pF2,colPct(pF2))+
-    MC('ti-droplet','Zinc fol.',pZn+'%','% área',pZn,colPct(pZn));
-  const el=document.getElementById('campos');el.innerHTML='';
-  if(!rows.length){el.innerHTML=`<div class="empty"><i class="ti ti-plant-off"></i>Sin datos para esta temporada</div>`;return;}
-  Object.entries(grp).forEach(([campo,lotes])=>{
+    MC('ti-map','Has',Math.round(totH).toLocaleString('es'),rows.length+' lotes',null,null)+
+    MC('ti-flask',season==='ver'?'Urea maiz':'Urea az.',promU?promU+' kg/ha':'—',conU.length+' lotes',null,null)+
+    MC('ti-repeat','Repaso',pR+'%','% area',pR,colPct(pR))+
+    MC('ti-shield','Fung 1',pF1+'%','% area',pF1,colPct(pF1))+
+    MC('ti-shield-check','Fung 2',pF2+'%','% area',pF2,colPct(pF2))+
+    MC('ti-droplet','Zinc fol.',pZn+'%','% area',pZn,colPct(pZn));
+  const el=document.getElementById('campos');
+  el.innerHTML='';
+  if(!rows.length){el.innerHTML='<div class="empty"><i class="ti ti-plant-off"></i>Sin datos para esta temporada</div>';return;}
+  Object.entries(grp).forEach(function(entry){
+    const campo=entry[0], lotes=entry[1];
     const ini=INI[campo]||campo.slice(0,2).toUpperCase();
-    const totHc=Math.round(lotes.reduce((a,r)=>a+r.has,0));
-    const nA=lotes.reduce((a,d)=>a+getLoteAlerts(d).length,0);
-    const k=campo+season+activeCamp;const isOpen=openC.has(k);
-    const card=document.createElement('div');card.className='ccard';
-    const safe=s=>s.replace(/'/g,"\'");
-    card.innerHTML=`<div class="chdr" onclick="togC('${safe(campo)}',this)"><div class="mono">${ini}</div><div><div class="cn">${campo}</div><div class="cm">${lotes.length} lotes · ${totHc.toLocaleString('es')} ha</div></div><div class="cr">${nA?`<span class="abadge"><i class="ti ti-bell" style="font-size:10px;"></i>${nA}</span>`:''}</div><i class="ti ti-chevron-right chev ${isOpen?'open':''}"></i></div>
-      <div class="llist ${isOpen?'open':''}" id="ll-${campo.replace(/\s/g,'_')}-${season}">${lotes.map(d=>{
-        const lk=`${campo}|${d.lote}|${season}|${activeCamp}`;const isLo=openL.has(lk);
-        const hasRe=d.re1?.var||d.re1?.fecha;const alerts=getLoteAlerts(d);
-        const prevL=season==='inv'?'Ver ant.':'Inv ant.';const curL=season==='inv'?`Inv ${activeCamp}`:`Ver ${activeCamp}`;const nextL=season==='inv'?'Ver':'Inv';
-        return `<div class="lrow"><div class="lhdr" onclick="togL('${safe(campo)}','${safe(d.lote)}',this)"><span class="lnum">${d.lote}</span><span class="lhas">${Math.round(d.has)} ha</span><span class="cbadge ${CB[d.cult]||'b-Cobertura'}">${CL[d.cult]||d.cult||'—'}</span>${hasRe?'<span class="re-tag">resiembra</span>':''}${alerts.length?`<div class="lrow-al">${alerts.map(a=>`<span class="la ${a.tipo}"><i class="ti ${a.icon}"></i>${a.msg}</span>`).join('')}</div>`:''}
-          <div class="rot"><div class="ri"><div class="rl">${prevL}</div>${rotB(d.antec||'—')}</div><span class="rarr">›</span><div class="ri cur"><div class="rl">${curL}</div>${rotB(d.cult)}</div><span class="rarr">›</span><div class="ri"><div class="rl">${nextL}</div>${rotB('?')}</div></div>
-          <i class="ti ti-chevron-right chev ${isLo?'open':''}" style="font-size:11px;margin-left:6px;"></i></div>
-          <div class="ldet ${isLo?'open':''}" id="ld-${campo.replace(/\s/g,'_')}_${d.lote.replace(/\s/g,'_')}_${season}">${renderDetail(d)}</div></div>`;
-      }).join('')}</div>`;
+    const totHc=Math.round(lotes.reduce(function(a,r){return a+r.has;},0));
+    const nA=lotes.reduce(function(a,d){return a+getLoteAlerts(d).length;},0);
+    const k=campo+season+activeCamp;
+    const isOpen=openC.has(k);
+    const card=document.createElement('div');
+    card.className='ccard';
+    const safe=function(s){return String(s).replace(/\/g,'\\').replace(/'/g,"\'");};
+    let loteHtml=lotes.map(function(d){
+      const lk=campo+'|'+d.lote+'|'+season+'|'+activeCamp;
+      const isLo=openL.has(lk);
+      const hasRe=d.re1&&(d.re1.var||d.re1.fecha);
+      const alerts=getLoteAlerts(d);
+      const prevL=season==='inv'?'Ver ant.':'Inv ant.';
+      const curL=season==='inv'?'Inv '+activeCamp:'Ver '+activeCamp;
+      const nextL=season==='inv'?'Ver':'Inv';
+      return '<div class="lrow"><div class="lhdr" onclick="togL(''+safe(campo)+'',''+safe(d.lote)+'',this)">'+
+        '<span class="lnum">'+d.lote+'</span><span class="lhas">'+Math.round(d.has)+' ha</span>'+
+        '<span class="cbadge '+(CB[d.cult]||'b-Cobertura')+'">'+(CL[d.cult]||d.cult||'—')+'</span>'+
+        (hasRe?'<span class="re-tag">resiembra</span>':'')+
+        (alerts.length?'<div class="lrow-al">'+alerts.map(function(a){return '<span class="la '+a.tipo+'"><i class="ti '+a.icon+'"></i>'+a.msg+'</span>';}).join('')+'</div>':'')+
+        '<div class="rot"><div class="ri"><div class="rl">'+prevL+'</div>'+rotB(d.antec||'—')+'</div>'+
+        '<span class="rarr">›</span><div class="ri cur"><div class="rl">'+curL+'</div>'+rotB(d.cult)+'</div>'+
+        '<span class="rarr">›</span><div class="ri"><div class="rl">'+nextL+'</div>'+rotB('?')+'</div></div>'+
+        '<i class="ti ti-chevron-right chev '+(isLo?'open':'')+'" style="font-size:11px;margin-left:6px;"></i></div>'+
+        '<div class="ldet '+(isLo?'open':'')+'" id="ld-'+campo.replace(/\s/g,'_')+'_'+String(d.lote).replace(/\s/g,'_')+'_'+season+'">'+
+        (isLo?renderDetail(d):'')+
+        '</div></div>';
+    }).join('');
+    card.innerHTML='<div class="chdr" onclick="togC(''+safe(campo)+'',this)">'+
+      '<div class="mono">'+ini+'</div>'+
+      '<div><div class="cn">'+campo+'</div><div class="cm">'+lotes.length+' lotes · '+totHc.toLocaleString('es')+' ha</div></div>'+
+      '<div class="cr">'+(nA?'<span class="abadge"><i class="ti ti-bell" style="font-size:10px;"></i>'+nA+'</span>':'')+
+      '</div><i class="ti ti-chevron-right chev '+(isOpen?'open':'')+'"></i></div>'+
+      '<div class="llist '+(isOpen?'open':'')+'" id="ll-'+campo.replace(/\s/g,'_')+'-'+season+'">'+loteHtml+'</div>';
     el.appendChild(card);
   });
 }
 
-function togC(campo,el){const k=campo+season+activeCamp;openC.has(k)?openC.delete(k):openC.add(k);document.getElementById('ll-'+campo.replace(/\s/g,'_')+'-'+season).classList.toggle('open');el.querySelector('.chev').classList.toggle('open');}
-function togL(campo,lote,el){const k=`${campo}|${lote}|${season}|${activeCamp}`;openL.has(k)?openL.delete(k):openL.add(k);document.getElementById(`ld-${campo.replace(/\s/g,'_')}_${lote.replace(/\s/g,'_')}_${season}`).classList.toggle('open');el.querySelector('.chev').classList.toggle('open');}
-function setSeason(s,el){season=s;filtCult='all';document.querySelectorAll('.fstrip .fchip[onclick^="setSeason"]').forEach(x=>x.classList.remove('on'));el.classList.add('on');render();}
-function setFilt(c,el){filtCult=c;document.querySelectorAll('#cult-chips .fchip').forEach(x=>x.classList.remove('on'));el.classList.add('on');render();}
-
-// ── START ─────────────────────────────────────────────────────
-// init happens after XLSX loads (see bottom of body)
-
-
-
-</script>
-<script>
-
-// Unregister any service workers
-if('serviceWorker' in navigator){
-  navigator.serviceWorker.getRegistrations().then(regs=>{
-    regs.forEach(r=>r.unregister());
-  });
+function togC(campo,el){
+  const k=campo+season+activeCamp;
+  openC.has(k)?openC.delete(k):openC.add(k);
+  document.getElementById('ll-'+campo.replace(/\s/g,'_')+'-'+season).classList.toggle('open');
+  el.querySelector('.chev').classList.toggle('open');
+}
+function togL(campo,lote,el){
+  const k=campo+'|'+lote+'|'+season+'|'+activeCamp;
+  openL.has(k)?openL.delete(k):openL.add(k);
+  const det=document.getElementById('ld-'+campo.replace(/\s/g,'_')+'_'+lote.replace(/\s/g,'_')+'_'+season);
+  if(det&&!det.innerHTML.trim())det.innerHTML=renderDetail(
+    (allData[activeCamp]&&(season==='inv'?allData[activeCamp].inv:allData[activeCamp].ver)||[])
+    .find(function(d){return d.campo===campo&&d.lote===lote;})||{}
+  );
+  det&&det.classList.toggle('open');
+  el.querySelector('.chev').classList.toggle('open');
+}
+function setSeason(s,el){
+  season=s;filtCult='all';
+  document.querySelectorAll('.fstrip .fchip').forEach(function(x){x.classList.remove('on');});
+  el.classList.add('on');render();
+}
+function setFilt(c,el){
+  filtCult=c;
+  document.querySelectorAll('#cult-chips .fchip').forEach(function(x){x.classList.remove('on');});
+  el.classList.add('on');render();
 }
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-<script>initApp();</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js" onload="initApp()" onerror="initApp()"></script>
 </body>
 </html>
