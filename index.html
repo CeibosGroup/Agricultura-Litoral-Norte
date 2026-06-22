@@ -171,12 +171,6 @@ html,body{background:#fff;color:#18180f;font-family:-apple-system,BlinkMacSystem
 <div id="splash">
   <img src="LOGO.png" class="sp-logo-img" alt="Agricultura Litoral Norte">
   <div class="sp-sub">Seguimiento de labores · Ceibos Group</div>
-  <div class="sp-status" id="sp-status">
-    <div class="spin"></div>
-    <span id="sp-msg">Conectando con GitHub...</span>
-  </div>
-  <div class="sp-err" id="sp-err"></div>
-  <button class="sp-retry" id="sp-retry" onclick="initApp()">Reintentar</button>
 </div>
 
 <!-- APP -->
@@ -224,31 +218,41 @@ const HAS_REF = {};
 
 // ── INIT ──────────────────────────────────────────────────────
 function initApp(manual=false){
-  if(manual){
-    document.getElementById('splash').classList.remove('hide');
-    document.getElementById('app').style.display='none';
+  try{
+    if(manual){
+      document.getElementById('splash').classList.remove('hide');
+      document.getElementById('app').style.display='none';
+    }
+
+    // Load historic data (embedded)
+    allData = JSON.parse(JSON.stringify(HISTORIC));
+    Object.values(allData).forEach(cd=>{
+      (cd.inv||[]).forEach(d=>{ HAS_REF[`${d.campo}|${d.lote}`]=d.has; });
+    });
+
+    const camps = Object.keys(allData).sort().reverse();
+    activeCamp = camps[0];
+
+    // Hide splash, show app
+    const splash = document.getElementById('splash');
+    const app = document.getElementById('app');
+    splash.style.display='none';
+    app.style.display='block';
+
+    document.getElementById('sync-txt').textContent = activeCamp;
+    document.getElementById('sync-ok').style.display='flex';
+
+    buildCampPills(camps);
+    render();
+
+    // Try GitHub update in background
+    updateFromGithub();
+
+  } catch(e){
+    // Show error on splash so we can debug
+    document.getElementById('splash').innerHTML += 
+      `<div style="color:red;font-size:12px;padding:16px;max-width:320px;word-break:break-all;">ERROR: ${e.message}<br>${e.stack||''}</div>`;
   }
-
-  // Load historic data (embedded)
-  allData = JSON.parse(JSON.stringify(HISTORIC));
-  Object.values(allData).forEach(cd=>{
-    (cd.inv||[]).forEach(d=>{ HAS_REF[`${d.campo}|${d.lote}`]=d.has; });
-  });
-
-  const camps = Object.keys(allData).sort().reverse();
-  activeCamp = camps[0];
-
-  document.getElementById('splash').classList.add('hide');
-  setTimeout(()=>document.getElementById('splash').style.display='none',200);
-  document.getElementById('app').style.display='block';
-  document.getElementById('sync-txt').textContent = activeCamp;
-  document.getElementById('sync-ok').style.display='flex';
-
-  buildCampPills(camps);
-  render();
-
-  // Try to update active campaign in background (non-blocking)
-  updateFromGithub();
 }
 
 async function updateFromGithub(){
@@ -282,11 +286,7 @@ async function updateFromGithub(){
   }
 }
 
-function setStatus(msg,showSpin){
-  document.getElementById('sp-msg').textContent=msg;
-  document.querySelector('.sp-status').style.display=msg?'flex':'none';
-  document.querySelector('.spin').style.display=showSpin?'block':'none';
-}
+function setStatus(msg,showSpin){}
 
 // ── PARSER ────────────────────────────────────────────────────
 function isFinn(cell){ return cell?.s?.fgColor?.rgb===FINN_COLOR; }
