@@ -7,7 +7,7 @@
 <link rel="manifest" href="manifest.json">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="LN Agro">
-<link rel="apple-touch-icon" href="LOGO.png">
+<link rel="apple-touch-icon" href="LOGO.jpeg">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
@@ -116,13 +116,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 <body>
 
 <div id="splash">
-  <img src="LOGO.png" class="sp-img" alt="LN Agro">
+  <img src="LOGO.jpeg" class="sp-img" alt="LN Agro">
   <div class="sp-sub">Seguimiento de labores</div>
 </div>
 
 <div id="app" style="display:none;">
   <div class="hdr">
-    <img src="LOGO.png" class="hdr-logo" alt="LN Agro">
+    <img src="LOGO.jpeg" class="hdr-logo" alt="LN Agro">
     <div class="hdr-r">
       <div id="cpills" style="display:flex;gap:4px;"></div>
       <div class="sync" id="sync" style="display:none;"><i class="ti ti-cloud-check"></i><span id="synctxt"></span></div>
@@ -156,6 +156,7 @@ var RAW = 'https://raw.githubusercontent.com/CeibosGroup/Agricultura-Litoral-Nor
 var FINN_COLOR = 'FF002060';
 
 // ── STATE ─────────────────────────────────────────────────────
+var VER_CULT = {"26-27":{"Malacara|1":"Sj2","Malacara|2":"Sj1","Malacara|3":"Sj1","Malacara|7":"Sj1","Malacara|8":"Sj1","Malacara|9":"Sj1","Malacara|10":"Sj1","Malacara|11":"Sj1","Malacara|12":"Sj1","Malacara|13":"Sj1","Montecristo|6":"Sj1","Montecristo|7":"Sj2","Montecristo|11":"Sj2","Montecristo|12":"Sj2","Montecristo|13":"Sj2","Montecristo|14":"Sj2","Montecristo|16":"Sj2","La Campana|1":"Sj2","La Campana|2":"Sj2","La Campana|3":"Sj2","La Campana|4":"Sj2","La Campana|5":"Sj1","La Campana|6":"Sj1","La Campana|11":"Sj2","La Campana|12":"Sj1","San Luis|1":"Sj2","San Luis|2":"Mz1","La Blanqueada|1":"Sj1","La Blanqueada|2":"Sj2","La Blanqueada|3":"Sj2","La Blanqueada|4":"Sj2","La Blanqueada|5":"Sj1","La Blanqueada|7":"Sj1","La Blanqueada|8":"Sj1","La Blanqueada|9":"Mz1","La Blanqueada|10":"Sj2","La Blanqueada|11":"Sj1","La Blanqueada|12":"Mz1","La Blanqueada|13":"Mz1","La Blanqueada|14":"Sj1","La Blanqueada|15":"Sj1","Santa Rafaela|Bellaco":"Mz2","Santa Rafaela|Chaniar norte":"Sj1","Santa Rafaela|Chaniar sur":"Sj2","Santa Rafaela|Los Juanes":"Sj2","Santa Rafaela|Manguera E":"Sj2","Santa Rafaela|Manguera w":"Mz2","Santa Rafaela|Nianiez":"Sj2","Santa Rafaela|Trillo":"Mz1","Santa Rafaela|Entrada":"Mz1","Santa Rafaela|Puesto":"Mz1"},"25-26":{"Malacara|1":"Sj1","Malacara|2":"Sj2","Malacara|3":"Sj2","Malacara|7":"Sj2","Malacara|8":"Sj2","Malacara|9":"Sj2","Malacara|10":"Sj2","Malacara|11":"Sj2","Malacara|12":"Sj2","Malacara|13":"Sj2","Montecristo|6":"Sj2","Montecristo|7":"Sj2","Montecristo|11":"Sj2","Montecristo|12":"Sj2","Montecristo|13":"Sj2","Montecristo|14":"Sj2","Montecristo|16":"Sj2","Pereira|Frente":"Sj2","Pereira|Fondo":"Sj2","La Campana|1":"Sj1","La Campana|2":"Sj1","La Campana|3":"Sj1","La Campana|4":"Sj1","La Campana|5":"Sj2","La Campana|6":"Sj2","La Campana|11":"Sj1","La Campana|12":"Sj2","San Luis|1":"Mz1","San Luis|2":"Sj2","La Blanqueada|1":"Mz2","La Blanqueada|2":"Mz1","La Blanqueada|3":"Mz1","La Blanqueada|4":"Mz1","La Blanqueada|5":"Mz2","La Blanqueada|7":"Sj2","La Blanqueada|8":"Sj2","La Blanqueada|9":"Sj2","La Blanqueada|10":"Mz1","La Blanqueada|11":"Mz2","La Blanqueada|12":"Sj2","La Blanqueada|13":"Sj2","La Blanqueada|14":"Sj2","La Blanqueada|15":"Sj2","Santa Rafaela|Bellaco":"Sj2","Santa Rafaela|Chaniar norte":"Mz2","Santa Rafaela|Chaniar sur":"Sj2","Santa Rafaela|Los Juanes":"Sj2","Santa Rafaela|Manguera E":"Sj2","Santa Rafaela|Manguera w":"Sj2","Santa Rafaela|Nianiez":"Sj2","Santa Rafaela|Trillo":"Sj2","Santa Rafaela|Entrada":"Sj2","Santa Rafaela|Puesto":"Sj2"},"24-25":{"Malacara|1":"Sj2","Malacara|2":"Sj1","Malacara|3":"Sj1","Malacara|7":"Sj1","Malacara|8":"Sj1","Malacara|9":"Sj1","Malacara|10":"Sj1","Malacara|11":"Sj1","Malacara|12":"Sj1","Malacara|13":"Sj1","La Campana|1":"Sj2","La Campana|2":"Sj2","La Campana|3":"Sj2","La Campana|4":"Sj2","La Campana|5":"Sj1","La Campana|6":"Sj1","La Campana|11":"Sj2","La Campana|12":"Sj1","Montecristo|6":"Sj1","Montecristo|7":"Sj1","Montecristo|11":"Sj1","Montecristo|12":"Sj1","Montecristo|13":"Sj1","Montecristo|14":"Sj1","Montecristo|16":"Sj1","Pereira|Entrada":"Sj1","Pereira|Fondo":"Sj2","La Blanqueada|1":"Sj2","La Blanqueada|2":"Sj2","La Blanqueada|3":"Sj2","La Blanqueada|4":"Sj2","La Blanqueada|5":"Sj2","La Blanqueada|7":"Sj2","La Blanqueada|8":"Sj2","La Blanqueada|9":"Sj2","La Blanqueada|10":"Sj2","La Blanqueada|11":"Sj2","La Blanqueada|12":"Sj2","La Blanqueada|13":"Sj2","La Blanqueada|14":"Sj2","La Blanqueada|15":"Sj2","San Luis|1":"Sj2","San Luis|2":"Sj2","Santa Rafaela|Bellaco":"Sj2","Santa Rafaela|Chaniar norte":"Sj2","Santa Rafaela|Chaniar sur":"Sj1","Santa Rafaela|Entrada":"Sj2","Santa Rafaela|Los Juanes":"Sj1","Santa Rafaela|Manguera E":"Sj1","Santa Rafaela|Manguera w":"Sj2","Santa Rafaela|Nianiez":"Sj1","Santa Rafaela|Puesto":"Sj2","Santa Rafaela|Trillo":"Sj2"}};
 var AD = HISTORIC, AC = null, SE = 'inv', FC = 'all';
 var openC = {}, openL = {};
 
@@ -189,7 +190,7 @@ function rotB(c) {
   return '<span class="rb '+(BCL[c]||'bCob')+'">'+cl+'</span>';
 }
 
-function FS() { return '<span class="ff"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAAB1klEQVR4nO2Yz0sCQRTHv5pppViRkJBEkEF/QNChQ4cOHTp06NChQ3foUIcO0T/QH9ChQxBBBF0iEoIQJBARJCLSLiJiIiL+6PvCgyzLzs7szO7uviuBBe88Zt77vJl5b3YBgiAIgiAIgiCIEAEAZ2Z2ZmaqBgCgpig1RamKUmYRLgFQAHAE4A7AEkAJwBbABUARQBbAGUAOwBFAHkAWQAFAEUAGQBpAEkAcQAxAFEAIQAhACEA4QARAGEAIQARAGEAQQAhACEAQQBhAEEAIQAhAEEAYQBBAEEAIQAhAEEAYQBBAEEAIQAhAEEA4QBBAGEAIQAhAEEAQQBhAEEAIQAhAEEAYQBBAEEAIQAhAEEAQQBhAEEAIQAhAEEAYQBBAEEAIQAhAEEAQQBhAEEAIQAhAEEAYQBBAEEAIQAhAEEAQQBhAEEAIQAhAEEAYQBBAGEAIQAhAEEAQQBhAEEAIQAhAEEAYQBBAEEAIQAhAEEAQQBhAEEAIQAhAEEAYQBBAEEAIQAhAEEAQQBhAEEAIQAhAEEAYQBBAEEAIQAhAEEAQQBhAEEAIQAhAEEAYQBBAEEAIQAhAEEAQQBhAEEAIQAhAEEAYQBBAEEAIQAhAEEAQQBhAEEAIQAhAEEAYQBBAEEAIQAhAEEAQQBhAEEAIQAhAEEAYQBBAEEAIQAhAEEAQQBhAEEAIQAhAEEAYQBBAEEAIQAhAEEAQQBhAEEAIQAhAGEAQgAhAEIAQQBiAEIAIgBiAEIAIgBiAEIAIgBiAEIAIgBiAEIAIgBiAEI=" alt="F"></span>'; }
+function FS() { return '<span class="ff"><img src="data:image/png;base64,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" alt="F"></span>'; }
 
 // ── INIT ──────────────────────────────────────────────────────
 function initApp(manual) {
@@ -350,13 +351,13 @@ function render() {
           '<span class="lnum">'+d.lote+'</span>'+
           '<span class="lhas">'+Math.round(d.has)+' ha</span>'+
           '<span class="cbadge '+(BCL[d.cult]||'bCob')+'">'+(CL[d.cult]||d.cult||'?')+'</span>'+
-          (hasRe?'<span class="re-tag">re</span>':'')+
+          (hasRe?'<span class="re-tag"><i class="ti ti-refresh" style="font-size:9px;vertical-align:-1px;"></i>'+(d.re1&&d.re1.ha&&d.has?Math.round(d.re1.ha/d.has*100)+'%':'re')+'</span>':'')+
           '<div class="rot">'+
             '<div class="ri"><div class="rl">'+prevL+'</div>'+rotB(d.antec||'?')+'</div>'+
             '<span class="rarr">&#8250;</span>'+
             '<div class="ri cur"><div class="rl">'+curL+'</div>'+rotB(d.cult)+'</div>'+
             '<span class="rarr">&#8250;</span>'+
-            '<div class="ri"><div class="rl">'+nextL+'</div>'+rotB('?')+'</div>'+
+            '<div class="ri"><div class="rl">'+nextL+'</div>'+rotB(SE==='inv'?(VER_CULT[AC]&&VER_CULT[AC][d.campo+'|'+d.lote]||null):(d.antec||null))+'</div>'+
           '</div>'+
           '<i class="ti ti-chevron-right" style="font-size:11px;color:#ccc;margin-left:4px;transition:transform .2s;'+(isLo?'transform:rotate(90deg)':'')+'" id="lci'+lid+'"></i>'+
         '</div>'+
