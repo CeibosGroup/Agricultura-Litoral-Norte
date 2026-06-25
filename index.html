@@ -135,6 +135,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div class="fchip on" id="btn-inv">Invierno</div>
     <div class="fchip" id="btn-ver">Verano</div>
   </div>
+  <div id="alerts" style="background:#fff;border-bottom:1px solid #e8e6de;padding:6px 16px;min-height:34px;display:flex;flex-wrap:wrap;gap:5px;align-items:center;"></div>
   <div class="mwrap"><div class="metrics" id="metrics"></div></div>
   <div class="campos" id="campos"></div>
 </div>
@@ -279,6 +280,56 @@ function filtered() {
   return FC==='all' ? src : src.filter(function(d){return d.cult===FC;});
 }
 
+
+function renderAlerts(rows) {
+  var al = q('alerts');
+  if(SE !== 'inv') {
+    al.innerHTML = '<span style="font-size:11px;color:#999;display:flex;align-items:center;gap:4px;"><i class="ti ti-circle-check" style="color:#1a8a5a;font-size:13px;"></i>Sin alertas activas</span>';
+    return;
+  }
+  var all = [];
+  rows.forEach(function(d) {
+    getLoteAlerts(d).forEach(function(a) {
+      all.push({campo:d.campo, lote:d.lote, tipo:a.tipo, msg:a.msg});
+    });
+  });
+  if(!all.length) {
+    al.innerHTML = '<span style="font-size:11px;color:#999;display:flex;align-items:center;gap:4px;"><i class="ti ti-circle-check" style="color:#1a8a5a;font-size:13px;"></i>Sin alertas activas</span>';
+    return;
+  }
+  var h = '<span style="font-size:9px;font-weight:700;color:#999;text-transform:uppercase;letter-spacing:.06em;margin-right:2px;display:flex;align-items:center;gap:3px;white-space:nowrap;"><i class="ti ti-bell-ringing"></i>Alertas</span>';
+  all.slice(0,6).forEach(function(a) {
+    var bg = a.tipo==='urg'?'#fceaea':'#eeedfe';
+    var col = a.tipo==='urg'?'#b83030':'#534AB7';
+    h += '<div style="font-size:11px;padding:2px 8px;border-radius:20px;background:'+bg+';color:'+col+';display:flex;align-items:center;gap:4px;white-space:nowrap;font-weight:500;">';
+    h += '<i class="ti ti-microscope" style="font-size:10px;"></i>';
+    h += '<strong>'+a.campo+' L'+a.lote+'</strong> &middot; '+a.msg+'</div>';
+  });
+  al.innerHTML = h;
+  // Push notification
+  pushNotifications(all);
+}
+
+function pushNotifications(alerts) {
+  if(!('Notification' in window)) return;
+  if(Notification.permission === 'default') {
+    Notification.requestPermission();
+    return;
+  }
+  if(Notification.permission !== 'granted') return;
+  // Only notify once per session
+  if(window._notifSent) return;
+  window._notifSent = true;
+  alerts.slice(0,3).forEach(function(a) {
+    try {
+      new Notification('LN Agro - Colza '+a.campo+' L'+a.lote, {
+        body: a.msg,
+        icon: 'LOGO.jpeg'
+      });
+    } catch(e) {}
+  });
+}
+
 function render() {
   var rows = filtered(), CL = SE==='inv'?CLI:CLV, prod = rows.filter(isProd);
 
@@ -308,6 +359,8 @@ function render() {
   var grp = {};
   rows.forEach(function(d){if(!grp[d.campo])grp[d.campo]=[];grp[d.campo].push(d);});
   var el = q('campos'); el.innerHTML = '';
+  // Render alerts
+  renderAlerts(rows);
   if(!rows.length){el.innerHTML='<div class="empty">Sin datos para esta temporada</div>';return;}
 
   Object.keys(grp).forEach(function(campo) {
