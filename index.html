@@ -479,18 +479,47 @@ function initClima(){
 }
 
 async function fetchOM(){
-  // Fetch from 2010-01-01 to today for Paysandú
   var today=new Date();
+  var yesterday=new Date(today);yesterday.setDate(yesterday.getDate()-1);
   var fmt=function(d){return d.toISOString().slice(0,10);};
-  var url='https://api.open-meteo.com/v1/forecast?latitude='+LAT+'&longitude='+LON+
-    '&daily=temperature_2m_min,temperature_2m_max,et0_fao_evapotranspiration'+
-    '&start_date=2010-01-01&end_date='+fmt(today)+'&timezone=America%2FSao_Paulo';
+  var params='&daily=temperature_2m_min,temperature_2m_max,et0_fao_evapotranspiration&timezone=America%2FSao_Paulo';
+  var baseHist='https://archive-api.open-meteo.com/v1/archive?latitude='+LAT+'&longitude='+LON;
+  var baseFore='https://api.open-meteo.com/v1/forecast?latitude='+LAT+'&longitude='+LON+'&past_days=92';
   try{
-    var res=await fetch(url);
-    omData=await res.json();
+    // Fetch historical (2010 to yesterday) + recent forecast in parallel
+    var results=await Promise.all([
+      fetch(baseHist+params+'&start_date=2010-01-01&end_date='+fmt(yesterday)).then(function(r){return r.json();}),
+      fetch(baseFore+params).then(function(r){return r.json();})
+    ]);
+    var hist=results[0],fore=results[1];
+    // Merge: use hist as base, append fore dates not already in hist
+    var allDates=hist.daily.time.slice();
+    var allTmin=hist.daily.temperature_2m_min.slice();
+    var allTmax=hist.daily.temperature_2m_max.slice();
+    var allEtp=hist.daily.et0_fao_evapotranspiration.slice();
+    var lastHistDate=allDates[allDates.length-1];
+    if(fore.daily&&fore.daily.time){
+      fore.daily.time.forEach(function(d,i){
+        if(d>lastHistDate){
+          allDates.push(d);
+          allTmin.push(fore.daily.temperature_2m_min[i]);
+          allTmax.push(fore.daily.temperature_2m_max[i]);
+          allEtp.push(fore.daily.et0_fao_evapotranspiration[i]);
+        }
+      });
+    }
+    omData={daily:{time:allDates,temperature_2m_min:allTmin,temperature_2m_max:allTmax,et0_fao_evapotranspiration:allEtp}};
     renderClima();
   }catch(e){
-    q('clima-content').innerHTML='<div style="padding:20px;text-align:center;color:#b83030;font-size:12px;">Error al cargar datos climáticos</div>';
+    console.error('OM error:',e);
+    // Fallback: try just forecast with max past days
+    try{
+      var r=await fetch('https://api.open-meteo.com/v1/forecast?latitude='+LAT+'&longitude='+LON+'&past_days=92'+params);
+      omData=await r.json();
+      renderClima();
+    }catch(e2){
+      q('clima-content').innerHTML='<div style="padding:20px;text-align:center;color:#b83030;font-size:12px;">Error al cargar datos climáticos. Verificá tu conexión.</div>';
+    }
   }
 }
 
