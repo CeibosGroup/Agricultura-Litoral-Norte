@@ -23,33 +23,23 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .cpill.on{background:#eeedfe;border-color:#534AB7;color:#534AB7;font-weight:600;}
 .sync{font-size:10px;color:#1a8a5a;display:flex;align-items:center;gap:3px;}
 .ibtn{padding:5px;border-radius:6px;cursor:pointer;color:#666;font-size:16px;border:none;background:transparent;}
-
-/* TABS */
 .tabs{background:#fff;border-bottom:1px solid #e8e6de;display:flex;}
 .tab{flex:1;padding:10px 0;text-align:center;font-size:12px;color:#999;cursor:pointer;border-bottom:2px solid transparent;font-weight:500;}
 .tab.on{color:#534AB7;border-bottom-color:#534AB7;}
 .tab-panel{display:none;}
 .tab-panel.on{display:block;}
-
-/* STATUS TAB */
 .fstrip{background:#fff;border-bottom:1px solid #e8e6de;padding:7px 16px;display:flex;gap:5px;overflow-x:auto;align-items:center;scrollbar-width:none;}
 .fstrip::-webkit-scrollbar{display:none;}
 .fl{font-size:9px;font-weight:700;color:#999;text-transform:uppercase;letter-spacing:.06em;margin-right:3px;white-space:nowrap;flex-shrink:0;}
 .fchip{font-size:11px;padding:4px 10px;border-radius:20px;border:1px solid #ccc;cursor:pointer;color:#666;white-space:nowrap;flex-shrink:0;}
 .fchip.on{border-color:#333;color:#333;background:#f8f7f3;font-weight:600;}
 .fsep{width:1px;height:16px;background:#e8e6de;margin:0 3px;flex-shrink:0;}
-
-/* ALERTS */
 .alerts-bar{background:#fff;border-bottom:1px solid #e8e6de;cursor:pointer;user-select:none;}
 .alerts-collapsed{padding:7px 16px;display:flex;align-items:center;gap:8px;}
 .alerts-expanded{padding:6px 16px 8px;display:flex;flex-wrap:wrap;gap:5px;align-items:center;}
-.alert-badge{font-size:11px;padding:2px 9px;border-radius:20px;font-weight:600;display:flex;align-items:center;gap:3px;}
 .alert-pill{font-size:11px;padding:3px 9px;border-radius:20px;font-weight:500;display:flex;align-items:center;gap:4px;white-space:nowrap;}
 .a-urg{background:#fceaea;color:#b83030;}
 .a-info{background:#eeedfe;color:#534AB7;}
-.a-ok{background:#e8f5ee;color:#1a8a5a;}
-
-/* METRICS */
 .mwrap{background:#fff;border-bottom:1px solid #e8e6de;padding:8px 16px;overflow-x:auto;scrollbar-width:none;}
 .mwrap::-webkit-scrollbar{display:none;}
 .metrics{display:flex;gap:6px;min-width:max-content;}
@@ -59,8 +49,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .ms{font-size:9px;color:#999;margin-top:1px;white-space:nowrap;}
 .mbar{width:100%;height:3px;border-radius:2px;background:#e8e6de;margin-top:4px;}
 .mfill{height:3px;border-radius:2px;}
-
-/* CAMPOS */
 .campos{padding:10px 12px;display:flex;flex-direction:column;gap:8px;padding-bottom:50px;}
 .ccard{background:#fff;border:1px solid #e8e6de;border-radius:12px;overflow:hidden;}
 .chdr{padding:11px 14px;cursor:pointer;display:flex;align-items:center;gap:10px;user-select:none;}
@@ -134,39 +122,27 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .hbar{width:100%;height:3px;border-radius:2px;background:#e8e6de;margin-top:3px;}
 .hbarf{height:3px;border-radius:2px;background:#1a8a5a;}
 .empty{padding:36px;text-align:center;color:#999;font-size:13px;}
-
-/* CLIMA TAB */
-.clima-wrap{padding:10px 12px;padding-bottom:50px;}
-.clima-filters{background:#fff;border-bottom:1px solid #e8e6de;padding:7px 16px;display:flex;gap:5px;overflow-x:auto;scrollbar-width:none;}
-.clima-filters::-webkit-scrollbar{display:none;}
-.suma-cards{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:10px;}
-.suma-card{background:#fff;border:1px solid #e8e6de;border-radius:8px;padding:8px 10px;}
-.sc-lbl{font-size:9px;color:#999;font-weight:600;text-transform:uppercase;letter-spacing:.04em;margin-bottom:2px;}
+.clima-wrap{padding:10px 12px;padding-bottom:60px;}
+.clima-row{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px;}
+.sc{background:#fff;border:1px solid #e8e6de;border-radius:8px;padding:8px 10px;}
+.sc-lbl{font-size:9px;color:#999;font-weight:600;text-transform:uppercase;letter-spacing:.04em;margin-bottom:2px;display:flex;align-items:center;gap:3px;}
 .sc-val{font-size:18px;font-weight:600;}
 .sc-sub{font-size:9px;color:#999;margin-top:1px;}
-.clima-chart-card{background:#fff;border:1px solid #e8e6de;border-radius:10px;padding:12px;margin-bottom:10px;}
-.clima-chart-title{font-size:10px;font-weight:600;color:#999;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;}
-.api-badge{font-size:9px;background:#E6F1FB;color:#185FA5;padding:2px 7px;border-radius:20px;}
-.bars{display:flex;align-items:flex-end;gap:2px;height:70px;}
-.bar{flex:1;border-radius:2px 2px 0 0;min-width:0;}
-.bar.low{background:#B5D4F4;}
-.bar.mid{background:#378ADD;}
-.bar.high{background:#185FA5;}
-.chart-axis{display:flex;justify-content:space-between;margin-top:4px;}
-.chart-axis span{font-size:9px;color:#999;}
-.eventos-title{font-size:10px;font-weight:700;color:#999;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;}
-.evento-card{background:#fff;border:1px solid #e8e6de;border-radius:8px;padding:9px 12px;margin-bottom:5px;display:flex;align-items:center;gap:10px;}
-.evento-icon{width:34px;height:34px;border-radius:7px;background:#E6F1FB;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.evento-info{flex:1;}
-.evento-fecha{font-size:12px;font-weight:600;}
-.evento-campos{font-size:10px;color:#999;margin-top:1px;}
-.evento-mm{font-size:17px;font-weight:600;color:#185FA5;}
-.evento-mm span{font-size:10px;font-weight:400;color:#999;margin-left:1px;}
-
-/* EMPTY TABS */
+.chart-card{background:#fff;border:1px solid #e8e6de;border-radius:10px;padding:12px;margin-bottom:8px;}
+.chart-title{font-size:10px;font-weight:600;color:#666;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;}
+.legend{display:flex;gap:12px;margin-bottom:8px;flex-wrap:wrap;}
+.leg-item{display:flex;align-items:center;gap:4px;font-size:10px;color:#666;}
+.leg-sq{width:10px;height:10px;border-radius:2px;display:inline-block;}
+.leg-ln{width:14px;height:3px;border-radius:1px;display:inline-block;}
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px;}
+.stat-card{background:#fff;border:1px solid #e8e6de;border-radius:8px;padding:8px 10px;}
+.stat-lbl{font-size:9px;color:#999;text-transform:uppercase;letter-spacing:.04em;font-weight:600;margin-bottom:3px;}
+.stat-val{font-size:14px;font-weight:600;}
+.stat-sub{font-size:9px;color:#999;margin-top:1px;}
 .tab-empty{padding:60px 20px;text-align:center;color:#999;}
 .tab-empty i{font-size:32px;display:block;margin-bottom:10px;color:#ccc;}
 .tab-empty p{font-size:13px;}
+.clima-loading{padding:40px;text-align:center;color:#999;font-size:12px;}
 </style>
 </head>
 <body>
@@ -174,9 +150,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   <img src="LOGO.jpeg" class="sp-img" alt="LN Agro">
   <div class="sp-sub">Seguimiento de labores</div>
 </div>
-
 <div id="app" style="display:none;">
-  <!-- HEADER -->
   <div class="hdr">
     <img src="LOGO.jpeg" class="hdr-logo" alt="LN Agro">
     <div class="hdr-r">
@@ -185,8 +159,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       <button class="ibtn" id="btnRefresh"><i class="ti ti-refresh"></i></button>
     </div>
   </div>
-
-  <!-- TABS -->
   <div class="tabs">
     <div class="tab on" data-tab="status">Status</div>
     <div class="tab" data-tab="clima">Clima</div>
@@ -194,7 +166,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div class="tab" data-tab="avances">Avances</div>
   </div>
 
-  <!-- STATUS TAB -->
+  <!-- STATUS -->
   <div class="tab-panel on" id="panel-status">
     <div class="fstrip">
       <span class="fl">Cultivo</span>
@@ -217,227 +189,199 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div class="campos" id="campos"></div>
   </div>
 
-  <!-- CLIMA TAB -->
+  <!-- CLIMA -->
   <div class="tab-panel" id="panel-clima">
-    <div class="clima-filters" id="clima-campo-filters"></div>
-    <div class="clima-filters" style="border-top:none;" id="clima-period-filters"></div>
-    <div class="clima-wrap">
-      <div class="suma-cards" id="suma-cards"></div>
-      <div class="clima-chart-card">
-        <div class="clima-chart-title">
-          <span>Precipitaciones diarias (mm)</span>
-          <span class="api-badge">Open-Meteo</span>
-        </div>
-        <div class="bars" id="clima-bars"></div>
-        <div class="chart-axis" id="clima-axis"></div>
-      </div>
-      <div class="eventos-title">Eventos destacados</div>
-      <div id="clima-eventos"></div>
+    <div class="fstrip" id="clima-campo-fstrip">
+      <span class="fl">Campo</span>
+      <div id="clima-campo-chips" style="display:flex;gap:5px;"></div>
+    </div>
+    <div class="fstrip" id="clima-period-fstrip">
+      <span class="fl">Período</span>
+      <div id="clima-period-chips" style="display:flex;gap:5px;"></div>
+    </div>
+    <div id="clima-content">
+      <div class="clima-loading"><i class="ti ti-loader" style="font-size:20px;display:block;margin-bottom:8px;"></i>Cargando datos climáticos...</div>
     </div>
   </div>
 
-  <!-- INDICADORES TAB -->
+  <!-- INDICADORES -->
   <div class="tab-panel" id="panel-indicadores">
-    <div class="tab-empty">
-      <i class="ti ti-chart-bar"></i>
-      <p>Indicadores en desarrollo</p>
-    </div>
+    <div class="tab-empty"><i class="ti ti-chart-bar"></i><p>Indicadores en desarrollo</p></div>
   </div>
 
-  <!-- AVANCES TAB -->
+  <!-- AVANCES -->
   <div class="tab-panel" id="panel-avances">
-    <div class="tab-empty">
-      <i class="ti ti-progress"></i>
-      <p>Avances en desarrollo</p>
-    </div>
+    <div class="tab-empty"><i class="ti ti-progress"></i><p>Avances en desarrollo</p></div>
   </div>
 </div>
 
 <script src="data.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
-var FINN_COLOR = 'FF002060';
-var CLI = {Tr:'Trigo',Cz:'Colza',Ceb:'Cebada',Cobertura:'Cob.',Carinata:'Car.'};
-var CLV = {Sj1:'Soja 1',Sj2:'Soja 2',Mz1:'Maiz 1',Mz2:'Maiz 2',Cobertura:'Cob.'};
-var BCL = {Tr:'bTr',Cz:'bCz',Ceb:'bCeb',Cobertura:'bCob',Carinata:'bCar',Sj1:'bSj1',Sj2:'bSj2',Mz1:'bMz1',Mz2:'bMz2'};
-var INI = {Malacara:'ML','La Blanqueada':'LB','La Campana':'LC',Montecristo:'MC','Santa Rafaela':'SR','San Luis':'SL',Pereira:'PE'};
-var CAMPOS_COORDS = {
-  Malacara: [-32.05,-58.20], 'La Blanqueada': [-31.95,-58.10],
-  'La Campana': [-31.90,-58.05], Montecristo: [-32.00,-58.15],
-  'Santa Rafaela': [-32.10,-58.25], 'San Luis': [-31.85,-58.00], Pereira: [-32.15,-58.30]
-};
-var RAW = 'https://raw.githubusercontent.com/CeibosGroup/Agricultura-Litoral-Norte/main';
-var AD = JSON.parse(JSON.stringify(HISTORIC));
-var AC = null, SE = 'inv', FC = 'all';
-var openC = {}, openL = {}, alertsOpen = false;
-var climaCampo = 'all', climaPeriod = 30, climaData = null;
+// ── LLUVIA HISTORICA (planilla) ────────────────────────────────
+var LLUVIAS_HIST = {"Santa Rafaela":{"2022":{"12":45},"2023":{"1":35,"2":50,"3":50,"4":30,"5":131,"6":35,"7":113,"8":45,"9":90,"10":105,"11":100,"12":310},"2024":{"1":110,"2":163,"3":380,"4":288,"5":165,"6":15,"7":15,"8":80,"9":36,"10":95,"11":137,"12":98},"2025":{"1":80,"2":175,"3":110,"4":61,"5":149,"6":97,"7":80,"8":75,"9":98,"10":48,"11":101,"12":22},"2026":{"1":25,"2":70,"3":66,"4":165,"5":92,"6":45}},"Malacara":{"2022":{"12":47},"2023":{"1":30,"2":25,"3":95,"4":66,"5":118,"6":15,"7":135,"8":30,"9":126,"10":85,"11":205,"12":412},"2024":{"1":140,"2":70,"3":337,"4":347,"5":313,"6":20,"7":10,"8":95,"9":109,"10":211,"11":183,"12":54},"2025":{"1":72,"2":193,"3":170,"4":86,"5":152,"6":125,"7":115,"8":125,"9":101,"10":157,"11":125,"12":202},"2026":{"1":60,"2":120,"3":124,"4":214,"5":69,"6":56}},"La Campana":{"2022":{"12":35},"2023":{"1":20,"2":17,"3":55,"4":40,"5":71,"6":45,"7":91,"8":30,"9":160,"10":80,"11":158,"12":280},"2024":{"1":80,"2":173,"3":275,"4":381,"5":239,"6":95,"7":12,"8":78,"9":103,"10":109,"11":154,"12":110},"2025":{"1":65,"2":169,"3":133,"4":73,"5":150,"6":80,"7":110,"8":60,"9":76,"10":200,"11":86,"12":62},"2026":{"1":25,"2":70,"3":101,"4":160,"5":268,"6":41}},"Montecristo":{"2022":{"12":47},"2023":{"1":30,"2":25,"3":95,"4":78,"5":102,"6":11,"7":130,"8":35,"9":166,"10":80,"11":200,"12":352},"2024":{"1":107,"2":90,"3":250,"4":330,"5":310,"6":20,"7":10,"8":100,"9":118,"10":202,"11":169,"12":42},"2025":{"1":20,"2":174,"3":158,"4":100,"5":109,"6":162,"7":105,"8":108,"9":109,"10":229,"11":140,"12":201},"2026":{"1":51,"2":145,"3":123,"4":226,"5":62,"6":58}},"San Luis":{"2022":{"12":35},"2023":{"1":20,"2":17,"3":55,"4":60,"5":87,"6":10,"7":110,"8":30,"9":140,"10":70,"11":150,"12":255},"2024":{"1":110,"2":117,"3":300,"4":280,"5":155,"6":21,"7":10,"8":73,"9":120,"10":193,"11":168,"12":95},"2025":{"1":50,"2":132,"3":140,"4":77,"5":192,"6":80,"7":102,"8":69,"9":70,"10":159,"11":83,"12":93},"2026":{"1":33,"2":70,"3":137,"4":115,"5":300,"6":46}}};
+// La Blanqueada uses Santa Rafaela
+LLUVIAS_HIST['La Blanqueada'] = LLUVIAS_HIST['Santa Rafaela'];
 
-function q(id){ return document.getElementById(id); }
-function colPct(p){ return p>=70?'#1a8a5a':p>=40?'#c47a12':'#b83030'; }
-function pctArea(rows,fn){ var t=rows.reduce(function(a,r){return a+r.has;},0); if(!t)return 0; return Math.round(rows.filter(fn).reduce(function(a,r){return a+r.has;},0)/t*100); }
-function isProd(d){ return SE==='inv'?['Tr','Cz','Ceb','Carinata'].indexOf(d.cult)>=0:['Sj1','Sj2','Mz1','Mz2'].indexOf(d.cult)>=0; }
-function isMz(d){ return d.cult==='Mz1'||d.cult==='Mz2'; }
-function totalUrea(d){ if(SE==='inv')return(d.urea_siem&&d.urea_siem.kg||0)+(d.z22&&d.z22.kg||0)+(d.z30&&d.z30.kg||0)+(d.z33&&d.z33.kg||0); return(d.urea_siem&&d.urea_siem.kg||0)+(d.v4&&d.v4.kg||0)+(d.v8&&d.v8.kg||0); }
-function sid(s){ var h=0; for(var i=0;i<s.length;i++){h=(Math.imul(31,h)+s.charCodeAt(i))|0;} return 'x'+(h>>>0).toString(36); }
-function FS(){ var img=document.createElement('img'); img.src='data:image/png;base64,'+FINN_B64; img.style.cssText='width:13px;height:13px;object-fit:contain;opacity:.85;vertical-align:middle;margin-left:3px;'; return img.outerHTML; }
-function rotB(c){
-  if(!c) return '<span style="font-size:8px;color:#ccc">?</span>';
-  var CL=SE==='inv'?CLI:CLV;
-  var el=document.createElement('span'); el.className='rb '+(BCL[c]||'bCob'); el.textContent=CL[c]||c;
-  return el.outerHTML;
-}
+var FINN_COLOR='FF002060';
+var CLI={Tr:'Trigo',Cz:'Colza',Ceb:'Cebada',Cobertura:'Cob.',Carinata:'Car.'};
+var CLV={Sj1:'Soja 1',Sj2:'Soja 2',Mz1:'Maiz 1',Mz2:'Maiz 2',Cobertura:'Cob.'};
+var BCL={Tr:'bTr',Cz:'bCz',Ceb:'bCeb',Cobertura:'bCob',Carinata:'bCar',Sj1:'bSj1',Sj2:'bSj2',Mz1:'bMz1',Mz2:'bMz2'};
+var INI={Malacara:'ML','La Blanqueada':'LB','La Campana':'LC',Montecristo:'MC','Santa Rafaela':'SR','San Luis':'SL'};
+var CAMPOS_STAT = ['Santa Rafaela','Malacara','La Campana','Montecristo','San Luis','La Blanqueada'];
+// Paysandú coordinates
+var LAT=-32.32, LON=-58.08;
+var RAW='https://raw.githubusercontent.com/CeibosGroup/Agricultura-Litoral-Norte/main';
+var AD=JSON.parse(JSON.stringify(HISTORIC));
+var AC=null,SE='inv',FC='all';
+var openC={},openL={},alertsOpen=false;
+var climaCampo='all',climaPeriod='campaign';
+var climaChart=null,climaChart2=null;
+var omData=null; // open-meteo cache
 
-// ── TABS ──────────────────────────────────────────────────────
-document.addEventListener('DOMContentLoaded', function() {
-  document.querySelectorAll('.tab').forEach(function(tab) {
-    tab.onclick = function() {
-      var t = this.getAttribute('data-tab');
+function q(id){return document.getElementById(id);}
+function colPct(p){return p>=70?'#1a8a5a':p>=40?'#c47a12':'#b83030';}
+function pctArea(rows,fn){var t=rows.reduce(function(a,r){return a+r.has;},0);if(!t)return 0;return Math.round(rows.filter(fn).reduce(function(a,r){return a+r.has;},0)/t*100);}
+function isProd(d){return SE==='inv'?['Tr','Cz','Ceb','Carinata'].indexOf(d.cult)>=0:['Sj1','Sj2','Mz1','Mz2'].indexOf(d.cult)>=0;}
+function isMz(d){return d.cult==='Mz1'||d.cult==='Mz2';}
+function totalUrea(d){if(SE==='inv')return(d.urea_siem&&d.urea_siem.kg||0)+(d.z22&&d.z22.kg||0)+(d.z30&&d.z30.kg||0)+(d.z33&&d.z33.kg||0);return(d.urea_siem&&d.urea_siem.kg||0)+(d.v4&&d.v4.kg||0)+(d.v8&&d.v8.kg||0);}
+function sid(s){var h=0;for(var i=0;i<s.length;i++){h=(Math.imul(31,h)+s.charCodeAt(i))|0;}return 'x'+(h>>>0).toString(36);}
+function FS(){var img=document.createElement('img');img.src='data:image/png;base64,'+FINN_B64;img.style.cssText='width:13px;height:13px;object-fit:contain;opacity:.85;vertical-align:middle;margin-left:3px;';return img.outerHTML;}
+function rotB(c){if(!c)return '<span style="font-size:8px;color:#ccc">?</span>';var CL=SE==='inv'?CLI:CLV;var el=document.createElement('span');el.className='rb '+(BCL[c]||'bCob');el.textContent=CL[c]||c;return el.outerHTML;}
+var MESES=['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Set','Oct','Nov','Dic'];
+
+document.addEventListener('DOMContentLoaded',function(){
+  document.querySelectorAll('.tab').forEach(function(tab){
+    tab.onclick=function(){
+      var t=this.getAttribute('data-tab');
       document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('on');});
       document.querySelectorAll('.tab-panel').forEach(function(x){x.classList.remove('on');});
-      this.classList.add('on');
-      q('panel-'+t).classList.add('on');
-      if(t==='clima') initClima();
+      this.classList.add('on');q('panel-'+t).classList.add('on');
+      if(t==='clima')initClima();
     };
   });
-
-  q('btn-inv').onclick = function(){ setSeason('inv'); };
-  q('btn-ver').onclick = function(){ setSeason('ver'); };
-  q('btnRefresh').onclick = function(){ updateBg(); };
-  q('alerts-bar').onclick = function(){ toggleAlerts(); };
-
-  document.addEventListener('click', function(e) {
-    var chdr = e.target.closest('.chdr[data-cid]');
-    if(chdr){ togC(chdr.getAttribute('data-cid')); return; }
-    var lhdr = e.target.closest('.lhdr[data-lid]');
-    if(lhdr){ togL(lhdr.getAttribute('data-lid')); return; }
+  q('btn-inv').onclick=function(){setSeason('inv');};
+  q('btn-ver').onclick=function(){setSeason('ver');};
+  q('btnRefresh').onclick=function(){updateBg();};
+  q('alerts-bar').onclick=function(){toggleAlerts();};
+  document.addEventListener('click',function(e){
+    var chdr=e.target.closest('.chdr[data-cid]');if(chdr){togC(chdr.getAttribute('data-cid'));return;}
+    var lhdr=e.target.closest('.lhdr[data-lid]');if(lhdr){togL(lhdr.getAttribute('data-lid'));return;}
   });
-
   start();
   loadXLSX();
 });
 
-function start() {
-  AD = JSON.parse(JSON.stringify(HISTORIC));
-  var camps = Object.keys(AD).sort().reverse();
-  AC = camps[0];
-  q('splash').classList.add('hide');
-  q('app').style.display = 'block';
-  buildPills(camps);
-  render();
+function start(){
+  AD=JSON.parse(JSON.stringify(HISTORIC));
+  var camps=Object.keys(AD).sort().reverse();AC=camps[0];
+  q('splash').classList.add('hide');q('app').style.display='block';
+  buildPills(camps);render();
 }
-
-function loadXLSX() {
-  var s = document.createElement('script');
-  s.src = 'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
-  s.onload = updateBg;
-  document.body.appendChild(s);
-}
-
-async function updateBg() {
-  if(typeof XLSX==='undefined') return;
-  var now = new Date();
-  for(var y=now.getFullYear()+2; y>=2024; y--) {
-    var yy=String(y).slice(2), yp=String(y+1).slice(2), camp=yy+'-'+yp;
-    try {
-      var ctrl=new AbortController(); setTimeout(function(){ctrl.abort();},12000);
+function loadXLSX(){var s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';s.onload=updateBg;document.body.appendChild(s);}
+async function updateBg(){
+  if(typeof XLSX==='undefined')return;
+  var now=new Date();
+  for(var y=now.getFullYear()+2;y>=2024;y--){
+    var yy=String(y).slice(2),yp=String(y+1).slice(2),camp=yy+'-'+yp;
+    try{
+      var ctrl=new AbortController();setTimeout(function(){ctrl.abort();},12000);
       var res=await fetch(RAW+'/Planilla_labores_'+yy+'-'+yp+'.xlsx',{cache:'no-store',signal:ctrl.signal});
-      if(!res.ok) continue;
-      var buf=await res.arrayBuffer(), wb=XLSX.read(buf,{cellStyles:true});
+      if(!res.ok)continue;
+      var buf=await res.arrayBuffer(),wb=XLSX.read(buf,{cellStyles:true});
       AD[camp]={inv:parseSheet(wb,'Invierno'),ver:parseSheet(wb,'Verano')};
-      var camps=Object.keys(AD).sort().reverse(); AC=camps[0];
-      buildPills(camps); render();
-      q('synctxt').textContent=camp; q('sync').style.display='flex';
+      // Parse daily rainfall
+      parseLluviasDiarias(wb);
+      var camps=Object.keys(AD).sort().reverse();AC=camps[0];
+      buildPills(camps);render();
+      q('synctxt').textContent=camp;q('sync').style.display='flex';
       break;
-    } catch(e){ continue; }
+    }catch(e){continue;}
   }
 }
 
-function buildPills(camps) {
-  var el=q('cpills'); el.innerHTML='';
-  camps.forEach(function(c){
-    var d=document.createElement('div'); d.className='cpill'+(c===AC?' on':'');
-    d.textContent=c;
-    d.onclick=(function(camp){return function(){setCamp(camp);};})(c);
-    el.appendChild(d);
-  });
+function parseLluviasDiarias(wb){
+  if(wb.SheetNames.indexOf('Lluvias')<0)return;
+  var ws=wb.Sheets['Lluvias'];
+  if(!ws||!ws['!ref'])return;
+  var rng=XLSX.utils.decode_range(ws['!ref']);
+  var gv=function(r,c){var cell=ws[XLSX.utils.encode_cell({r:r,c:c})];return cell?cell.v:null;};
+  // Find daily section: look for 'REGISTRO DIARIO' in row 1 or a date in col AZ (col 51)
+  // Daily section: col 51=AZ(Fecha), 52=BA(SR), 53=BB(ML), 54=BC(LC), 55=BD(MC), 56=BE(SL), 57=BF(LB)
+  var START_COL=51; // 0-indexed = AZ
+  var CAMPO_COLS=['Santa Rafaela','Malacara','La Campana','Montecristo','San Luis','La Blanqueada'];
+  for(var ri=2;ri<=rng.e.r;ri++){
+    var dateVal=gv(ri,START_COL);
+    if(!dateVal)continue;
+    var d;
+    if(typeof dateVal==='number'){
+      var parsed=XLSX.SSF.parse_date_code(dateVal);
+      if(parsed)d=new Date(parsed.y,parsed.m-1,parsed.d);
+    }else if(dateVal instanceof Date){d=dateVal;}
+    else continue;
+    if(!d||isNaN(d))continue;
+    var y=d.getFullYear(),m=d.getMonth()+1,day=d.getDate();
+    var key=y+'-'+String(m).padStart(2,'0')+'-'+String(day).padStart(2,'0');
+    for(var ci=0;ci<CAMPO_COLS.length;ci++){
+      var campo=CAMPO_COLS[ci];
+      var val=gv(ri,START_COL+1+ci);
+      if(val!=null&&typeof val==='number'&&val>=0){
+        if(!LLUVIAS_HIST[campo])LLUVIAS_HIST[campo]={};
+        if(!LLUVIAS_HIST[campo]['daily'])LLUVIAS_HIST[campo]['daily']={};
+        LLUVIAS_HIST[campo]['daily'][key]=val;
+      }
+    }
+  }
 }
-function setCamp(c){ AC=c; document.querySelectorAll('.cpill').forEach(function(el){el.classList.toggle('on',el.textContent===c);}); render(); }
-function setSeason(s){ SE=s; FC='all'; q('btn-inv').classList.toggle('on',s==='inv'); q('btn-ver').classList.toggle('on',s==='ver'); render(); }
-function setFilt(c){ FC=c; document.querySelectorAll('#cchips .fchip').forEach(function(el){el.classList.toggle('on',el.getAttribute('data-v')===c);}); render(); }
 
-// ── ALERTS ────────────────────────────────────────────────────
-function toggleAlerts() {
-  alertsOpen = !alertsOpen;
-  q('alerts-collapsed').style.display = alertsOpen ? 'none' : 'flex';
-  q('alerts-expanded').style.display = alertsOpen ? 'flex' : 'none';
+// ── STATUS ─────────────────────────────────────────────────────
+function buildPills(camps){
+  var el=q('cpills');el.innerHTML='';
+  camps.forEach(function(c){var d=document.createElement('div');d.className='cpill'+(c===AC?' on':'');d.textContent=c;d.onclick=(function(camp){return function(){setCamp(camp);};})(c);el.appendChild(d);});
 }
-
-function getLoteAlerts(d) {
-  var a = [];
-  if(SE!=='inv'||d.cult!=='Cz') return a;
-  var ref = d.siem&&d.siem.fecha ? d.siem.fecha : null;
-  if(d.re1&&d.re1.fecha&&d.re1.ha&&d.has&&Math.round(d.re1.ha/d.has*100)>=50) ref=d.re1.fecha;
-  if(!ref) return a;
-  var p=ref.split('/'); var sd=new Date(+p[2],+p[1]-1,+p[0]); var TODAY=new Date();
-  [40,60].forEach(function(n){
-    var dt=new Date(sd); dt.setDate(dt.getDate()+n);
-    var r=Math.round((dt-TODAY)/86400000);
-    if(r>=0&&r<=5) a.push({tipo:r<=2?'urg':'info',msg:'N d'+n+' en '+r+'d ('+dt.getDate()+'/'+(dt.getMonth()+1)+')'});
-  });
+function setCamp(c){AC=c;document.querySelectorAll('.cpill').forEach(function(el){el.classList.toggle('on',el.textContent===c);});render();}
+function setSeason(s){SE=s;FC='all';q('btn-inv').classList.toggle('on',s==='inv');q('btn-ver').classList.toggle('on',s==='ver');render();}
+function setFilt(c){FC=c;document.querySelectorAll('#cchips .fchip').forEach(function(el){el.classList.toggle('on',el.getAttribute('data-v')===c);});render();}
+function toggleAlerts(){alertsOpen=!alertsOpen;q('alerts-collapsed').style.display=alertsOpen?'none':'flex';q('alerts-expanded').style.display=alertsOpen?'flex':'none';}
+function getLoteAlerts(d){
+  var a=[];if(SE!=='inv'||d.cult!=='Cz')return a;
+  var ref=d.siem&&d.siem.fecha?d.siem.fecha:null;
+  if(d.re1&&d.re1.fecha&&d.re1.ha&&d.has&&Math.round(d.re1.ha/d.has*100)>=50)ref=d.re1.fecha;
+  if(!ref)return a;
+  var p=ref.split('/');var sd=new Date(+p[2],+p[1]-1,+p[0]);var TODAY=new Date();
+  [40,60].forEach(function(n){var dt=new Date(sd);dt.setDate(dt.getDate()+n);var r=Math.round((dt-TODAY)/86400000);if(r>=0&&r<=5)a.push({tipo:r<=2?'urg':'info',msg:'N d'+n+' en '+r+'d ('+dt.getDate()+'/'+(dt.getMonth()+1)+')'});});
   return a;
 }
-
-function renderAlerts(allAlerts) {
-  var coll = q('alerts-collapsed'), exp = q('alerts-expanded');
-  if(!allAlerts.length) {
-    coll.style.display = 'none';
-    exp.style.display = 'flex';
-    exp.innerHTML = '<span style="font-size:11px;color:#999;display:flex;align-items:center;gap:5px;"><i class="ti ti-circle-check" style="color:#1a8a5a;font-size:13px;"></i>Sin alertas activas</span>';
-    return;
+function renderAlerts(all){
+  var coll=q('alerts-collapsed'),exp=q('alerts-expanded');
+  if(!all.length){
+    coll.style.display='none';exp.style.display='flex';
+    exp.innerHTML='<span style="font-size:11px;color:#999;display:flex;align-items:center;gap:5px;"><i class="ti ti-circle-check" style="color:#1a8a5a;font-size:13px;"></i>Sin alertas activas</span>';return;
   }
-  // Update collapsed
-  q('alerts-count').textContent = allAlerts.length;
-  coll.style.display = alertsOpen ? 'none' : 'flex';
-  // Update expanded
-  var h = '<span style="font-size:9px;font-weight:700;color:#999;text-transform:uppercase;letter-spacing:.06em;display:flex;align-items:center;gap:3px;white-space:nowrap;margin-right:2px;"><i class="ti ti-bell-ringing"></i>Alertas</span>';
-  allAlerts.slice(0,6).forEach(function(a){
-    var cls = a.tipo==='urg' ? 'a-urg' : 'a-info';
-    h += '<div class="alert-pill '+cls+'"><i class="ti ti-microscope" style="font-size:10px;"></i><strong>'+a.campo+' L'+a.lote+'</strong> &middot; '+a.msg+'</div>';
-  });
-  exp.innerHTML = h;
-  exp.style.display = alertsOpen ? 'flex' : 'none';
-  // Push notifications
-  pushNotify(allAlerts);
+  q('alerts-count').textContent=all.length;coll.style.display=alertsOpen?'none':'flex';
+  var h='<span style="font-size:9px;font-weight:700;color:#999;text-transform:uppercase;letter-spacing:.06em;display:flex;align-items:center;gap:3px;white-space:nowrap;margin-right:2px;"><i class="ti ti-bell-ringing"></i>Alertas</span>';
+  all.slice(0,6).forEach(function(a){h+='<div class="alert-pill '+(a.tipo==='urg'?'a-urg':'a-info')+'"><i class="ti ti-microscope" style="font-size:10px;"></i><strong>'+a.campo+' L'+a.lote+'</strong> &middot; '+a.msg+'</div>';});
+  exp.innerHTML=h;exp.style.display=alertsOpen?'flex':'none';
+  pushNotify(all);
 }
-
-function pushNotify(alerts) {
-  if(!('Notification' in window)) return;
-  if(Notification.permission==='default'){ Notification.requestPermission(); return; }
-  if(Notification.permission!=='granted') return;
-  if(window._notifSent) return; window._notifSent=true;
-  alerts.slice(0,3).forEach(function(a){
-    try{ new Notification('LN Agro · '+a.campo+' L'+a.lote,{body:a.msg,icon:'LOGO.jpeg'}); }catch(e){}
-  });
+function pushNotify(alerts){
+  if(!('Notification' in window))return;
+  if(Notification.permission==='default'){Notification.requestPermission();return;}
+  if(Notification.permission!=='granted')return;
+  if(window._notifSent)return;window._notifSent=true;
+  alerts.slice(0,3).forEach(function(a){try{new Notification('LN Agro · '+a.campo+' L'+a.lote,{body:a.msg,icon:'LOGO.jpeg'});}catch(e){}}); 
 }
-
-// ── RENDER ────────────────────────────────────────────────────
-function filtered(){ var cd=AD[AC]; if(!cd)return[]; var src=SE==='inv'?cd.inv:cd.ver; if(!src)return[]; return FC==='all'?src:src.filter(function(d){return d.cult===FC;}); }
-
-function render() {
-  var rows=filtered(), CL=SE==='inv'?CLI:CLV, prod=rows.filter(isProd);
-  // Cult chips
-  var cults=[]; rows.forEach(function(d){if(d.cult&&cults.indexOf(d.cult)<0)cults.push(d.cult);}); cults.sort();
-  var cchips=q('cchips'); cchips.innerHTML='';
+function filtered(){var cd=AD[AC];if(!cd)return[];var src=SE==='inv'?cd.inv:cd.ver;if(!src)return[];return FC==='all'?src:src.filter(function(d){return d.cult===FC;});}
+function render(){
+  var rows=filtered(),CL=SE==='inv'?CLI:CLV,prod=rows.filter(isProd);
+  var cults=[];rows.forEach(function(d){if(d.cult&&cults.indexOf(d.cult)<0)cults.push(d.cult);});cults.sort();
+  var cchips=q('cchips');cchips.innerHTML='';
   [{v:'all',l:'Todos'}].concat(cults.map(function(c){return{v:c,l:CL[c]||c};})).forEach(function(o){
-    var el=document.createElement('div'); el.className='fchip'+(FC===o.v?' on':'');
-    el.setAttribute('data-v',o.v); el.textContent=o.l;
-    el.onclick=(function(v){return function(){setFilt(v);};})(o.v);
-    cchips.appendChild(el);
+    var el=document.createElement('div');el.className='fchip'+(FC===o.v?' on':'');el.setAttribute('data-v',o.v);el.textContent=o.l;
+    el.onclick=(function(v){return function(){setFilt(v);};})(o.v);cchips.appendChild(el);
   });
-  // Collect alerts
-  var allAlerts=[];
-  rows.forEach(function(d){getLoteAlerts(d).forEach(function(a){allAlerts.push({campo:d.campo,lote:d.lote,tipo:a.tipo,msg:a.msg});});});
+  var allAlerts=[];rows.forEach(function(d){getLoteAlerts(d).forEach(function(a){allAlerts.push({campo:d.campo,lote:d.lote,tipo:a.tipo,msg:a.msg});});});
   renderAlerts(allAlerts);
-  // Metrics
   var totH=rows.reduce(function(a,r){return a+r.has;},0);
   var urows=SE==='ver'?rows.filter(isMz):prod;
   var conU=urows.filter(function(d){return totalUrea(d)>0;});
@@ -445,22 +389,21 @@ function render() {
   var pR=pctArea(prod,function(d){return d.rep&&d.rep.fecha;}),pF1=pctArea(prod,function(d){return d.f1&&d.f1.prod;}),pF2=pctArea(prod,function(d){return d.f2&&d.f2.prod;}),pZn=pctArea(prod,function(d){return d.znf&&d.znf.dosis;});
   function MC(lbl,val,sub,bar,col){return '<div class="metric"><div class="ml">'+lbl+'</div><div class="mv">'+val+'</div>'+(sub?'<div class="ms">'+sub+'</div>':'')+(bar!=null?'<div class="mbar"><div class="mfill" style="width:'+bar+'%;background:'+col+';"></div></div>':'')+'</div>';}
   q('metrics').innerHTML=MC('Has',Math.round(totH).toLocaleString('es'),rows.length+' lotes',null,null)+MC(SE==='ver'?'Urea maiz':'Urea az.',promU?promU+' kg/ha':'—',conU.length+' lotes',null,null)+MC('Repaso',pR+'%','% area',pR,colPct(pR))+MC('Fung 1',pF1+'%','% area',pF1,colPct(pF1))+MC('Fung 2',pF2+'%','% area',pF2,colPct(pF2))+MC('Zinc fol.',pZn+'%','% area',pZn,colPct(pZn));
-  // Campos
-  var grp={}; rows.forEach(function(d){if(!grp[d.campo])grp[d.campo]=[];grp[d.campo].push(d);});
-  var el=q('campos'); el.innerHTML='';
+  var grp={};rows.forEach(function(d){if(!grp[d.campo])grp[d.campo]=[];grp[d.campo].push(d);});
+  var el=q('campos');el.innerHTML='';
   if(!rows.length){el.innerHTML='<div class="empty">Sin datos para esta temporada</div>';return;}
   Object.keys(grp).forEach(function(campo){
-    var lotes=grp[campo], ini=INI[campo]||campo.slice(0,2).toUpperCase();
+    var lotes=grp[campo],ini=INI[campo]||campo.slice(0,2).toUpperCase();
     var totHc=Math.round(lotes.reduce(function(a,r){return a+r.has;},0));
-    var cid=sid(campo+SE+AC); var isOpen=!!openC[cid];
+    var cid=sid(campo+SE+AC);var isOpen=!!openC[cid];
     var lhtml='';
     lotes.forEach(function(d){
-      var lid=sid(campo+'|'+d.lote+'|'+SE+'|'+AC); var isLo=!!openL[lid];
+      var lid=sid(campo+'|'+d.lote+'|'+SE+'|'+AC);var isLo=!!openL[lid];
       var hasRe=d.re1&&(d.re1.var||d.re1.fecha);
       var rePct=hasRe&&d.re1.ha&&d.has?Math.round(d.re1.ha/d.has*100):null;
       var alerts=getLoteAlerts(d);
       var nextCult=SE==='inv'?(VER_CULT[AC]&&VER_CULT[AC][campo+'|'+d.lote]||null):(d.antec||null);
-      var prevL=SE==='inv'?'Ver ant.':'Inv ant.', curL=SE==='inv'?'Inv '+AC:'Ver '+AC, nextL=SE==='inv'?'Ver '+AC:'Inv';
+      var prevL=SE==='inv'?'Ver ant.':'Inv ant.',curL=SE==='inv'?'Inv '+AC:'Ver '+AC,nextL=SE==='inv'?'Ver '+AC:'Inv';
       var reBadge=hasRe?'<span class="re-tag"><i class="ti ti-refresh" style="font-size:9px;vertical-align:-1px;"></i>'+(rePct!=null?rePct+'%':'re')+'</span>':'';
       var alertHtml='';
       if(alerts.length){alertHtml='<div style="width:100%;margin-top:3px;">';alerts.forEach(function(a){alertHtml+='<span style="font-size:10px;padding:2px 7px;border-radius:3px;background:'+(a.tipo==='urg'?'#fceaea':'#eeedfe')+';color:'+(a.tipo==='urg'?'#b83030':'#534AB7')+';margin-right:4px;">'+a.msg+'</span>';});alertHtml+='</div>';}
@@ -474,34 +417,27 @@ function render() {
         '<i class="ti ti-chevron-right" style="font-size:11px;color:#ccc;margin-left:4px;'+(isLo?'transform:rotate(90deg)':'')+'"></i>'+
         '</div><div class="ldet'+(isLo?' open':'')+'" id="'+lid+'">'+(isLo?renderDetail(d):'')+'</div></div>';
     });
-    var card=document.createElement('div'); card.className='ccard';
+    var card=document.createElement('div');card.className='ccard';
     card.innerHTML='<div class="chdr" data-cid="'+cid+'"><div class="mono">'+ini+'</div><div><div class="cn">'+campo+'</div><div class="cm">'+lotes.length+' lotes &middot; '+totHc.toLocaleString('es')+' ha</div></div><i class="ti ti-chevron-right chev'+(isOpen?' open':'')+'" id="ci'+cid+'"></i></div><div class="llist'+(isOpen?' open':'')+'" id="ll'+cid+'">'+lhtml+'</div>';
     el.appendChild(card);
   });
 }
-
-function togC(cid){ openC[cid]=!openC[cid]; var ll=q('ll'+cid); if(ll)ll.classList.toggle('open'); var ci=q('ci'+cid); if(ci)ci.classList.toggle('open'); }
+function togC(cid){openC[cid]=!openC[cid];var ll=q('ll'+cid);if(ll)ll.classList.toggle('open');var ci=q('ci'+cid);if(ci)ci.classList.toggle('open');}
 function togL(lid){
-  openL[lid]=!openL[lid]; var det=q(lid);
+  openL[lid]=!openL[lid];var det=q(lid);
   if(det){
-    if(!det.innerHTML.trim()){
-      var src=AD[AC]&&(SE==='inv'?AD[AC].inv:AD[AC].ver)||[];
-      for(var i=0;i<src.length;i++){var d=src[i]; if(sid(d.campo+'|'+d.lote+'|'+SE+'|'+AC)===lid){det.innerHTML=renderDetail(d);break;}}
-    }
+    if(!det.innerHTML.trim()){var src=AD[AC]&&(SE==='inv'?AD[AC].inv:AD[AC].ver)||[];for(var i=0;i<src.length;i++){var d=src[i];if(sid(d.campo+'|'+d.lote+'|'+SE+'|'+AC)===lid){det.innerHTML=renderDetail(d);break;}}}
     det.classList.toggle('open');
     var icon=det.previousElementSibling&&det.previousElementSibling.querySelector('.ti-chevron-right');
     if(icon){if(openL[lid])icon.style.transform='rotate(90deg)';else icon.style.transform='';}
   }
 }
-
-// ── DETAIL RENDER ─────────────────────────────────────────────
 function LI(done,finn,icon,name,det,fecha,extra){var cls=finn?'finn':done?'done':'pend';return '<div class="li '+cls+(extra?' '+extra:'')+'"><i class="ti '+icon+'"></i><div class="lb"><div class="ln">'+name+(finn?FS():'')+' </div>'+(det?'<div class="ld">'+det+'</div>':'')+(fecha?'<div class="lf"><i class="ti ti-calendar" style="font-size:9px;vertical-align:-1px;"></i> '+fecha+'</div>':'')+'</div></div>';}
 function FC2(done,finn,label,val,unit,fecha){var cls=finn?'finn':done?'done':'pend';return '<div class="fc '+cls+'"><div class="fcl">'+label+(finn?FS():'')+' </div><div class="fcv">'+(val!=null?val:'—')+'<span class="fcu">'+(val!=null?unit:'')+'</span></div>'+(fecha?'<div class="fcd"><i class="ti ti-calendar" style="font-size:9px;vertical-align:-1px;"></i> '+fecha+'</div>':'')+'</div>';}
-
 function renderDetail(d){
-  var isVer=SE==='ver'; var hasRe=d.re1&&(d.re1.var||d.re1.fecha);
+  var isVer=SE==='ver';var hasRe=d.re1&&(d.re1.var||d.re1.fecha);
   var rePct=hasRe&&d.re1.ha?Math.round(d.re1.ha/d.has*100):null;
-  var totU=totalUrea(d), fb=d.fert_bas||{};
+  var totU=totalUrea(d),fb=d.fert_bas||{};
   var h='<div class="dbanner"><span class="dvar">'+(d.siem&&d.siem.var?d.siem.var:d.cult||'—')+'</span>'+(hasRe?'<span class="re-tag"><i class="ti ti-refresh" style="font-size:10px;vertical-align:-1px;"></i> Resiembra'+(d.re1.ha?' &middot; '+Math.round(d.re1.ha)+' ha':'')+'</span>':'')+'</div>';
   if(hasRe&&rePct!=null)h+='<div class="re-pb"><span class="re-pbl">Resiembra:</span><div class="re-pbg"><div class="re-pf" style="width:'+rePct+'%;"></div></div><span class="re-pv">'+rePct+'%</span></div><div style="height:5px;"></div>';
   h+='<div class="sgrid"><div class="sec"><div class="st"><i class="ti ti-spray"></i>Herbicidas</div>'+LI(d.barb&&d.barb.done,d.barb&&d.barb.finn,'ti-check-circle','Barbecho',d.barb&&d.barb.prod,d.barb&&d.barb.fecha)+LI(d.dg&&d.dg.done,d.dg&&d.dg.finn,'ti-check-circle','Doble golpe',d.dg&&d.dg.prod,d.dg&&d.dg.fecha)+LI(d.rep&&d.rep.done,d.rep&&d.rep.finn,'ti-check-circle','Repaso',d.rep&&d.rep.prod,d.rep&&d.rep.fecha)+'</div><div class="sec"><div class="st"><i class="ti ti-seeding"></i>Siembra</div>'+LI(d.siem&&(d.siem.var||d.siem.fecha),d.siem&&d.siem.finn,'ti-check-circle','Siembra',d.siem&&d.siem.var,d.siem&&d.siem.fecha)+LI(d.re1&&(d.re1.var||d.re1.fecha),d.re1&&d.re1.finn,'ti-refresh','Resiembra',d.re1&&d.re1.var,d.re1&&d.re1.fecha,'re')+'</div><div class="sec"><div class="st"><i class="ti ti-shield-check"></i>Sanidad</div>'+LI(d.f1&&d.f1.prod,d.f1&&d.f1.finn,'ti-check-circle','Fungicida 1',d.f1&&d.f1.prod,d.f1&&d.f1.fecha)+LI(d.f2&&d.f2.prod,d.f2&&d.f2.finn,'ti-check-circle','Fungicida 2',d.f2&&d.f2.prod,d.f2&&d.f2.fecha)+LI(d.f3&&d.f3.prod,d.f3&&d.f3.finn,'ti-check-circle','Fungicida 3',d.f3&&d.f3.prod,d.f3&&d.f3.fecha)+'</div></div>';
@@ -519,138 +455,276 @@ function renderDetail(d){
   return h;
 }
 
-// ── CLIMA ─────────────────────────────────────────────────────
-var climaInited = false;
-
-function initClima() {
-  if(climaInited) return;
-  climaInited = true;
-
-  // Campo filter
-  var campos = Object.keys(INI);
-  var cf = q('clima-campo-filters'); cf.innerHTML='';
-  [{v:'all',l:'Todos'}].concat(campos.map(function(c){return{v:c,l:c};})).forEach(function(o){
-    var el=document.createElement('div'); el.className='fchip'+(climaCampo===o.v?' on':'');
-    el.setAttribute('data-v',o.v); el.textContent=o.l;
-    el.onclick=(function(v){return function(){climaCampo=v;document.querySelectorAll('#clima-campo-filters .fchip').forEach(function(x){x.classList.toggle('on',x.getAttribute('data-v')===v);});fetchClima();};})(o.v);
-    cf.appendChild(el);
+// ── CLIMA ──────────────────────────────────────────────────────
+var climaInited=false;
+function initClima(){
+  if(climaInited)return;climaInited=true;
+  var campos=[{v:'all',l:'Todos'}].concat(CAMPOS_STAT.map(function(c){return{v:c,l:c};}));
+  var cc=q('clima-campo-chips');cc.innerHTML='';
+  campos.forEach(function(o){
+    var el=document.createElement('div');el.className='fchip'+(climaCampo===o.v?' on':'');
+    el.setAttribute('data-v',o.v);el.textContent=o.l;
+    el.onclick=(function(v){return function(){climaCampo=v;document.querySelectorAll('#clima-campo-chips .fchip').forEach(function(x){x.classList.toggle('on',x.getAttribute('data-v')===v);});renderClima();};})(o.v);
+    cc.appendChild(el);
   });
-
-  // Period filter
-  var pf = q('clima-period-filters'); pf.innerHTML='';
-  [{v:7,l:'7 días'},{v:30,l:'30 días'},{v:90,l:'Campaña'}].forEach(function(o){
-    var el=document.createElement('div'); el.className='fchip'+(climaPeriod===o.v?' on':'');
-    el.setAttribute('data-v',o.v); el.textContent=o.l;
-    el.onclick=(function(v){return function(){climaPeriod=v;document.querySelectorAll('#clima-period-filters .fchip').forEach(function(x){x.classList.toggle('on',parseInt(x.getAttribute('data-v'))===v);});fetchClima();};})(o.v);
-    pf.appendChild(el);
+  var periods=[{v:'30d',l:'30 días'},{v:'campaign',l:'Campaña'},{v:'year',l:'Año agric.'},{v:'all',l:'Todo'}];
+  var pc=q('clima-period-chips');pc.innerHTML='';
+  periods.forEach(function(o){
+    var el=document.createElement('div');el.className='fchip'+(climaPeriod===o.v?' on':'');
+    el.setAttribute('data-v',o.v);el.textContent=o.l;
+    el.onclick=(function(v){return function(){climaPeriod=v;document.querySelectorAll('#clima-period-chips .fchip').forEach(function(x){x.classList.toggle('on',x.getAttribute('data-v')===v);});renderClima();};})(o.v);
+    pc.appendChild(el);
   });
-
-  fetchClima();
+  fetchOM();
 }
 
-async function fetchClima() {
-  // Get coordinates - use center of all campos or specific campo
-  var lat = -32.0, lon = -58.15;
-  if(climaCampo!=='all' && CAMPOS_COORDS[climaCampo]) {
-    lat = CAMPOS_COORDS[climaCampo][0];
-    lon = CAMPOS_COORDS[climaCampo][1];
-  }
-
-  var endDate = new Date();
-  var startDate = new Date();
-  if(climaPeriod===90){
-    startDate = new Date(2026,3,1); // April 2026 - start of campaign
-  } else {
-    startDate.setDate(startDate.getDate()-climaPeriod);
-  }
-
-  var fmt = function(d){ return d.toISOString().slice(0,10); };
-  var url = 'https://api.open-meteo.com/v1/forecast?latitude='+lat+'&longitude='+lon+
-    '&daily=precipitation_sum,temperature_2m_min&start_date='+fmt(startDate)+'&end_date='+fmt(endDate)+'&timezone=America%2FSao_Paulo';
-
-  q('suma-cards').innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:20px;color:#999;font-size:12px;"><i class="ti ti-loader" style="font-size:18px;display:block;margin-bottom:6px;"></i>Cargando...</div>';
-
-  try {
-    var res = await fetch(url);
-    var data = await res.json();
-    climaData = data.daily;
+async function fetchOM(){
+  // Fetch from 2010-01-01 to today for Paysandú
+  var today=new Date();
+  var fmt=function(d){return d.toISOString().slice(0,10);};
+  var url='https://api.open-meteo.com/v1/forecast?latitude='+LAT+'&longitude='+LON+
+    '&daily=temperature_2m_min,temperature_2m_max,et0_fao_evapotranspiration'+
+    '&start_date=2010-01-01&end_date='+fmt(today)+'&timezone=America%2FSao_Paulo';
+  try{
+    var res=await fetch(url);
+    omData=await res.json();
     renderClima();
-  } catch(e) {
-    q('suma-cards').innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:20px;color:#b83030;font-size:12px;">Error al cargar datos climáticos</div>';
+  }catch(e){
+    q('clima-content').innerHTML='<div style="padding:20px;text-align:center;color:#b83030;font-size:12px;">Error al cargar datos climáticos</div>';
   }
 }
 
-function renderClima() {
-  if(!climaData) return;
-  var prec = climaData.precipitation_sum || [];
-  var dates = climaData.time || [];
-  var tmin = climaData.temperature_2m_min || [];
-
-  var total = prec.reduce(function(a,v){return a+(v||0);},0);
-  var maxVal = Math.max.apply(null, prec.map(function(v){return v||0;}));
-  var lastEvent = null, lastMm = 0;
-  for(var i=prec.length-1;i>=0;i--){
-    if(prec[i]>0.5){lastEvent=dates[i];lastMm=prec[i];break;}
+function getDateRange(){
+  var today=new Date();
+  var start;
+  if(climaPeriod==='30d'){start=new Date(today);start.setDate(start.getDate()-30);}
+  else if(climaPeriod==='campaign'){
+    // Campaign starts April of current agric year
+    var y=today.getMonth()<3?today.getFullYear()-1:today.getFullYear();
+    start=new Date(y,3,1);
   }
-  var daysAgo = lastEvent ? Math.round((new Date()-new Date(lastEvent))/86400000) : null;
+  else if(climaPeriod==='year'){start=new Date(today.getFullYear()-1,today.getMonth(),today.getDate());}
+  else{start=new Date(2010,0,1);}
+  return{start:start,end:today};
+}
 
-  // Heladas
-  var heladas = tmin.filter(function(t){return t!=null&&t<0;}).length;
+function getLluviasMensuales(campo,year,month){
+  // Get monthly rainfall for a campo/year/month from historical data
+  var d=LLUVIAS_HIST[campo];
+  if(!d)return null;
+  // Try daily first
+  if(d.daily){
+    var total=0,found=false;
+    var y=year,m=month;
+    var days=new Date(y,m,0).getDate();
+    for(var day=1;day<=days;day++){
+      var key=y+'-'+String(m).padStart(2,'0')+'-'+String(day).padStart(2,'0');
+      if(d.daily[key]!=null){total+=d.daily[key];found=true;}
+    }
+    if(found)return total;
+  }
+  // Fall back to monthly historical
+  var yd=d[String(year)];
+  if(yd&&yd[month]!=null)return yd[month];
+  return null;
+}
+
+function buildMonthlyData(startDate,endDate){
+  // Returns array of {label, lluvia, tmin, tmax, etp, balance}
+  var result=[];
+  var omDates=omData&&omData.daily?omData.daily.time:[];
+  var omTmin=omData&&omData.daily?omData.daily.temperature_2m_min:[];
+  var omTmax=omData&&omData.daily?omData.daily.temperature_2m_max:[];
+  var omEtp=omData&&omData.daily?omData.daily.et0_fao_evapotranspiration:[];
+
+  // Build OM lookup by date
+  var omByDate={};
+  omDates.forEach(function(d,i){omByDate[d]={tmin:omTmin[i],tmax:omTmax[i],etp:omEtp[i]};});
+
+  // Iterate months
+  var cur=new Date(startDate.getFullYear(),startDate.getMonth(),1);
+  var end=new Date(endDate.getFullYear(),endDate.getMonth(),1);
+  while(cur<=end){
+    var y=cur.getFullYear(),m=cur.getMonth()+1;
+    var label=MESES[m-1]+' '+y;
+
+    // Lluvia: from planilla (avg of selected campos or single campo)
+    var campos=climaCampo==='all'?CAMPOS_STAT:[climaCampo];
+    var lluviaVals=[];
+    campos.forEach(function(c){var v=getLluviasMensuales(c,y,m);if(v!=null)lluviaVals.push(v);});
+    var lluvia=lluviaVals.length?Math.round(lluviaVals.reduce(function(a,b){return a+b;},0)/lluviaVals.length):null;
+
+    // OM monthly aggregates
+    var tminArr=[],tmaxArr=[],etpSum=0,etpDays=0,heladaDays=0;
+    var daysInMonth=new Date(y,m,0).getDate();
+    for(var day=1;day<=daysInMonth;day++){
+      var key=y+'-'+String(m).padStart(2,'0')+'-'+String(day).padStart(2,'0');
+      var od=omByDate[key];
+      if(od){
+        if(od.tmin!=null){tminArr.push(od.tmin);if(od.tmin<0)heladaDays++;}
+        if(od.tmax!=null)tmaxArr.push(od.tmax);
+        if(od.etp!=null){etpSum+=od.etp;etpDays++;}
+      }
+    }
+    var tmin=tminArr.length?Math.round(Math.min.apply(null,tminArr)*10)/10:null;
+    var tmax=tmaxArr.length?Math.round(Math.max.apply(null,tmaxArr)*10)/10:null;
+    var etp=etpDays?Math.round(etpSum):null;
+    var balance=(lluvia!=null&&etp!=null)?Math.round(lluvia-etp):null;
+
+    result.push({label:label,y:y,m:m,lluvia:lluvia,tmin:tmin,tmax:tmax,etp:etp,balance:balance,heladas:heladaDays});
+    cur=new Date(y,m,1);
+  }
+  return result;
+}
+
+function renderClima(){
+  if(!omData){q('clima-content').innerHTML='<div class="clima-loading"><i class="ti ti-loader" style="font-size:20px;display:block;margin-bottom:8px;"></i>Cargando datos climáticos...</div>';return;}
+  var range=getDateRange();
+  var data=buildMonthlyData(range.start,range.end);
+  if(!data.length){q('clima-content').innerHTML='<div class="clima-loading">Sin datos para el período seleccionado</div>';return;}
+
+  // Destroy old charts
+  if(climaChart){climaChart.destroy();climaChart=null;}
+  if(climaChart2){climaChart2.destroy();climaChart2=null;}
+
+  // Compute stats
+  var totalLluvia=data.reduce(function(a,d){return a+(d.lluvia||0);},0);
+  var totalHeladas=data.reduce(function(a,d){return a+d.heladas;},0);
+  var tminMin=null,tminMinLabel='';
+  var diasSinLluvia=0,totalDias=0;
+  var mesMasLluvioso=null,mesMasLl=null,mesMenosLluvioso=null,mesMenosLl=null;
+  var heladaTardia=null,heladaTardiaDate='';
+
+  data.forEach(function(d){
+    if(d.lluvia!=null){
+      if(mesMasLl===null||d.lluvia>mesMasLl){mesMasLl=d.lluvia;mesMasLluvioso=d.label;}
+      if(mesMenosLl===null||d.lluvia<mesMenosLl){mesMenosLl=d.lluvia;mesMenosLluvioso=d.label;}
+    }
+    if(d.tmin!=null&&(tminMin===null||d.tmin<tminMin)){tminMin=d.tmin;tminMinLabel=d.label;}
+    if(d.heladas>0&&d.m>=9){heladaTardia=d.heladas;heladaTardiaDate=d.label;}
+  });
+
+  // Days without rain from OM daily
+  var omDates=omData.daily.time;
+  var omPrec=omData.daily.et0_fao_evapotranspiration; // we don't have precip from OM for daily
+  // Use our monthly data to count
+  data.forEach(function(d){
+    var days=new Date(d.y,d.m,0).getDate();
+    totalDias+=days;
+    if(d.lluvia!==null&&d.lluvia<1)diasSinLluvia+=days;
+  });
+
+  // Campo más lluvioso
+  var campoMasLl=null,campoMasLlVal=null,campoMenosLl=null,campoMenosLlVal=null;
+  CAMPOS_STAT.forEach(function(c){
+    var total=0,cnt=0;
+    data.forEach(function(d){var v=getLluviasMensuales(c,d.y,d.m);if(v!=null){total+=v;cnt++;}});
+    if(cnt){
+      var avg=Math.round(total/cnt*10)/10;
+      if(campoMasLlVal===null||total>campoMasLlVal){campoMasLlVal=total;campoMasLl=c;}
+      if(campoMenosLlVal===null||total<campoMenosLlVal){campoMenosLlVal=total;campoMenosLl=c;}
+    }
+  });
+
+  var labels=data.map(function(d){return d.label;});
+  var lluvias=data.map(function(d){return d.lluvia;});
+  var tmins=data.map(function(d){return d.tmin;});
+  var balances=data.map(function(d){return d.balance;});
+  var heladasPts=data.map(function(d){return d.heladas>0?d.tmin:null;});
+
+  var html='<div class="clima-wrap">';
 
   // Summary cards
-  q('suma-cards').innerHTML =
-    '<div class="suma-card"><div class="sc-lbl">Acumulado</div><div class="sc-val">'+Math.round(total)+'<span style="font-size:10px;font-weight:400;color:#999;margin-left:2px;">mm</span></div><div class="sc-sub">'+prec.length+' días</div></div>'+
-    '<div class="suma-card"><div class="sc-lbl">Último evento</div><div class="sc-val">'+(lastMm?Math.round(lastMm):'—')+'<span style="font-size:10px;font-weight:400;color:#999;margin-left:2px;">'+(lastMm?'mm':'')+'</span></div><div class="sc-sub">'+(daysAgo!=null?'hace '+daysAgo+'d':'sin datos')+'</div></div>'+
-    '<div class="suma-card"><div class="sc-lbl">Heladas</div><div class="sc-val" style="color:'+(heladas>0?'#185FA5':'#18180f')+'">'+heladas+'<span style="font-size:10px;font-weight:400;color:#999;margin-left:2px;">días</span></div><div class="sc-sub">T° min &lt; 0°C</div></div>';
+  html+='<div class="clima-row">'+
+    '<div class="sc"><div class="sc-lbl"><i class="ti ti-droplet" style="color:#185FA5;font-size:10px;"></i>Lluvia total</div><div class="sc-val">'+Math.round(totalLluvia)+'<span style="font-size:10px;font-weight:400;color:#999;margin-left:2px;">mm</span></div><div class="sc-sub">dato real planilla</div></div>'+
+    '<div class="sc"><div class="sc-lbl"><i class="ti ti-snowflake" style="color:#378ADD;font-size:10px;"></i>Heladas</div><div class="sc-val" style="color:'+(totalHeladas>0?'#185FA5':'#18180f')+'">'+totalHeladas+'<span style="font-size:10px;font-weight:400;color:#999;margin-left:2px;">días</span></div><div class="sc-sub">Open-Meteo Paysandú</div></div>'+
+  '</div>';
 
-  // Bars
-  var barsEl = q('clima-bars'); barsEl.innerHTML='';
-  var step = Math.max(1, Math.floor(prec.length/30));
-  var shown = [], shownDates = [];
-  for(var i=0;i<prec.length;i+=step){
-    shown.push(prec[i]||0);
-    shownDates.push(dates[i]);
-  }
-  var maxShown = Math.max.apply(null,shown)||1;
-  shown.forEach(function(v,i){
-    var pct = Math.round(v/maxShown*100);
-    var cls = v>20?'high':v>5?'mid':'low';
-    var bar = document.createElement('div');
-    bar.className = 'bar '+cls;
-    bar.style.height = Math.max(2,pct)+'%';
-    bar.title = shownDates[i]+': '+Math.round(v)+'mm';
-    barsEl.appendChild(bar);
+  // Chart 1: Lluvia + Temperatura
+  html+='<div class="chart-card">'+
+    '<div class="chart-title"><span>Lluvia (mm) · Temperatura mín (°C)</span></div>'+
+    '<div class="legend">'+
+      '<span class="leg-item"><span class="leg-sq" style="background:#378ADD;"></span>Lluvia mm</span>'+
+      '<span class="leg-item"><span class="leg-ln" style="background:#E24B4A;"></span>T° mín</span>'+
+      '<span class="leg-item"><span style="width:8px;height:8px;border-radius:50%;background:#b83030;border:1.5px solid #791F1F;display:inline-block;"></span>Helada</span>'+
+    '</div>'+
+    '<div style="position:relative;width:100%;height:220px;"><canvas id="chart-main" role="img" aria-label="Gráfico de lluvia y temperatura mínima mensual"></canvas></div>'+
+  '</div>';
+
+  // Chart 2: Balance hídrico
+  html+='<div class="chart-card">'+
+    '<div class="chart-title"><span>Balance hídrico (lluvia - ETP)</span><span style="font-size:9px;background:#E6F1FB;color:#185FA5;padding:2px 7px;border-radius:20px;">Open-Meteo</span></div>'+
+    '<div style="position:relative;width:100%;height:180px;"><canvas id="chart-balance" role="img" aria-label="Gráfico de balance hídrico mensual"></canvas></div>'+
+  '</div>';
+
+  // Stats grid
+  html+='<div class="stats-grid">'+
+    '<div class="stat-card"><div class="stat-lbl"><i class="ti ti-droplet" style="font-size:9px;"></i> Mes más lluvioso</div><div class="stat-val">'+mesMasLluvioso+'</div><div class="stat-sub">'+(mesMasLl!=null?Math.round(mesMasLl)+' mm':'—')+'</div></div>'+
+    '<div class="stat-card"><div class="stat-lbl"><i class="ti ti-droplet-off" style="font-size:9px;"></i> Mes menos lluvioso</div><div class="stat-val">'+mesMenosLluvioso+'</div><div class="stat-sub">'+(mesMenosLl!=null?Math.round(mesMenosLl)+' mm':'—')+'</div></div>'+
+    '<div class="stat-card"><div class="stat-lbl"><i class="ti ti-building" style="font-size:9px;"></i> Campo más lluvioso</div><div class="stat-val">'+(campoMasLl||'—')+'</div><div class="stat-sub">'+(campoMasLlVal!=null?Math.round(campoMasLlVal)+' mm total':'—')+'</div></div>'+
+    '<div class="stat-card"><div class="stat-lbl"><i class="ti ti-building-off" style="font-size:9px;"></i> Campo menos lluvioso</div><div class="stat-val">'+(campoMenosLl||'—')+'</div><div class="stat-sub">'+(campoMenosLlVal!=null?Math.round(campoMenosLlVal)+' mm total':'—')+'</div></div>'+
+    '<div class="stat-card"><div class="stat-lbl"><i class="ti ti-temperature" style="font-size:9px;"></i> T° mín registrada</div><div class="stat-val" style="color:#185FA5;">'+(tminMin!=null?tminMin+'°C':'—')+'</div><div class="stat-sub">'+tminMinLabel+'</div></div>'+
+    '<div class="stat-card"><div class="stat-lbl"><i class="ti ti-alert-triangle" style="font-size:9px;"></i> Helada tardía</div><div class="stat-val" style="color:'+(heladaTardia?'#b83030':'#18180f')+'">'+(heladaTardia?heladaTardiaDate:'Sin registro')+'</div><div class="stat-sub">'+(heladaTardia?heladaTardia+' días (post sep)':'')+'</div></div>'+
+  '</div>';
+
+  html+='</div>';
+  q('clima-content').innerHTML=html;
+
+  // Render Chart 1
+  var ctx1=document.getElementById('chart-main').getContext('2d');
+  climaChart=new Chart(ctx1,{
+    data:{
+      labels:labels,
+      datasets:[
+        {type:'bar',label:'Lluvia mm',data:lluvias,backgroundColor:'#B5D4F4',borderColor:'#378ADD',borderWidth:1,yAxisID:'y'},
+        {type:'line',label:'T° mín',data:tmins,borderColor:'#E24B4A',backgroundColor:'transparent',borderWidth:2,tension:0.3,pointRadius:0,yAxisID:'y1'},
+        {type:'scatter',label:'Helada',data:data.map(function(d,i){return d.heladas>0?{x:labels[i],y:d.tmin}:null;}).filter(Boolean),
+          backgroundColor:'#b83030',borderColor:'#791F1F',pointRadius:5,pointStyle:'circle',showLine:false,yAxisID:'y1'}
+      ]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      interaction:{mode:'index',intersect:false},
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:function(ctx){
+        if(ctx.dataset.label==='Lluvia mm')return 'Lluvia: '+(ctx.raw!=null?Math.round(ctx.raw):'—')+' mm';
+        if(ctx.dataset.label==='T° mín')return 'T° mín: '+(ctx.raw!=null?ctx.raw:'—')+'°C';
+        if(ctx.dataset.label==='Helada')return 'Helada: '+ctx.raw.y+'°C';
+        return '';
+      }}}},
+      scales:{
+        x:{ticks:{maxTicksLimit:6,maxRotation:45,font:{size:9}},grid:{display:false}},
+        y:{position:'left',title:{display:true,text:'mm',font:{size:9}},ticks:{font:{size:9}},grid:{color:'#e8e6de'}},
+        y1:{position:'right',title:{display:true,text:'°C',font:{size:9}},ticks:{font:{size:9}},grid:{display:false}}
+      }
+    }
   });
 
-  // Axis
-  var axEl = q('clima-axis');
-  if(shownDates.length>0){
-    var fmt2=function(s){var p=s.split('-');return p[2]+'/'+p[1];};
-    axEl.innerHTML='<span>'+fmt2(shownDates[0])+'</span>';
-    if(shownDates.length>2)axEl.innerHTML+='<span>'+fmt2(shownDates[Math.floor(shownDates.length/2)])+'</span>';
-    axEl.innerHTML+='<span>'+fmt2(shownDates[shownDates.length-1])+'</span>';
-  }
-
-  // Eventos destacados
-  var eventos=[];
-  for(var i=0;i<prec.length;i++){
-    if(prec[i]>5) eventos.push({fecha:dates[i],mm:prec[i]});
-  }
-  eventos.sort(function(a,b){return b.mm-a.mm;});
-  var evEl=q('clima-eventos'); evEl.innerHTML='';
-  if(!eventos.length){evEl.innerHTML='<div style="text-align:center;padding:20px;color:#999;font-size:12px;">Sin eventos significativos en el período</div>';return;}
-  eventos.slice(0,5).forEach(function(ev){
-    var p=ev.fecha.split('-');
-    var fechaStr=p[2]+'/'+p[1]+'/'+p[0];
-    var card=document.createElement('div'); card.className='evento-card';
-    card.innerHTML='<div class="evento-icon"><i class="ti ti-droplet" style="font-size:15px;color:#185FA5;"></i></div>'+
-      '<div class="evento-info"><div class="evento-fecha">'+fechaStr+'</div><div class="evento-campos">'+(climaCampo==='all'?'Todos los campos':climaCampo)+'</div></div>'+
-      '<div class="evento-mm">'+Math.round(ev.mm)+'<span>mm</span></div>';
-    evEl.appendChild(card);
+  // Render Chart 2: Balance hídrico
+  var ctx2=document.getElementById('chart-balance').getContext('2d');
+  climaChart2=new Chart(ctx2,{
+    data:{
+      labels:labels,
+      datasets:[{
+        type:'bar',label:'Balance hídrico',
+        data:balances,
+        backgroundColor:balances.map(function(v){return v===null?'transparent':v>=0?'rgba(26,138,90,0.7)':'rgba(184,48,48,0.7)';}),
+        borderColor:balances.map(function(v){return v===null?'transparent':v>=0?'#1a8a5a':'#b83030';}),
+        borderWidth:1
+      }]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:function(ctx){return 'Balance: '+(ctx.raw!=null?Math.round(ctx.raw):'—')+' mm';} }}},
+      scales:{
+        x:{ticks:{maxTicksLimit:6,maxRotation:45,font:{size:9}},grid:{display:false}},
+        y:{ticks:{font:{size:9}},grid:{color:'#e8e6de'},
+          afterBuildTicks:function(ax){if(!ax.ticks.find(function(t){return t.value===0;}))ax.ticks.push({value:0});}}
+      }
+    }
   });
 }
 
-// ── XLSX PARSER ───────────────────────────────────────────────
+// ── XLSX PARSER ────────────────────────────────────────────────
 function isFinn(cell){return cell&&cell.s&&cell.s.fgColor&&cell.s.fgColor.rgb===FINN_COLOR;}
 function normCult(v){var m={CC:'Cobertura',cc:'Cobertura',Car:'Carinata',car:'Carinata'};return v?m[String(v).trim()]||String(v).trim():null;}
 function fmtDate(v){if(v==null)return null;if(typeof v==='number'&&v>40000){var d=XLSX.SSF.parse_date_code(v);if(d)return String(d.d).padStart(2,'0')+'/'+String(d.m).padStart(2,'0')+'/'+d.y;}var s=String(v).trim();if(s.includes('/')&&s.length<=6){var p=s.split('/');if(p.length===2){try{return p[0].padStart(2,'0')+'/'+p[1].padStart(2,'0')+'/2026';}catch(e){}}}return s||null;}
@@ -678,7 +752,9 @@ function parseSheet(wb,sheetName){
   var lotes=[],campo=null;
   for(var ri=2;ri<=maxR;ri++){
     var v0=gv(ri,0);if(v0)campo=String(v0).trim();
-    if(!campo)continue;if(gv(ri,1)==null)continue;
+    if(!campo)continue;
+    if(campo==='Pereira'||campo==='Don Juan Del Tala'||campo==='Don Juan del Tala')continue;
+    if(gv(ri,1)==null)continue;
     var lote=String(gv(ri,1)),hasRaw=sfn(gv(ri,2))||0;
     var re1haRaw=G(ri,'re1_ha'),re1ha=(typeof re1haRaw==='number'&&re1haRaw<10000)?re1haRaw:null;
     var vArr=[];for(var ci2=0;ci2<=maxC;ci2++)vArr.push(gv(ri,ci2));
