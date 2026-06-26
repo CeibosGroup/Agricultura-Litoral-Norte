@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#fff;color:#18180f;min-height:100vh;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f8f7f3;color:#18180f;min-height:100vh;}
 #splash{position:fixed;inset:0;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;z-index:200;}
 #splash.hide{display:none;}
 .sp-img{width:110px;height:auto;}
@@ -23,12 +23,33 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .cpill.on{background:#eeedfe;border-color:#534AB7;color:#534AB7;font-weight:600;}
 .sync{font-size:10px;color:#1a8a5a;display:flex;align-items:center;gap:3px;}
 .ibtn{padding:5px;border-radius:6px;cursor:pointer;color:#666;font-size:16px;border:none;background:transparent;}
+
+/* TABS */
+.tabs{background:#fff;border-bottom:1px solid #e8e6de;display:flex;}
+.tab{flex:1;padding:10px 0;text-align:center;font-size:12px;color:#999;cursor:pointer;border-bottom:2px solid transparent;font-weight:500;}
+.tab.on{color:#534AB7;border-bottom-color:#534AB7;}
+.tab-panel{display:none;}
+.tab-panel.on{display:block;}
+
+/* STATUS TAB */
 .fstrip{background:#fff;border-bottom:1px solid #e8e6de;padding:7px 16px;display:flex;gap:5px;overflow-x:auto;align-items:center;scrollbar-width:none;}
 .fstrip::-webkit-scrollbar{display:none;}
 .fl{font-size:9px;font-weight:700;color:#999;text-transform:uppercase;letter-spacing:.06em;margin-right:3px;white-space:nowrap;flex-shrink:0;}
 .fchip{font-size:11px;padding:4px 10px;border-radius:20px;border:1px solid #ccc;cursor:pointer;color:#666;white-space:nowrap;flex-shrink:0;}
 .fchip.on{border-color:#333;color:#333;background:#f8f7f3;font-weight:600;}
 .fsep{width:1px;height:16px;background:#e8e6de;margin:0 3px;flex-shrink:0;}
+
+/* ALERTS */
+.alerts-bar{background:#fff;border-bottom:1px solid #e8e6de;cursor:pointer;user-select:none;}
+.alerts-collapsed{padding:7px 16px;display:flex;align-items:center;gap:8px;}
+.alerts-expanded{padding:6px 16px 8px;display:flex;flex-wrap:wrap;gap:5px;align-items:center;}
+.alert-badge{font-size:11px;padding:2px 9px;border-radius:20px;font-weight:600;display:flex;align-items:center;gap:3px;}
+.alert-pill{font-size:11px;padding:3px 9px;border-radius:20px;font-weight:500;display:flex;align-items:center;gap:4px;white-space:nowrap;}
+.a-urg{background:#fceaea;color:#b83030;}
+.a-info{background:#eeedfe;color:#534AB7;}
+.a-ok{background:#e8f5ee;color:#1a8a5a;}
+
+/* METRICS */
 .mwrap{background:#fff;border-bottom:1px solid #e8e6de;padding:8px 16px;overflow-x:auto;scrollbar-width:none;}
 .mwrap::-webkit-scrollbar{display:none;}
 .metrics{display:flex;gap:6px;min-width:max-content;}
@@ -38,6 +59,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .ms{font-size:9px;color:#999;margin-top:1px;white-space:nowrap;}
 .mbar{width:100%;height:3px;border-radius:2px;background:#e8e6de;margin-top:4px;}
 .mfill{height:3px;border-radius:2px;}
+
+/* CAMPOS */
 .campos{padding:10px 12px;display:flex;flex-direction:column;gap:8px;padding-bottom:50px;}
 .ccard{background:#fff;border:1px solid #e8e6de;border-radius:12px;overflow:hidden;}
 .chdr{padding:11px 14px;cursor:pointer;display:flex;align-items:center;gap:10px;user-select:none;}
@@ -111,6 +134,39 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .hbar{width:100%;height:3px;border-radius:2px;background:#e8e6de;margin-top:3px;}
 .hbarf{height:3px;border-radius:2px;background:#1a8a5a;}
 .empty{padding:36px;text-align:center;color:#999;font-size:13px;}
+
+/* CLIMA TAB */
+.clima-wrap{padding:10px 12px;padding-bottom:50px;}
+.clima-filters{background:#fff;border-bottom:1px solid #e8e6de;padding:7px 16px;display:flex;gap:5px;overflow-x:auto;scrollbar-width:none;}
+.clima-filters::-webkit-scrollbar{display:none;}
+.suma-cards{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:10px;}
+.suma-card{background:#fff;border:1px solid #e8e6de;border-radius:8px;padding:8px 10px;}
+.sc-lbl{font-size:9px;color:#999;font-weight:600;text-transform:uppercase;letter-spacing:.04em;margin-bottom:2px;}
+.sc-val{font-size:18px;font-weight:600;}
+.sc-sub{font-size:9px;color:#999;margin-top:1px;}
+.clima-chart-card{background:#fff;border:1px solid #e8e6de;border-radius:10px;padding:12px;margin-bottom:10px;}
+.clima-chart-title{font-size:10px;font-weight:600;color:#999;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;}
+.api-badge{font-size:9px;background:#E6F1FB;color:#185FA5;padding:2px 7px;border-radius:20px;}
+.bars{display:flex;align-items:flex-end;gap:2px;height:70px;}
+.bar{flex:1;border-radius:2px 2px 0 0;min-width:0;}
+.bar.low{background:#B5D4F4;}
+.bar.mid{background:#378ADD;}
+.bar.high{background:#185FA5;}
+.chart-axis{display:flex;justify-content:space-between;margin-top:4px;}
+.chart-axis span{font-size:9px;color:#999;}
+.eventos-title{font-size:10px;font-weight:700;color:#999;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;}
+.evento-card{background:#fff;border:1px solid #e8e6de;border-radius:8px;padding:9px 12px;margin-bottom:5px;display:flex;align-items:center;gap:10px;}
+.evento-icon{width:34px;height:34px;border-radius:7px;background:#E6F1FB;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.evento-info{flex:1;}
+.evento-fecha{font-size:12px;font-weight:600;}
+.evento-campos{font-size:10px;color:#999;margin-top:1px;}
+.evento-mm{font-size:17px;font-weight:600;color:#185FA5;}
+.evento-mm span{font-size:10px;font-weight:400;color:#999;margin-left:1px;}
+
+/* EMPTY TABS */
+.tab-empty{padding:60px 20px;text-align:center;color:#999;}
+.tab-empty i{font-size:32px;display:block;margin-bottom:10px;color:#ccc;}
+.tab-empty p{font-size:13px;}
 </style>
 </head>
 <body>
@@ -118,7 +174,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   <img src="LOGO.jpeg" class="sp-img" alt="LN Agro">
   <div class="sp-sub">Seguimiento de labores</div>
 </div>
+
 <div id="app" style="display:none;">
+  <!-- HEADER -->
   <div class="hdr">
     <img src="LOGO.jpeg" class="hdr-logo" alt="LN Agro">
     <div class="hdr-r">
@@ -127,17 +185,72 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       <button class="ibtn" id="btnRefresh"><i class="ti ti-refresh"></i></button>
     </div>
   </div>
-  <div class="fstrip">
-    <span class="fl">Cultivo</span>
-    <div id="cchips" style="display:flex;gap:5px;"></div>
-    <div class="fsep"></div>
-    <span class="fl">Estacion</span>
-    <div class="fchip on" id="btn-inv">Invierno</div>
-    <div class="fchip" id="btn-ver">Verano</div>
+
+  <!-- TABS -->
+  <div class="tabs">
+    <div class="tab on" data-tab="status">Status</div>
+    <div class="tab" data-tab="clima">Clima</div>
+    <div class="tab" data-tab="indicadores">Indicadores</div>
+    <div class="tab" data-tab="avances">Avances</div>
   </div>
-  <div id="alerts" style="background:#fff;border-bottom:1px solid #e8e6de;padding:6px 16px;min-height:34px;display:flex;flex-wrap:wrap;gap:5px;align-items:center;"></div>
-  <div class="mwrap"><div class="metrics" id="metrics"></div></div>
-  <div class="campos" id="campos"></div>
+
+  <!-- STATUS TAB -->
+  <div class="tab-panel on" id="panel-status">
+    <div class="fstrip">
+      <span class="fl">Cultivo</span>
+      <div id="cchips" style="display:flex;gap:5px;"></div>
+      <div class="fsep"></div>
+      <span class="fl">Estacion</span>
+      <div class="fchip on" id="btn-inv">Invierno</div>
+      <div class="fchip" id="btn-ver">Verano</div>
+    </div>
+    <div class="alerts-bar" id="alerts-bar">
+      <div class="alerts-collapsed" id="alerts-collapsed" style="display:none;">
+        <i class="ti ti-bell-ringing" style="font-size:13px;color:#b83030;"></i>
+        <span id="alerts-count" style="font-size:11px;font-weight:600;color:#b83030;"></span>
+        <span style="font-size:11px;color:#999;">alertas activas</span>
+        <i class="ti ti-chevron-down" style="font-size:11px;color:#999;margin-left:auto;"></i>
+      </div>
+      <div class="alerts-expanded" id="alerts-expanded"></div>
+    </div>
+    <div class="mwrap"><div class="metrics" id="metrics"></div></div>
+    <div class="campos" id="campos"></div>
+  </div>
+
+  <!-- CLIMA TAB -->
+  <div class="tab-panel" id="panel-clima">
+    <div class="clima-filters" id="clima-campo-filters"></div>
+    <div class="clima-filters" style="border-top:none;" id="clima-period-filters"></div>
+    <div class="clima-wrap">
+      <div class="suma-cards" id="suma-cards"></div>
+      <div class="clima-chart-card">
+        <div class="clima-chart-title">
+          <span>Precipitaciones diarias (mm)</span>
+          <span class="api-badge">Open-Meteo</span>
+        </div>
+        <div class="bars" id="clima-bars"></div>
+        <div class="chart-axis" id="clima-axis"></div>
+      </div>
+      <div class="eventos-title">Eventos destacados</div>
+      <div id="clima-eventos"></div>
+    </div>
+  </div>
+
+  <!-- INDICADORES TAB -->
+  <div class="tab-panel" id="panel-indicadores">
+    <div class="tab-empty">
+      <i class="ti ti-chart-bar"></i>
+      <p>Indicadores en desarrollo</p>
+    </div>
+  </div>
+
+  <!-- AVANCES TAB -->
+  <div class="tab-panel" id="panel-avances">
+    <div class="tab-empty">
+      <i class="ti ti-progress"></i>
+      <p>Avances en desarrollo</p>
+    </div>
+  </div>
 </div>
 
 <script src="data.js"></script>
@@ -147,40 +260,55 @@ var CLI = {Tr:'Trigo',Cz:'Colza',Ceb:'Cebada',Cobertura:'Cob.',Carinata:'Car.'};
 var CLV = {Sj1:'Soja 1',Sj2:'Soja 2',Mz1:'Maiz 1',Mz2:'Maiz 2',Cobertura:'Cob.'};
 var BCL = {Tr:'bTr',Cz:'bCz',Ceb:'bCeb',Cobertura:'bCob',Carinata:'bCar',Sj1:'bSj1',Sj2:'bSj2',Mz1:'bMz1',Mz2:'bMz2'};
 var INI = {Malacara:'ML','La Blanqueada':'LB','La Campana':'LC',Montecristo:'MC','Santa Rafaela':'SR','San Luis':'SL',Pereira:'PE'};
+var CAMPOS_COORDS = {
+  Malacara: [-32.05,-58.20], 'La Blanqueada': [-31.95,-58.10],
+  'La Campana': [-31.90,-58.05], Montecristo: [-32.00,-58.15],
+  'Santa Rafaela': [-32.10,-58.25], 'San Luis': [-31.85,-58.00], Pereira: [-32.15,-58.30]
+};
 var RAW = 'https://raw.githubusercontent.com/CeibosGroup/Agricultura-Litoral-Norte/main';
 var AD = JSON.parse(JSON.stringify(HISTORIC));
 var AC = null, SE = 'inv', FC = 'all';
-var openC = {}, openL = {};
+var openC = {}, openL = {}, alertsOpen = false;
+var climaCampo = 'all', climaPeriod = 30, climaData = null;
 
-function q(id) { return document.getElementById(id); }
-function colPct(p) { return p>=70?'#1a8a5a':p>=40?'#c47a12':'#b83030'; }
-function pctArea(rows,fn) { var t=rows.reduce(function(a,r){return a+r.has;},0); if(!t)return 0; return Math.round(rows.filter(fn).reduce(function(a,r){return a+r.has;},0)/t*100); }
-function isProd(d) { return SE==='inv'?['Tr','Cz','Ceb','Carinata'].indexOf(d.cult)>=0:['Sj1','Sj2','Mz1','Mz2'].indexOf(d.cult)>=0; }
-function isMz(d) { return d.cult==='Mz1'||d.cult==='Mz2'; }
-function totalUrea(d) { if(SE==='inv')return(d.urea_siem&&d.urea_siem.kg||0)+(d.z22&&d.z22.kg||0)+(d.z30&&d.z30.kg||0)+(d.z33&&d.z33.kg||0); return(d.urea_siem&&d.urea_siem.kg||0)+(d.v4&&d.v4.kg||0)+(d.v8&&d.v8.kg||0); }
-function sid(s) { var h=0; for(var i=0;i<s.length;i++){h=(Math.imul(31,h)+s.charCodeAt(i))|0;} return 'x'+(h>>>0).toString(36); }
-function FS() { var img=document.createElement('img'); img.src='data:image/png;base64,'+FINN_B64; img.style.cssText='width:13px;height:13px;object-fit:contain;opacity:.85;vertical-align:middle;margin-left:3px;'; return img.outerHTML; }
-function rotB(c) {
+function q(id){ return document.getElementById(id); }
+function colPct(p){ return p>=70?'#1a8a5a':p>=40?'#c47a12':'#b83030'; }
+function pctArea(rows,fn){ var t=rows.reduce(function(a,r){return a+r.has;},0); if(!t)return 0; return Math.round(rows.filter(fn).reduce(function(a,r){return a+r.has;},0)/t*100); }
+function isProd(d){ return SE==='inv'?['Tr','Cz','Ceb','Carinata'].indexOf(d.cult)>=0:['Sj1','Sj2','Mz1','Mz2'].indexOf(d.cult)>=0; }
+function isMz(d){ return d.cult==='Mz1'||d.cult==='Mz2'; }
+function totalUrea(d){ if(SE==='inv')return(d.urea_siem&&d.urea_siem.kg||0)+(d.z22&&d.z22.kg||0)+(d.z30&&d.z30.kg||0)+(d.z33&&d.z33.kg||0); return(d.urea_siem&&d.urea_siem.kg||0)+(d.v4&&d.v4.kg||0)+(d.v8&&d.v8.kg||0); }
+function sid(s){ var h=0; for(var i=0;i<s.length;i++){h=(Math.imul(31,h)+s.charCodeAt(i))|0;} return 'x'+(h>>>0).toString(36); }
+function FS(){ var img=document.createElement('img'); img.src='data:image/png;base64,'+FINN_B64; img.style.cssText='width:13px;height:13px;object-fit:contain;opacity:.85;vertical-align:middle;margin-left:3px;'; return img.outerHTML; }
+function rotB(c){
   if(!c) return '<span style="font-size:8px;color:#ccc">?</span>';
   var CL=SE==='inv'?CLI:CLV;
-  var el=document.createElement('span');
-  el.className='rb '+(BCL[c]||'bCob');
-  el.textContent=CL[c]||c;
+  var el=document.createElement('span'); el.className='rb '+(BCL[c]||'bCob'); el.textContent=CL[c]||c;
   return el.outerHTML;
 }
 
-// ── EVENT LISTENERS (no inline onclick needed) ────────────────
+// ── TABS ──────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', function() {
-  q('btn-inv').onclick = function() { setSeason('inv'); };
-  q('btn-ver').onclick = function() { setSeason('ver'); };
-  q('btnRefresh').onclick = function() { updateBg(); };
+  document.querySelectorAll('.tab').forEach(function(tab) {
+    tab.onclick = function() {
+      var t = this.getAttribute('data-tab');
+      document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('on');});
+      document.querySelectorAll('.tab-panel').forEach(function(x){x.classList.remove('on');});
+      this.classList.add('on');
+      q('panel-'+t).classList.add('on');
+      if(t==='clima') initClima();
+    };
+  });
 
-  // Delegated clicks
+  q('btn-inv').onclick = function(){ setSeason('inv'); };
+  q('btn-ver').onclick = function(){ setSeason('ver'); };
+  q('btnRefresh').onclick = function(){ updateBg(); };
+  q('alerts-bar').onclick = function(){ toggleAlerts(); };
+
   document.addEventListener('click', function(e) {
     var chdr = e.target.closest('.chdr[data-cid]');
-    if(chdr) { togC(chdr.getAttribute('data-cid')); return; }
+    if(chdr){ togC(chdr.getAttribute('data-cid')); return; }
     var lhdr = e.target.closest('.lhdr[data-lid]');
-    if(lhdr) { togL(lhdr.getAttribute('data-lid')); return; }
+    if(lhdr){ togL(lhdr.getAttribute('data-lid')); return; }
   });
 
   start();
@@ -205,330 +333,324 @@ function loadXLSX() {
 }
 
 async function updateBg() {
-  if(typeof XLSX === 'undefined') return;
+  if(typeof XLSX==='undefined') return;
   var now = new Date();
-  for(var y = now.getFullYear()+2; y >= 2024; y--) {
-    var yy = String(y).slice(2), yp = String(y+1).slice(2), camp = yy+'-'+yp;
+  for(var y=now.getFullYear()+2; y>=2024; y--) {
+    var yy=String(y).slice(2), yp=String(y+1).slice(2), camp=yy+'-'+yp;
     try {
-      var ctrl = new AbortController();
-      setTimeout(function(){ctrl.abort();}, 12000);
-      var res = await fetch(RAW+'/Planilla_labores_'+yy+'-'+yp+'.xlsx', {cache:'no-store', signal:ctrl.signal});
+      var ctrl=new AbortController(); setTimeout(function(){ctrl.abort();},12000);
+      var res=await fetch(RAW+'/Planilla_labores_'+yy+'-'+yp+'.xlsx',{cache:'no-store',signal:ctrl.signal});
       if(!res.ok) continue;
-      var buf = await res.arrayBuffer(), wb = XLSX.read(buf, {cellStyles:true});
-      AD[camp] = {inv: parseSheet(wb,'Invierno'), ver: parseSheet(wb,'Verano')};
-      var camps = Object.keys(AD).sort().reverse(); AC = camps[0];
+      var buf=await res.arrayBuffer(), wb=XLSX.read(buf,{cellStyles:true});
+      AD[camp]={inv:parseSheet(wb,'Invierno'),ver:parseSheet(wb,'Verano')};
+      var camps=Object.keys(AD).sort().reverse(); AC=camps[0];
       buildPills(camps); render();
-      q('synctxt').textContent = camp; q('sync').style.display = 'flex';
+      q('synctxt').textContent=camp; q('sync').style.display='flex';
       break;
-    } catch(e) { continue; }
+    } catch(e){ continue; }
   }
 }
 
 function buildPills(camps) {
-  var el = q('cpills'); el.innerHTML = '';
-  camps.forEach(function(c) {
-    var d = document.createElement('div');
-    d.className = 'cpill' + (c===AC ? ' on' : '');
-    d.textContent = c;
-    d.onclick = (function(camp){ return function(){ setCamp(camp); }; })(c);
+  var el=q('cpills'); el.innerHTML='';
+  camps.forEach(function(c){
+    var d=document.createElement('div'); d.className='cpill'+(c===AC?' on':'');
+    d.textContent=c;
+    d.onclick=(function(camp){return function(){setCamp(camp);};})(c);
     el.appendChild(d);
   });
 }
+function setCamp(c){ AC=c; document.querySelectorAll('.cpill').forEach(function(el){el.classList.toggle('on',el.textContent===c);}); render(); }
+function setSeason(s){ SE=s; FC='all'; q('btn-inv').classList.toggle('on',s==='inv'); q('btn-ver').classList.toggle('on',s==='ver'); render(); }
+function setFilt(c){ FC=c; document.querySelectorAll('#cchips .fchip').forEach(function(el){el.classList.toggle('on',el.getAttribute('data-v')===c);}); render(); }
 
-function setCamp(c) {
-  AC = c;
-  document.querySelectorAll('.cpill').forEach(function(el) {
-    el.classList.toggle('on', el.textContent===c);
-  });
-  render();
-}
-
-function setSeason(s) {
-  SE = s; FC = 'all';
-  q('btn-inv').classList.toggle('on', s==='inv');
-  q('btn-ver').classList.toggle('on', s==='ver');
-  render();
-}
-
-function setFilt(c) {
-  FC = c;
-  document.querySelectorAll('#cchips .fchip').forEach(function(el) {
-    el.classList.toggle('on', el.getAttribute('data-v')===c);
-  });
-  render();
+// ── ALERTS ────────────────────────────────────────────────────
+function toggleAlerts() {
+  alertsOpen = !alertsOpen;
+  q('alerts-collapsed').style.display = alertsOpen ? 'none' : 'flex';
+  q('alerts-expanded').style.display = alertsOpen ? 'flex' : 'none';
 }
 
 function getLoteAlerts(d) {
   var a = [];
   if(SE!=='inv'||d.cult!=='Cz') return a;
   var ref = d.siem&&d.siem.fecha ? d.siem.fecha : null;
-  if(d.re1&&d.re1.fecha&&d.re1.ha&&d.has&&Math.round(d.re1.ha/d.has*100)>=50) ref = d.re1.fecha;
+  if(d.re1&&d.re1.fecha&&d.re1.ha&&d.has&&Math.round(d.re1.ha/d.has*100)>=50) ref=d.re1.fecha;
   if(!ref) return a;
-  var p = ref.split('/');
-  var sd = new Date(+p[2],+p[1]-1,+p[0]), TODAY = new Date();
-  [40,60].forEach(function(n) {
-    var dt = new Date(sd); dt.setDate(dt.getDate()+n);
-    var r = Math.round((dt-TODAY)/86400000);
-    if(r>=0&&r<=5) a.push({tipo:r<=2?'urg':'info', msg:'Analisis N en '+r+'d (d'+n+')'});
+  var p=ref.split('/'); var sd=new Date(+p[2],+p[1]-1,+p[0]); var TODAY=new Date();
+  [40,60].forEach(function(n){
+    var dt=new Date(sd); dt.setDate(dt.getDate()+n);
+    var r=Math.round((dt-TODAY)/86400000);
+    if(r>=0&&r<=5) a.push({tipo:r<=2?'urg':'info',msg:'N d'+n+' en '+r+'d ('+dt.getDate()+'/'+(dt.getMonth()+1)+')'});
   });
   return a;
 }
 
-function filtered() {
-  var cd = AD[AC]; if(!cd) return [];
-  var src = SE==='inv' ? cd.inv : cd.ver; if(!src) return [];
-  return FC==='all' ? src : src.filter(function(d){return d.cult===FC;});
-}
-
-
-function renderAlerts(rows) {
-  var al = q('alerts');
-  if(SE !== 'inv') {
-    al.innerHTML = '<span style="font-size:11px;color:#999;display:flex;align-items:center;gap:4px;"><i class="ti ti-circle-check" style="color:#1a8a5a;font-size:13px;"></i>Sin alertas activas</span>';
+function renderAlerts(allAlerts) {
+  var coll = q('alerts-collapsed'), exp = q('alerts-expanded');
+  if(!allAlerts.length) {
+    coll.style.display = 'none';
+    exp.style.display = 'flex';
+    exp.innerHTML = '<span style="font-size:11px;color:#999;display:flex;align-items:center;gap:5px;"><i class="ti ti-circle-check" style="color:#1a8a5a;font-size:13px;"></i>Sin alertas activas</span>';
     return;
   }
-  var all = [];
-  rows.forEach(function(d) {
-    getLoteAlerts(d).forEach(function(a) {
-      all.push({campo:d.campo, lote:d.lote, tipo:a.tipo, msg:a.msg});
-    });
+  // Update collapsed
+  q('alerts-count').textContent = allAlerts.length;
+  coll.style.display = alertsOpen ? 'none' : 'flex';
+  // Update expanded
+  var h = '<span style="font-size:9px;font-weight:700;color:#999;text-transform:uppercase;letter-spacing:.06em;display:flex;align-items:center;gap:3px;white-space:nowrap;margin-right:2px;"><i class="ti ti-bell-ringing"></i>Alertas</span>';
+  allAlerts.slice(0,6).forEach(function(a){
+    var cls = a.tipo==='urg' ? 'a-urg' : 'a-info';
+    h += '<div class="alert-pill '+cls+'"><i class="ti ti-microscope" style="font-size:10px;"></i><strong>'+a.campo+' L'+a.lote+'</strong> &middot; '+a.msg+'</div>';
   });
-  if(!all.length) {
-    al.innerHTML = '<span style="font-size:11px;color:#999;display:flex;align-items:center;gap:4px;"><i class="ti ti-circle-check" style="color:#1a8a5a;font-size:13px;"></i>Sin alertas activas</span>';
-    return;
-  }
-  var h = '<span style="font-size:9px;font-weight:700;color:#999;text-transform:uppercase;letter-spacing:.06em;margin-right:2px;display:flex;align-items:center;gap:3px;white-space:nowrap;"><i class="ti ti-bell-ringing"></i>Alertas</span>';
-  all.slice(0,6).forEach(function(a) {
-    var bg = a.tipo==='urg'?'#fceaea':'#eeedfe';
-    var col = a.tipo==='urg'?'#b83030':'#534AB7';
-    h += '<div style="font-size:11px;padding:2px 8px;border-radius:20px;background:'+bg+';color:'+col+';display:flex;align-items:center;gap:4px;white-space:nowrap;font-weight:500;">';
-    h += '<i class="ti ti-microscope" style="font-size:10px;"></i>';
-    h += '<strong>'+a.campo+' L'+a.lote+'</strong> &middot; '+a.msg+'</div>';
-  });
-  al.innerHTML = h;
-  // Push notification
-  pushNotifications(all);
+  exp.innerHTML = h;
+  exp.style.display = alertsOpen ? 'flex' : 'none';
+  // Push notifications
+  pushNotify(allAlerts);
 }
 
-function pushNotifications(alerts) {
+function pushNotify(alerts) {
   if(!('Notification' in window)) return;
-  if(Notification.permission === 'default') {
-    Notification.requestPermission();
-    return;
-  }
-  if(Notification.permission !== 'granted') return;
-  // Only notify once per session
-  if(window._notifSent) return;
-  window._notifSent = true;
-  alerts.slice(0,3).forEach(function(a) {
-    try {
-      new Notification('LN Agro - Colza '+a.campo+' L'+a.lote, {
-        body: a.msg,
-        icon: 'LOGO.jpeg'
-      });
-    } catch(e) {}
+  if(Notification.permission==='default'){ Notification.requestPermission(); return; }
+  if(Notification.permission!=='granted') return;
+  if(window._notifSent) return; window._notifSent=true;
+  alerts.slice(0,3).forEach(function(a){
+    try{ new Notification('LN Agro · '+a.campo+' L'+a.lote,{body:a.msg,icon:'LOGO.jpeg'}); }catch(e){}
   });
 }
+
+// ── RENDER ────────────────────────────────────────────────────
+function filtered(){ var cd=AD[AC]; if(!cd)return[]; var src=SE==='inv'?cd.inv:cd.ver; if(!src)return[]; return FC==='all'?src:src.filter(function(d){return d.cult===FC;}); }
 
 function render() {
-  var rows = filtered(), CL = SE==='inv'?CLI:CLV, prod = rows.filter(isProd);
-
+  var rows=filtered(), CL=SE==='inv'?CLI:CLV, prod=rows.filter(isProd);
   // Cult chips
-  var cults = [];
-  rows.forEach(function(d){if(d.cult&&cults.indexOf(d.cult)<0)cults.push(d.cult);}); cults.sort();
-  var cchips = q('cchips'); cchips.innerHTML = '';
-  [{v:'all',l:'Todos'}].concat(cults.map(function(c){return{v:c,l:CL[c]||c};})).forEach(function(o) {
-    var el = document.createElement('div');
-    el.className = 'fchip'+(FC===o.v?' on':'');
-    el.setAttribute('data-v', o.v);
-    el.textContent = o.l;
-    el.onclick = (function(v){return function(){setFilt(v);};})(o.v);
+  var cults=[]; rows.forEach(function(d){if(d.cult&&cults.indexOf(d.cult)<0)cults.push(d.cult);}); cults.sort();
+  var cchips=q('cchips'); cchips.innerHTML='';
+  [{v:'all',l:'Todos'}].concat(cults.map(function(c){return{v:c,l:CL[c]||c};})).forEach(function(o){
+    var el=document.createElement('div'); el.className='fchip'+(FC===o.v?' on':'');
+    el.setAttribute('data-v',o.v); el.textContent=o.l;
+    el.onclick=(function(v){return function(){setFilt(v);};})(o.v);
     cchips.appendChild(el);
   });
-
+  // Collect alerts
+  var allAlerts=[];
+  rows.forEach(function(d){getLoteAlerts(d).forEach(function(a){allAlerts.push({campo:d.campo,lote:d.lote,tipo:a.tipo,msg:a.msg});});});
+  renderAlerts(allAlerts);
   // Metrics
-  var totH = rows.reduce(function(a,r){return a+r.has;},0);
-  var urows = SE==='ver'?rows.filter(isMz):prod;
-  var conU = urows.filter(function(d){return totalUrea(d)>0;});
-  var promU = conU.length ? Math.round(conU.reduce(function(a,d){return a+totalUrea(d)*d.has;},0)/conU.reduce(function(a,d){return a+d.has;},0)) : 0;
+  var totH=rows.reduce(function(a,r){return a+r.has;},0);
+  var urows=SE==='ver'?rows.filter(isMz):prod;
+  var conU=urows.filter(function(d){return totalUrea(d)>0;});
+  var promU=conU.length?Math.round(conU.reduce(function(a,d){return a+totalUrea(d)*d.has;},0)/conU.reduce(function(a,d){return a+d.has;},0)):0;
   var pR=pctArea(prod,function(d){return d.rep&&d.rep.fecha;}),pF1=pctArea(prod,function(d){return d.f1&&d.f1.prod;}),pF2=pctArea(prod,function(d){return d.f2&&d.f2.prod;}),pZn=pctArea(prod,function(d){return d.znf&&d.znf.dosis;});
   function MC(lbl,val,sub,bar,col){return '<div class="metric"><div class="ml">'+lbl+'</div><div class="mv">'+val+'</div>'+(sub?'<div class="ms">'+sub+'</div>':'')+(bar!=null?'<div class="mbar"><div class="mfill" style="width:'+bar+'%;background:'+col+';"></div></div>':'')+'</div>';}
-  q('metrics').innerHTML = MC('Has',Math.round(totH).toLocaleString('es'),rows.length+' lotes',null,null)+MC(SE==='ver'?'Urea maiz':'Urea az.',promU?promU+' kg/ha':'—',conU.length+' lotes',null,null)+MC('Repaso',pR+'%','% area',pR,colPct(pR))+MC('Fung 1',pF1+'%','% area',pF1,colPct(pF1))+MC('Fung 2',pF2+'%','% area',pF2,colPct(pF2))+MC('Zinc fol.',pZn+'%','% area',pZn,colPct(pZn));
-
+  q('metrics').innerHTML=MC('Has',Math.round(totH).toLocaleString('es'),rows.length+' lotes',null,null)+MC(SE==='ver'?'Urea maiz':'Urea az.',promU?promU+' kg/ha':'—',conU.length+' lotes',null,null)+MC('Repaso',pR+'%','% area',pR,colPct(pR))+MC('Fung 1',pF1+'%','% area',pF1,colPct(pF1))+MC('Fung 2',pF2+'%','% area',pF2,colPct(pF2))+MC('Zinc fol.',pZn+'%','% area',pZn,colPct(pZn));
   // Campos
-  var grp = {};
-  rows.forEach(function(d){if(!grp[d.campo])grp[d.campo]=[];grp[d.campo].push(d);});
-  var el = q('campos'); el.innerHTML = '';
-  // Render alerts
-  renderAlerts(rows);
+  var grp={}; rows.forEach(function(d){if(!grp[d.campo])grp[d.campo]=[];grp[d.campo].push(d);});
+  var el=q('campos'); el.innerHTML='';
   if(!rows.length){el.innerHTML='<div class="empty">Sin datos para esta temporada</div>';return;}
-
-  Object.keys(grp).forEach(function(campo) {
-    var lotes = grp[campo];
-    var ini = INI[campo]||campo.slice(0,2).toUpperCase();
-    var totHc = Math.round(lotes.reduce(function(a,r){return a+r.has;},0));
-    var cid = sid(campo+SE+AC);
-    var isOpen = !!openC[cid];
-
-    var lhtml = '';
-    lotes.forEach(function(d) {
-      var lid = sid(campo+'|'+d.lote+'|'+SE+'|'+AC);
-      var isLo = !!openL[lid];
-      var hasRe = d.re1&&(d.re1.var||d.re1.fecha);
-      var rePct = hasRe&&d.re1.ha&&d.has ? Math.round(d.re1.ha/d.has*100) : null;
-      var alerts = getLoteAlerts(d);
-      var nextCult = SE==='inv' ? (VER_CULT[AC]&&VER_CULT[AC][campo+'|'+d.lote]||null) : (d.antec||null);
-      var prevL = SE==='inv'?'Ver ant.':'Inv ant.';
-      var curL  = SE==='inv'?'Inv '+AC:'Ver '+AC;
-      var nextL = SE==='inv'?'Ver '+AC:'Inv';
-
-      var reBadge = hasRe ? '<span class="re-tag"><i class="ti ti-refresh" style="font-size:9px;vertical-align:-1px;"></i>'+(rePct!=null?rePct+'%':'re')+'</span>' : '';
-      var alertHtml = '';
-      if(alerts.length) {
-        alertHtml = '<div style="width:100%;margin-top:3px;">';
-        alerts.forEach(function(a){alertHtml+='<span style="font-size:10px;padding:2px 7px;border-radius:3px;background:'+(a.tipo==='urg'?'#fceaea':'#eeedfe')+';color:'+(a.tipo==='urg'?'#b83030':'#534AB7')+';margin-right:4px;">'+a.msg+'</span>';});
-        alertHtml += '</div>';
-      }
-
-      lhtml += '<div class="lrow">' +
-        '<div class="lhdr" data-lid="'+lid+'">' +
-          '<span class="lnum">'+d.lote+'</span>' +
-          '<span class="lhas">'+Math.round(d.has)+' ha</span>' +
-          '<span class="cbadge '+(BCL[d.cult]||'bCob')+'">'+(CL[d.cult]||d.cult||'?')+'</span>' +
-          reBadge + alertHtml +
-          '<div class="rot">' +
-            '<div class="ri"><div class="rl">'+prevL+'</div>'+rotB(d.antec||null)+'</div>' +
-            '<span class="rarr">&#8250;</span>' +
-            '<div class="ri cur"><div class="rl">'+curL+'</div>'+rotB(d.cult)+'</div>' +
-            '<span class="rarr">&#8250;</span>' +
-            '<div class="ri"><div class="rl">'+nextL+'</div>'+rotB(nextCult)+'</div>' +
-          '</div>' +
-          '<i class="ti ti-chevron-right" style="font-size:11px;color:#ccc;margin-left:4px;'+(isLo?'transform:rotate(90deg)':'')+'"></i>' +
-        '</div>' +
-        '<div class="ldet'+(isLo?' open':'')+'" id="'+lid+'">'+(isLo?renderDetail(d):'')+'</div>' +
-      '</div>';
+  Object.keys(grp).forEach(function(campo){
+    var lotes=grp[campo], ini=INI[campo]||campo.slice(0,2).toUpperCase();
+    var totHc=Math.round(lotes.reduce(function(a,r){return a+r.has;},0));
+    var cid=sid(campo+SE+AC); var isOpen=!!openC[cid];
+    var lhtml='';
+    lotes.forEach(function(d){
+      var lid=sid(campo+'|'+d.lote+'|'+SE+'|'+AC); var isLo=!!openL[lid];
+      var hasRe=d.re1&&(d.re1.var||d.re1.fecha);
+      var rePct=hasRe&&d.re1.ha&&d.has?Math.round(d.re1.ha/d.has*100):null;
+      var alerts=getLoteAlerts(d);
+      var nextCult=SE==='inv'?(VER_CULT[AC]&&VER_CULT[AC][campo+'|'+d.lote]||null):(d.antec||null);
+      var prevL=SE==='inv'?'Ver ant.':'Inv ant.', curL=SE==='inv'?'Inv '+AC:'Ver '+AC, nextL=SE==='inv'?'Ver '+AC:'Inv';
+      var reBadge=hasRe?'<span class="re-tag"><i class="ti ti-refresh" style="font-size:9px;vertical-align:-1px;"></i>'+(rePct!=null?rePct+'%':'re')+'</span>':'';
+      var alertHtml='';
+      if(alerts.length){alertHtml='<div style="width:100%;margin-top:3px;">';alerts.forEach(function(a){alertHtml+='<span style="font-size:10px;padding:2px 7px;border-radius:3px;background:'+(a.tipo==='urg'?'#fceaea':'#eeedfe')+';color:'+(a.tipo==='urg'?'#b83030':'#534AB7')+';margin-right:4px;">'+a.msg+'</span>';});alertHtml+='</div>';}
+      lhtml+='<div class="lrow"><div class="lhdr" data-lid="'+lid+'">'+
+        '<span class="lnum">'+d.lote+'</span><span class="lhas">'+Math.round(d.has)+' ha</span>'+
+        '<span class="cbadge '+(BCL[d.cult]||'bCob')+'">'+(CL[d.cult]||d.cult||'?')+'</span>'+
+        reBadge+alertHtml+
+        '<div class="rot"><div class="ri"><div class="rl">'+prevL+'</div>'+rotB(d.antec||null)+'</div>'+
+        '<span class="rarr">&#8250;</span><div class="ri cur"><div class="rl">'+curL+'</div>'+rotB(d.cult)+'</div>'+
+        '<span class="rarr">&#8250;</span><div class="ri"><div class="rl">'+nextL+'</div>'+rotB(nextCult)+'</div></div>'+
+        '<i class="ti ti-chevron-right" style="font-size:11px;color:#ccc;margin-left:4px;'+(isLo?'transform:rotate(90deg)':'')+'"></i>'+
+        '</div><div class="ldet'+(isLo?' open':'')+'" id="'+lid+'">'+(isLo?renderDetail(d):'')+'</div></div>';
     });
-
-    var card = document.createElement('div');
-    card.className = 'ccard';
-    card.innerHTML =
-      '<div class="chdr" data-cid="'+cid+'">' +
-        '<div class="mono">'+ini+'</div>' +
-        '<div><div class="cn">'+campo+'</div><div class="cm">'+lotes.length+' lotes &middot; '+totHc.toLocaleString('es')+' ha</div></div>' +
-        '<i class="ti ti-chevron-right chev'+(isOpen?' open':'')+'" id="ci'+cid+'"></i>' +
-      '</div>' +
-      '<div class="llist'+(isOpen?' open':'')+'" id="ll'+cid+'">'+lhtml+'</div>';
+    var card=document.createElement('div'); card.className='ccard';
+    card.innerHTML='<div class="chdr" data-cid="'+cid+'"><div class="mono">'+ini+'</div><div><div class="cn">'+campo+'</div><div class="cm">'+lotes.length+' lotes &middot; '+totHc.toLocaleString('es')+' ha</div></div><i class="ti ti-chevron-right chev'+(isOpen?' open':'')+'" id="ci'+cid+'"></i></div><div class="llist'+(isOpen?' open':'')+'" id="ll'+cid+'">'+lhtml+'</div>';
     el.appendChild(card);
   });
 }
 
-function togC(cid) {
-  openC[cid] = !openC[cid];
-  var ll = q('ll'+cid); if(ll) ll.classList.toggle('open');
-  var ci = q('ci'+cid); if(ci) ci.classList.toggle('open');
-}
-
-function togL(lid) {
-  openL[lid] = !openL[lid];
-  var det = q(lid);
-  if(det) {
-    if(!det.innerHTML.trim()) {
-      // Find the lote data
-      var src = AD[AC]&&(SE==='inv'?AD[AC].inv:AD[AC].ver)||[];
-      // Find by matching sid
-      for(var i=0;i<src.length;i++) {
-        var d=src[i];
-        if(sid(d.campo+'|'+d.lote+'|'+SE+'|'+AC)===lid) {
-          det.innerHTML = renderDetail(d);
-          break;
-        }
-      }
+function togC(cid){ openC[cid]=!openC[cid]; var ll=q('ll'+cid); if(ll)ll.classList.toggle('open'); var ci=q('ci'+cid); if(ci)ci.classList.toggle('open'); }
+function togL(lid){
+  openL[lid]=!openL[lid]; var det=q(lid);
+  if(det){
+    if(!det.innerHTML.trim()){
+      var src=AD[AC]&&(SE==='inv'?AD[AC].inv:AD[AC].ver)||[];
+      for(var i=0;i<src.length;i++){var d=src[i]; if(sid(d.campo+'|'+d.lote+'|'+SE+'|'+AC)===lid){det.innerHTML=renderDetail(d);break;}}
     }
     det.classList.toggle('open');
-    var icon = det.previousElementSibling&&det.previousElementSibling.querySelector('.ti-chevron-right');
-    if(icon) { if(openL[lid]) icon.style.transform='rotate(90deg)'; else icon.style.transform=''; }
+    var icon=det.previousElementSibling&&det.previousElementSibling.querySelector('.ti-chevron-right');
+    if(icon){if(openL[lid])icon.style.transform='rotate(90deg)';else icon.style.transform='';}
   }
 }
 
-function LI(done,finn,icon,name,det,fecha,extra) {
-  var cls = finn?'finn':done?'done':'pend';
-  var html = '<div class="li '+cls+(extra?' '+extra:'')+'">' +
-    '<i class="ti '+icon+'"></i>' +
-    '<div class="lb"><div class="ln">'+name+(finn?FS():'')+' </div>' +
-    (det?'<div class="ld">'+det+'</div>':'') +
-    (fecha?'<div class="lf"><i class="ti ti-calendar" style="font-size:9px;vertical-align:-1px;"></i> '+fecha+'</div>':'') +
-    '</div></div>';
-  return html;
-}
+// ── DETAIL RENDER ─────────────────────────────────────────────
+function LI(done,finn,icon,name,det,fecha,extra){var cls=finn?'finn':done?'done':'pend';return '<div class="li '+cls+(extra?' '+extra:'')+'"><i class="ti '+icon+'"></i><div class="lb"><div class="ln">'+name+(finn?FS():'')+' </div>'+(det?'<div class="ld">'+det+'</div>':'')+(fecha?'<div class="lf"><i class="ti ti-calendar" style="font-size:9px;vertical-align:-1px;"></i> '+fecha+'</div>':'')+'</div></div>';}
+function FC2(done,finn,label,val,unit,fecha){var cls=finn?'finn':done?'done':'pend';return '<div class="fc '+cls+'"><div class="fcl">'+label+(finn?FS():'')+' </div><div class="fcv">'+(val!=null?val:'—')+'<span class="fcu">'+(val!=null?unit:'')+'</span></div>'+(fecha?'<div class="fcd"><i class="ti ti-calendar" style="font-size:9px;vertical-align:-1px;"></i> '+fecha+'</div>':'')+'</div>';}
 
-function FC2(done,finn,label,val,unit,fecha) {
-  var cls = finn?'finn':done?'done':'pend';
-  return '<div class="fc '+cls+'">' +
-    '<div class="fcl">'+label+(finn?FS():'')+' </div>' +
-    '<div class="fcv">'+(val!=null?val:'—')+'<span class="fcu">'+(val!=null?unit:'')+'</span></div>' +
-    (fecha?'<div class="fcd"><i class="ti ti-calendar" style="font-size:9px;vertical-align:-1px;"></i> '+fecha+'</div>':'') +
-    '</div>';
-}
-
-function renderDetail(d) {
-  var isCz=d.cult==='Cz', isVer=SE==='ver';
-  var hasRe=d.re1&&(d.re1.var||d.re1.fecha);
+function renderDetail(d){
+  var isVer=SE==='ver'; var hasRe=d.re1&&(d.re1.var||d.re1.fecha);
   var rePct=hasRe&&d.re1.ha?Math.round(d.re1.ha/d.has*100):null;
   var totU=totalUrea(d), fb=d.fert_bas||{};
-
-  var h = '<div class="dbanner"><span class="dvar">'+(d.siem&&d.siem.var?d.siem.var:d.cult||'—')+'</span>'+
-    (hasRe?'<span class="re-tag"><i class="ti ti-refresh" style="font-size:10px;vertical-align:-1px;"></i> Resiembra'+(d.re1.ha?' &middot; '+Math.round(d.re1.ha)+' ha':'')+'</span>':'')+'</div>';
-  if(hasRe&&rePct!=null) h+='<div class="re-pb"><span class="re-pbl">Resiembra:</span><div class="re-pbg"><div class="re-pf" style="width:'+rePct+'%;"></div></div><span class="re-pv">'+rePct+'%</span></div><div style="height:5px;"></div>';
-
-  h += '<div class="sgrid">' +
-    '<div class="sec"><div class="st"><i class="ti ti-spray"></i>Herbicidas</div>' +
-      LI(d.barb&&d.barb.done,d.barb&&d.barb.finn,'ti-check-circle','Barbecho',d.barb&&d.barb.prod,d.barb&&d.barb.fecha) +
-      LI(d.dg&&d.dg.done,d.dg&&d.dg.finn,'ti-check-circle','Doble golpe',d.dg&&d.dg.prod,d.dg&&d.dg.fecha) +
-      LI(d.rep&&d.rep.done,d.rep&&d.rep.finn,'ti-check-circle','Repaso',d.rep&&d.rep.prod,d.rep&&d.rep.fecha) +
-    '</div>' +
-    '<div class="sec"><div class="st"><i class="ti ti-seeding"></i>Siembra</div>' +
-      LI(d.siem&&(d.siem.var||d.siem.fecha),d.siem&&d.siem.finn,'ti-check-circle','Siembra',d.siem&&d.siem.var,d.siem&&d.siem.fecha) +
-      LI(d.re1&&(d.re1.var||d.re1.fecha),d.re1&&d.re1.finn,'ti-refresh','Resiembra',d.re1&&d.re1.var,d.re1&&d.re1.fecha,'re') +
-    '</div>' +
-    '<div class="sec"><div class="st"><i class="ti ti-shield-check"></i>Sanidad</div>' +
-      LI(d.f1&&d.f1.prod,d.f1&&d.f1.finn,'ti-check-circle','Fungicida 1',d.f1&&d.f1.prod,d.f1&&d.f1.fecha) +
-      LI(d.f2&&d.f2.prod,d.f2&&d.f2.finn,'ti-check-circle','Fungicida 2',d.f2&&d.f2.prod,d.f2&&d.f2.fecha) +
-      LI(d.f3&&d.f3.prod,d.f3&&d.f3.finn,'ti-check-circle','Fungicida 3',d.f3&&d.f3.prod,d.f3&&d.f3.fecha) +
-    '</div>' +
-  '</div>';
-
-  if(!isVer||isMz(d)) {
-    h += '<div class="fsec"><div class="ftit"><i class="ti ti-test-pipe"></i>Fertilizaciones</div>';
-    if(!isVer) {
-      var pSrc = fb.spt!=null?(fb.fosz!=null?'SPT '+fb.spt+' + Fosz '+fb.fosz:'SPT '+fb.spt):fb.fosz!=null?'Foszinc '+fb.fosz:'—';
-      var pFinn=!!(fb.spt_finn||fb.fosz_finn), pDone=fb.spt!=null||fb.fosz!=null;
-      h += '<div class="fgrp"><div class="fgl">Basal</div><div class="frow">' +
-        '<div class="fc '+(pFinn?'finn':pDone?'done':'pend')+'"><div class="fcl">Fosforo (P)'+(pFinn?FS():'')+' </div><div class="fcv" style="font-size:12px;">'+pSrc+'</div>'+(fb.fecha_p?'<div class="fcd"><i class="ti ti-calendar" style="font-size:9px;"></i> '+fb.fecha_p+'</div>':'')+'</div>' +
-        FC2(fb.kcl!=null,fb.kcl_finn,'Potasio (K)',fb.kcl,' kg/ha',fb.fecha_k) +
-        FC2(fb.caso4!=null,fb.caso4_finn,'Azufre (S)',fb.caso4,' kg/ha',fb.fecha_s) +
-      '</div></div>';
-    }
-    var uits = !isVer ? [['Siembra',d.urea_siem],['Z22/B4',d.z22],['Z30/C1',d.z30],['Z33',d.z33]] : [['Siembra',d.urea_siem],['V4',d.v4],['V8',d.v8]];
-    h += '<div class="fgrp"><div class="fgl">Urea azufrada (kg/ha)</div><div class="frow">';
+  var h='<div class="dbanner"><span class="dvar">'+(d.siem&&d.siem.var?d.siem.var:d.cult||'—')+'</span>'+(hasRe?'<span class="re-tag"><i class="ti ti-refresh" style="font-size:10px;vertical-align:-1px;"></i> Resiembra'+(d.re1.ha?' &middot; '+Math.round(d.re1.ha)+' ha':'')+'</span>':'')+'</div>';
+  if(hasRe&&rePct!=null)h+='<div class="re-pb"><span class="re-pbl">Resiembra:</span><div class="re-pbg"><div class="re-pf" style="width:'+rePct+'%;"></div></div><span class="re-pv">'+rePct+'%</span></div><div style="height:5px;"></div>';
+  h+='<div class="sgrid"><div class="sec"><div class="st"><i class="ti ti-spray"></i>Herbicidas</div>'+LI(d.barb&&d.barb.done,d.barb&&d.barb.finn,'ti-check-circle','Barbecho',d.barb&&d.barb.prod,d.barb&&d.barb.fecha)+LI(d.dg&&d.dg.done,d.dg&&d.dg.finn,'ti-check-circle','Doble golpe',d.dg&&d.dg.prod,d.dg&&d.dg.fecha)+LI(d.rep&&d.rep.done,d.rep&&d.rep.finn,'ti-check-circle','Repaso',d.rep&&d.rep.prod,d.rep&&d.rep.fecha)+'</div><div class="sec"><div class="st"><i class="ti ti-seeding"></i>Siembra</div>'+LI(d.siem&&(d.siem.var||d.siem.fecha),d.siem&&d.siem.finn,'ti-check-circle','Siembra',d.siem&&d.siem.var,d.siem&&d.siem.fecha)+LI(d.re1&&(d.re1.var||d.re1.fecha),d.re1&&d.re1.finn,'ti-refresh','Resiembra',d.re1&&d.re1.var,d.re1&&d.re1.fecha,'re')+'</div><div class="sec"><div class="st"><i class="ti ti-shield-check"></i>Sanidad</div>'+LI(d.f1&&d.f1.prod,d.f1&&d.f1.finn,'ti-check-circle','Fungicida 1',d.f1&&d.f1.prod,d.f1&&d.f1.fecha)+LI(d.f2&&d.f2.prod,d.f2&&d.f2.finn,'ti-check-circle','Fungicida 2',d.f2&&d.f2.prod,d.f2&&d.f2.fecha)+LI(d.f3&&d.f3.prod,d.f3&&d.f3.finn,'ti-check-circle','Fungicida 3',d.f3&&d.f3.prod,d.f3&&d.f3.fecha)+'</div></div>';
+  if(!isVer||isMz(d)){
+    h+='<div class="fsec"><div class="ftit"><i class="ti ti-test-pipe"></i>Fertilizaciones</div>';
+    if(!isVer){var pSrc=fb.spt!=null?(fb.fosz!=null?'SPT '+fb.spt+' + Fosz '+fb.fosz:'SPT '+fb.spt):fb.fosz!=null?'Foszinc '+fb.fosz:'—';var pFinn=!!(fb.spt_finn||fb.fosz_finn),pDone=fb.spt!=null||fb.fosz!=null;h+='<div class="fgrp"><div class="fgl">Basal</div><div class="frow"><div class="fc '+(pFinn?'finn':pDone?'done':'pend')+'"><div class="fcl">Fosforo (P)'+(pFinn?FS():'')+' </div><div class="fcv" style="font-size:12px;">'+pSrc+'</div>'+(fb.fecha_p?'<div class="fcd"><i class="ti ti-calendar" style="font-size:9px;"></i> '+fb.fecha_p+'</div>':'')+'</div>'+FC2(fb.kcl!=null,fb.kcl_finn,'Potasio (K)',fb.kcl,' kg/ha',fb.fecha_k)+FC2(fb.caso4!=null,fb.caso4_finn,'Azufre (S)',fb.caso4,' kg/ha',fb.fecha_s)+'</div></div>';}
+    var uits=!isVer?[['Siembra',d.urea_siem],['Z22/B4',d.z22],['Z30/C1',d.z30],['Z33',d.z33]]:[['Siembra',d.urea_siem],['V4',d.v4],['V8',d.v8]];
+    h+='<div class="fgrp"><div class="fgl">Urea azufrada (kg/ha)</div><div class="frow">';
     uits.forEach(function(lu){h+=FC2(lu[1]&&lu[1].kg!=null,lu[1]&&lu[1].finn,lu[0],lu[1]&&lu[1].kg,' kg/ha',lu[1]&&lu[1].fecha);});
-    h += '<div class="fc total"><div class="fcl">Total</div><div class="fcv">'+(totU||'—')+'<span class="fcu">'+(totU?' kg/ha':'')+'</span></div></div></div></div>';
-    h += '<div class="fgrp" style="margin-bottom:0;"><div class="fgl">Otros</div><div class="frow">';
-    h += FC2(d.znf&&d.znf.dosis!=null,d.znf&&d.znf.finn,'Zinc foliar',d.znf&&d.znf.dosis,' L/ha',d.znf&&d.znf.fecha);
-    if(!isVer) {
-      var humPct = d.hum&&d.hum.ha ? Math.round(d.hum.ha/d.has*100) : null;
-      h += '<div class="fc '+(d.hum&&d.hum.dosis!=null?(d.hum.finn?'finn':'done'):'pend')+'">' +
-        '<div class="fcl">Ac. humicos'+(d.hum&&d.hum.finn?FS():'')+' </div>' +
-        '<div class="fcv">'+(d.hum&&d.hum.dosis!=null?d.hum.dosis:'—')+'<span class="fcu">'+(d.hum&&d.hum.dosis!=null?' L/ha':'')+'</span></div>' +
-        (d.hum&&d.hum.fecha?'<div class="fcd"><i class="ti ti-calendar" style="font-size:9px;"></i> '+d.hum.fecha+'</div>':'') +
-        (humPct!=null?'<div style="margin-top:3px;"><div style="display:flex;justify-content:space-between;font-size:9px;color:#999;"><span>'+Math.round(d.hum.ha)+'/'+Math.round(d.has)+' ha</span><span style="font-weight:700;color:#1a8a5a;">'+humPct+'%</span></div><div class="hbar"><div class="hbarf" style="width:'+humPct+'%;"></div></div></div>':'') +
-      '</div>';
-    }
-    h += '</div></div></div>';
+    h+='<div class="fc total"><div class="fcl">Total</div><div class="fcv">'+(totU||'—')+'<span class="fcu">'+(totU?' kg/ha':'')+'</span></div></div></div></div>';
+    h+='<div class="fgrp" style="margin-bottom:0;"><div class="fgl">Otros</div><div class="frow">'+FC2(d.znf&&d.znf.dosis!=null,d.znf&&d.znf.finn,'Zinc foliar',d.znf&&d.znf.dosis,' L/ha',d.znf&&d.znf.fecha);
+    if(!isVer){var humPct=d.hum&&d.hum.ha?Math.round(d.hum.ha/d.has*100):null;h+='<div class="fc '+(d.hum&&d.hum.dosis!=null?(d.hum.finn?'finn':'done'):'pend')+'"><div class="fcl">Ac. humicos'+(d.hum&&d.hum.finn?FS():'')+' </div><div class="fcv">'+(d.hum&&d.hum.dosis!=null?d.hum.dosis:'—')+'<span class="fcu">'+(d.hum&&d.hum.dosis!=null?' L/ha':'')+'</span></div>'+(d.hum&&d.hum.fecha?'<div class="fcd"><i class="ti ti-calendar" style="font-size:9px;"></i> '+d.hum.fecha+'</div>':'')+(humPct!=null?'<div style="margin-top:3px;"><div style="display:flex;justify-content:space-between;font-size:9px;color:#999;"><span>'+Math.round(d.hum.ha)+'/'+Math.round(d.has)+' ha</span><span style="font-weight:700;color:#1a8a5a;">'+humPct+'%</span></div><div class="hbar"><div class="hbarf" style="width:'+humPct+'%;"></div></div></div>':'')+'</div>';}
+    h+='</div></div></div>';
   }
   return h;
 }
 
-// XLSX parser (for background sync only)
+// ── CLIMA ─────────────────────────────────────────────────────
+var climaInited = false;
+
+function initClima() {
+  if(climaInited) return;
+  climaInited = true;
+
+  // Campo filter
+  var campos = Object.keys(INI);
+  var cf = q('clima-campo-filters'); cf.innerHTML='';
+  [{v:'all',l:'Todos'}].concat(campos.map(function(c){return{v:c,l:c};})).forEach(function(o){
+    var el=document.createElement('div'); el.className='fchip'+(climaCampo===o.v?' on':'');
+    el.setAttribute('data-v',o.v); el.textContent=o.l;
+    el.onclick=(function(v){return function(){climaCampo=v;document.querySelectorAll('#clima-campo-filters .fchip').forEach(function(x){x.classList.toggle('on',x.getAttribute('data-v')===v);});fetchClima();};})(o.v);
+    cf.appendChild(el);
+  });
+
+  // Period filter
+  var pf = q('clima-period-filters'); pf.innerHTML='';
+  [{v:7,l:'7 días'},{v:30,l:'30 días'},{v:90,l:'Campaña'}].forEach(function(o){
+    var el=document.createElement('div'); el.className='fchip'+(climaPeriod===o.v?' on':'');
+    el.setAttribute('data-v',o.v); el.textContent=o.l;
+    el.onclick=(function(v){return function(){climaPeriod=v;document.querySelectorAll('#clima-period-filters .fchip').forEach(function(x){x.classList.toggle('on',parseInt(x.getAttribute('data-v'))===v);});fetchClima();};})(o.v);
+    pf.appendChild(el);
+  });
+
+  fetchClima();
+}
+
+async function fetchClima() {
+  // Get coordinates - use center of all campos or specific campo
+  var lat = -32.0, lon = -58.15;
+  if(climaCampo!=='all' && CAMPOS_COORDS[climaCampo]) {
+    lat = CAMPOS_COORDS[climaCampo][0];
+    lon = CAMPOS_COORDS[climaCampo][1];
+  }
+
+  var endDate = new Date();
+  var startDate = new Date();
+  if(climaPeriod===90){
+    startDate = new Date(2026,3,1); // April 2026 - start of campaign
+  } else {
+    startDate.setDate(startDate.getDate()-climaPeriod);
+  }
+
+  var fmt = function(d){ return d.toISOString().slice(0,10); };
+  var url = 'https://api.open-meteo.com/v1/forecast?latitude='+lat+'&longitude='+lon+
+    '&daily=precipitation_sum,temperature_2m_min&start_date='+fmt(startDate)+'&end_date='+fmt(endDate)+'&timezone=America%2FSao_Paulo';
+
+  q('suma-cards').innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:20px;color:#999;font-size:12px;"><i class="ti ti-loader" style="font-size:18px;display:block;margin-bottom:6px;"></i>Cargando...</div>';
+
+  try {
+    var res = await fetch(url);
+    var data = await res.json();
+    climaData = data.daily;
+    renderClima();
+  } catch(e) {
+    q('suma-cards').innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:20px;color:#b83030;font-size:12px;">Error al cargar datos climáticos</div>';
+  }
+}
+
+function renderClima() {
+  if(!climaData) return;
+  var prec = climaData.precipitation_sum || [];
+  var dates = climaData.time || [];
+  var tmin = climaData.temperature_2m_min || [];
+
+  var total = prec.reduce(function(a,v){return a+(v||0);},0);
+  var maxVal = Math.max.apply(null, prec.map(function(v){return v||0;}));
+  var lastEvent = null, lastMm = 0;
+  for(var i=prec.length-1;i>=0;i--){
+    if(prec[i]>0.5){lastEvent=dates[i];lastMm=prec[i];break;}
+  }
+  var daysAgo = lastEvent ? Math.round((new Date()-new Date(lastEvent))/86400000) : null;
+
+  // Heladas
+  var heladas = tmin.filter(function(t){return t!=null&&t<0;}).length;
+
+  // Summary cards
+  q('suma-cards').innerHTML =
+    '<div class="suma-card"><div class="sc-lbl">Acumulado</div><div class="sc-val">'+Math.round(total)+'<span style="font-size:10px;font-weight:400;color:#999;margin-left:2px;">mm</span></div><div class="sc-sub">'+prec.length+' días</div></div>'+
+    '<div class="suma-card"><div class="sc-lbl">Último evento</div><div class="sc-val">'+(lastMm?Math.round(lastMm):'—')+'<span style="font-size:10px;font-weight:400;color:#999;margin-left:2px;">'+(lastMm?'mm':'')+'</span></div><div class="sc-sub">'+(daysAgo!=null?'hace '+daysAgo+'d':'sin datos')+'</div></div>'+
+    '<div class="suma-card"><div class="sc-lbl">Heladas</div><div class="sc-val" style="color:'+(heladas>0?'#185FA5':'#18180f')+'">'+heladas+'<span style="font-size:10px;font-weight:400;color:#999;margin-left:2px;">días</span></div><div class="sc-sub">T° min &lt; 0°C</div></div>';
+
+  // Bars
+  var barsEl = q('clima-bars'); barsEl.innerHTML='';
+  var step = Math.max(1, Math.floor(prec.length/30));
+  var shown = [], shownDates = [];
+  for(var i=0;i<prec.length;i+=step){
+    shown.push(prec[i]||0);
+    shownDates.push(dates[i]);
+  }
+  var maxShown = Math.max.apply(null,shown)||1;
+  shown.forEach(function(v,i){
+    var pct = Math.round(v/maxShown*100);
+    var cls = v>20?'high':v>5?'mid':'low';
+    var bar = document.createElement('div');
+    bar.className = 'bar '+cls;
+    bar.style.height = Math.max(2,pct)+'%';
+    bar.title = shownDates[i]+': '+Math.round(v)+'mm';
+    barsEl.appendChild(bar);
+  });
+
+  // Axis
+  var axEl = q('clima-axis');
+  if(shownDates.length>0){
+    var fmt2=function(s){var p=s.split('-');return p[2]+'/'+p[1];};
+    axEl.innerHTML='<span>'+fmt2(shownDates[0])+'</span>';
+    if(shownDates.length>2)axEl.innerHTML+='<span>'+fmt2(shownDates[Math.floor(shownDates.length/2)])+'</span>';
+    axEl.innerHTML+='<span>'+fmt2(shownDates[shownDates.length-1])+'</span>';
+  }
+
+  // Eventos destacados
+  var eventos=[];
+  for(var i=0;i<prec.length;i++){
+    if(prec[i]>5) eventos.push({fecha:dates[i],mm:prec[i]});
+  }
+  eventos.sort(function(a,b){return b.mm-a.mm;});
+  var evEl=q('clima-eventos'); evEl.innerHTML='';
+  if(!eventos.length){evEl.innerHTML='<div style="text-align:center;padding:20px;color:#999;font-size:12px;">Sin eventos significativos en el período</div>';return;}
+  eventos.slice(0,5).forEach(function(ev){
+    var p=ev.fecha.split('-');
+    var fechaStr=p[2]+'/'+p[1]+'/'+p[0];
+    var card=document.createElement('div'); card.className='evento-card';
+    card.innerHTML='<div class="evento-icon"><i class="ti ti-droplet" style="font-size:15px;color:#185FA5;"></i></div>'+
+      '<div class="evento-info"><div class="evento-fecha">'+fechaStr+'</div><div class="evento-campos">'+(climaCampo==='all'?'Todos los campos':climaCampo)+'</div></div>'+
+      '<div class="evento-mm">'+Math.round(ev.mm)+'<span>mm</span></div>';
+    evEl.appendChild(card);
+  });
+}
+
+// ── XLSX PARSER ───────────────────────────────────────────────
 function isFinn(cell){return cell&&cell.s&&cell.s.fgColor&&cell.s.fgColor.rgb===FINN_COLOR;}
 function normCult(v){var m={CC:'Cobertura',cc:'Cobertura',Car:'Carinata',car:'Carinata'};return v?m[String(v).trim()]||String(v).trim():null;}
 function fmtDate(v){if(v==null)return null;if(typeof v==='number'&&v>40000){var d=XLSX.SSF.parse_date_code(v);if(d)return String(d.d).padStart(2,'0')+'/'+String(d.m).padStart(2,'0')+'/'+d.y;}var s=String(v).trim();if(s.includes('/')&&s.length<=6){var p=s.split('/');if(p.length===2){try{return p[0].padStart(2,'0')+'/'+p[1].padStart(2,'0')+'/2026';}catch(e){}}}return s||null;}
