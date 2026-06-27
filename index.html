@@ -209,7 +209,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 
   <!-- INDICADORES -->
   <div class="tab-panel" id="panel-indicadores">
-    <div class="tab-empty"><i class="ti ti-chart-bar"></i><p>Indicadores en desarrollo</p></div>
+    <div id="ind-content">
+      <div class="clima-loading"><i class="ti ti-loader" style="font-size:20px;display:block;margin-bottom:8px;"></i>Cargando indicadores...</div>
+    </div>
   </div>
 
   <!-- AVANCES -->
@@ -262,6 +264,7 @@ document.addEventListener('DOMContentLoaded',function(){
       document.querySelectorAll('.tab-panel').forEach(function(x){x.classList.remove('on');});
       this.classList.add('on');q('panel-'+t).classList.add('on');
       if(t==='clima')initClima();
+      if(t==='indicadores')initIndicadores();
     };
   });
   q('btn-inv').onclick=function(){setSeason('inv');};
@@ -486,7 +489,7 @@ async function fetchOM(){
   var today=new Date();
   var yesterday=new Date(today);yesterday.setDate(yesterday.getDate()-1);
   var fmt=function(d){return d.toISOString().slice(0,10);};
-  var params='&daily=temperature_2m_min,temperature_2m_max,et0_fao_evapotranspiration&timezone=America%2FSao_Paulo';
+  var params='&daily=temperature_2m_min,temperature_2m_max,et0_fao_evapotranspiration,shortwave_radiation_sum&timezone=America%2FSao_Paulo';
   var baseHist='https://archive-api.open-meteo.com/v1/archive?latitude='+LAT+'&longitude='+LON;
   var baseFore='https://api.open-meteo.com/v1/forecast?latitude='+LAT+'&longitude='+LON+'&past_days=92';
   try{
@@ -512,7 +515,12 @@ async function fetchOM(){
         }
       });
     }
-    omData={daily:{time:allDates,temperature_2m_min:allTmin,temperature_2m_max:allTmax,et0_fao_evapotranspiration:allEtp}};
+    var histRad=hist.daily.shortwave_radiation_sum||[];
+    var foreRad=fore.daily&&fore.daily.shortwave_radiation_sum?fore.daily.shortwave_radiation_sum:[];
+    var allRad=histRad.slice();
+    hist.daily.time.forEach(function(d,i){});
+    fore.daily&&fore.daily.time&&fore.daily.time.forEach(function(d,i){if(d>lastHistDate)allRad.push(foreRad[i]||null);});
+    omData={daily:{time:allDates,temperature_2m_min:allTmin,temperature_2m_max:allTmax,et0_fao_evapotranspiration:allEtp,shortwave_radiation_sum:allRad}};
     renderClima();
   }catch(e){
     console.error('OM error:',e);
@@ -604,7 +612,31 @@ function buildMonthlyData(startDate,endDate){
     var etp=etpDays?Math.round(etpSum):null;
     var balance=(lluvia!=null&&etp!=null)?Math.round(lluvia-etp):null;
 
-    result.push({label:label,y:y,m:m,lluvia:lluvia,tmin:tmin,tmax:tmax,etp:etp,balance:balance,heladas:heladaDays});
+    // T>30 days
+    // Radiation
+    var radArr=[];
+    var omRad=omData.daily.shortwave_radiation_sum||[];
+    for(var day4=1;day4<=daysInMonth;day4++){
+      var k4=y+'-'+String(m).padStart(2,'0')+'-'+String(day4).padStart(2,'0');
+      var idx4=omDates.indexOf(k4);
+      if(idx4>=0&&omRad[idx4]!=null)radArr.push(omRad[idx4]);
+    }
+    var radAvg=radArr.length?Math.round(radArr.reduce(function(a,b){return a+b;},0)/radArr.length*10)/10:null;
+    var dias30=0;
+    for(var day2=1;day2<=daysInMonth;day2++){
+      var k2=y+'-'+String(m).padStart(2,'0')+'-'+String(day2).padStart(2,'0');
+      var od2=omByDate[k2];
+      if(od2&&od2.tmax!=null&&od2.tmax>30)dias30++;
+    }
+    // Amplitud termica promedio
+    var amplArr=[];
+    for(var day3=1;day3<=daysInMonth;day3++){
+      var k3=y+'-'+String(m).padStart(2,'0')+'-'+String(day3).padStart(2,'0');
+      var od3=omByDate[k3];
+      if(od3&&od3.tmax!=null&&od3.tmin!=null)amplArr.push(od3.tmax-od3.tmin);
+    }
+    var ampl=amplArr.length?Math.round(amplArr.reduce(function(a,b){return a+b;},0)/amplArr.length*10)/10:null;
+    result.push({label:label,y:y,m:m,lluvia:lluvia,tmin:tmin,tmax:tmax,etp:etp,balance:balance,heladas:heladaDays,dias30:dias30,ampl:ampl,rad:radAvg});
     cur=new Date(y,m,1);
   }
   return result;
@@ -777,6 +809,7 @@ function renderClima(){
       '<span class="leg-item"><span class="leg-sq" style="background:#378ADD;"></span>Lluvia mm</span>'+
       '<span class="leg-item"><span class="leg-ln" style="background:#E24B4A;"></span>T° mín</span>'+
       '<span class="leg-item"><span style="width:8px;height:8px;border-radius:50%;background:#b83030;border:1.5px solid #791F1F;display:inline-block;"></span>Helada</span>'+
+    '<span class="leg-item"><span style="width:8px;height:8px;border-radius:50%;background:#7B2FBE;border:1.5px solid #4A1A75;display:inline-block;"></span>T>30°C</span>'+
     '</div>'+
     '<div style="position:relative;width:100%;height:220px;"><canvas id="chart-main" role="img" aria-label="Gráfico de lluvia y temperatura mínima mensual"></canvas></div>'+
   '</div>';
@@ -814,7 +847,9 @@ function renderClima(){
         {type:'bar',label:'Lluvia mm',data:lluvias,backgroundColor:'#B5D4F4',borderColor:'#378ADD',borderWidth:1,yAxisID:'y'},
         {type:'line',label:'T° mín',data:tmins,borderColor:'#E24B4A',backgroundColor:'transparent',borderWidth:2,tension:0.3,pointRadius:0,yAxisID:'y1'},
         {type:'scatter',label:'Helada',data:data.map(function(d,i){return d.heladas>0?{x:labels[i],y:d.tmin}:null;}).filter(Boolean),
-          backgroundColor:'#b83030',borderColor:'#791F1F',pointRadius:5,pointStyle:'circle',showLine:false,yAxisID:'y1'}
+          backgroundColor:'#b83030',borderColor:'#791F1F',pointRadius:5,pointStyle:'circle',showLine:false,yAxisID:'y1'},
+        {type:'scatter',label:'T>30°C',data:data.map(function(d,i){return d.dias30>0?{x:labels[i],y:d.tmax}:null;}).filter(Boolean),
+          backgroundColor:'#7B2FBE',borderColor:'#4A1A75',pointRadius:5,pointStyle:'circle',showLine:false,yAxisID:'y1'}
       ]
     },
     options:{
@@ -857,6 +892,149 @@ function renderClima(){
       }
     }
   });
+}
+
+
+// ── INDICADORES ────────────────────────────────────────────────
+var indInited=false;
+function initIndicadores(){
+  if(indInited)return;
+  if(!omData){
+    // Wait for OM data
+    q('ind-content').innerHTML='<div class="clima-loading"><i class="ti ti-loader" style="font-size:20px;display:block;margin-bottom:8px;"></i>Cargando datos climáticos...</div>';
+    initClima();
+    setTimeout(function(){if(omData)renderIndicadores();else setTimeout(renderIndicadores,3000);},2000);
+    return;
+  }
+  indInited=true;
+  renderIndicadores();
+}
+
+var RAD_THRESH={
+  'Trigo/Cebada':{months:[10,11],good:20,ok:15,label:'Trigo & Cebada',period:'Oct-Nov',why:'La radiación en espigazón y llenado de grano determina el peso del grano. Más MJ/m² = granos más pesados y mayor proteína.'},
+  'Colza':{months:[8,9],good:18,ok:13,label:'Colza',period:'Ago-Sep',why:'Durante la floración y cuaje de silicuas, la radiación es clave para la fijación de aceite y rendimiento final.'},
+  'Soja':{months:[1,2],good:22,ok:16,label:'Soja',period:'Ene-Feb',why:'En el período R5-R7 (llenado de granos), alta radiación maximiza la fotosíntesis y el rendimiento.'},
+  'Maíz':{months:[12,1],good:22,ok:16,label:'Maíz',period:'Dic-Ene',why:'La floración y llenado del grano son los momentos más sensibles a la radiación solar.'}
+};
+var AMPL_THRESH={good:12,ok:8};
+
+function semaforo(val,good,ok,inverse){
+  if(val==null)return {color:'#999',label:'Sin datos',bg:'#f8f7f3'};
+  if(!inverse){
+    if(val>=good)return {color:'#1a8a5a',label:'Buena',bg:'#e8f5ee'};
+    if(val>=ok)return {color:'#c47a12',label:'Regular',bg:'#fdf3e0'};
+    return {color:'#b83030',label:'Baja',bg:'#fceaea'};
+  } else {
+    if(val<=good)return {color:'#1a8a5a',label:'Óptima',bg:'#e8f5ee'};
+    if(val<=ok)return {color:'#c47a12',label:'Regular',bg:'#fdf3e0'};
+    return {color:'#b83030',label:'Alta',bg:'#fceaea'};
+  }
+}
+
+function renderIndicadores(){
+  indInited=true;
+  if(!omData){q('ind-content').innerHTML='<div style="padding:20px;text-align:center;color:#b83030;font-size:12px;">Sin datos climáticos disponibles</div>';return;}
+  
+  var today=new Date();
+  var curYear=today.getFullYear();
+  // Build monthly data for current year + previous for context
+  var allData=buildMonthlyData(new Date(curYear-1,0,1),today);
+  var byYearMonth={};
+  allData.forEach(function(d){byYearMonth[d.y+'-'+d.m]=d;});
+
+  var html='<div style="padding:10px 12px;padding-bottom:60px;">';
+
+  // ── RADIACIÓN ──
+  html+='<div style="font-size:11px;font-weight:700;color:#18180f;margin-bottom:8px;margin-top:2px;display:flex;align-items:center;gap:6px;"><i class="ti ti-sun" style="font-size:14px;color:#c47a12;"></i>Radiación solar por cultivo</div>';
+
+  Object.keys(RAD_THRESH).forEach(function(key){
+    var th=RAD_THRESH[key];
+    // Get relevant months - use latest available year for those months
+    var vals=[];
+    th.months.forEach(function(m){
+      // For months already passed this year use curYear, else curYear-1
+      var y=(m>today.getMonth()+1)?curYear-1:curYear;
+      // Handle Dec-Jan cross year
+      if(key==='Maíz'&&m===12)y=curYear-1;
+      if(key==='Maíz'&&m===1)y=curYear;
+      var d=byYearMonth[y+'-'+m];
+      if(d&&d.rad!=null)vals.push(d.rad);
+    });
+    var avg=vals.length?Math.round(vals.reduce(function(a,b){return a+b;},0)/vals.length*10)/10:null;
+    var sem=semaforo(avg,th.good,th.ok,false);
+    
+    html+='<div style="background:#fff;border:1px solid #e8e6de;border-radius:10px;padding:12px;margin-bottom:8px;">';
+    html+='<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">';
+    html+='<div><div style="font-size:13px;font-weight:600;">'+th.label+'</div>';
+    html+='<div style="font-size:10px;color:#999;">Período crítico: '+th.period+'</div></div>';
+    html+='<div style="text-align:right;">';
+    html+='<div style="font-size:18px;font-weight:600;color:'+sem.color+'">'+(avg!=null?avg:'—')+'<span style="font-size:10px;font-weight:400;color:#999;margin-left:1px;">MJ/m²/d</span></div>';
+    html+='<div style="font-size:11px;font-weight:600;background:'+sem.bg+';color:'+sem.color+';padding:2px 8px;border-radius:20px;display:inline-block;margin-top:2px;">'+sem.label+'</div>';
+    html+='</div></div>';
+    // Progress bar
+    var maxRef=th.good*1.2;
+    var pct=avg!=null?Math.min(100,Math.round(avg/maxRef*100)):0;
+    html+='<div style="width:100%;height:6px;border-radius:3px;background:#e8e6de;margin-bottom:6px;position:relative;">';
+    html+='<div style="height:6px;border-radius:3px;background:'+sem.color+';width:'+pct+'%;"></div>';
+    html+='<div style="position:absolute;left:'+Math.round(th.ok/maxRef*100)+'%;top:-2px;width:2px;height:10px;background:#c47a12;" title="Mínimo aceptable"></div>';
+    html+='<div style="position:absolute;left:'+Math.round(th.good/maxRef*100)+'%;top:-2px;width:2px;height:10px;background:#1a8a5a;" title="Buena radiación"></div>';
+    html+='</div>';
+    // Why
+    html+='<div style="font-size:10px;color:#666;line-height:1.4;background:#f8f7f3;border-radius:6px;padding:6px 8px;">';
+    html+='<i class="ti ti-info-circle" style="font-size:10px;color:#999;vertical-align:-1px;margin-right:3px;"></i>'+th.why+'</div>';
+    html+='</div>';
+  });
+
+  // ── AMPLITUD TERMICA ──
+  html+='<div style="font-size:11px;font-weight:700;color:#18180f;margin:12px 0 8px;display:flex;align-items:center;gap:6px;"><i class="ti ti-temperature" style="font-size:14px;color:#534AB7;"></i>Amplitud térmica</div>';
+  
+  // Last 3 months
+  var amplMonths=[];
+  for(var back=2;back>=0;back--){
+    var d2=new Date(today.getFullYear(),today.getMonth()-back,1);
+    var dm=byYearMonth[d2.getFullYear()+'-'+(d2.getMonth()+1)];
+    if(dm)amplMonths.push(dm);
+  }
+  
+  amplMonths.forEach(function(dm){
+    var sem2=semaforo(dm.ampl,AMPL_THRESH.good,AMPL_THRESH.ok,false);
+    html+='<div style="background:#fff;border:1px solid #e8e6de;border-radius:10px;padding:12px;margin-bottom:8px;">';
+    html+='<div style="display:flex;align-items:center;justify-content:space-between;">';
+    html+='<div><div style="font-size:13px;font-weight:600;">'+dm.label+'</div>';
+    html+='<div style="font-size:10px;color:#999;">Amplitud promedio diaria</div></div>';
+    html+='<div style="text-align:right;">';
+    html+='<div style="font-size:18px;font-weight:600;color:'+sem2.color+'">'+(dm.ampl!=null?dm.ampl:'—')+'<span style="font-size:10px;font-weight:400;color:#999;margin-left:1px;">°C</span></div>';
+    html+='<div style="font-size:11px;font-weight:600;background:'+sem2.bg+';color:'+sem2.color+';padding:2px 8px;border-radius:20px;display:inline-block;margin-top:2px;">'+sem2.label+'</div>';
+    html+='</div></div>';
+    if(dm.dias30>0){
+      html+='<div style="margin-top:8px;font-size:10px;background:#F3EAFD;color:#7B2FBE;padding:5px 8px;border-radius:6px;display:flex;align-items:center;gap:5px;">';
+      html+='<span style="width:8px;height:8px;border-radius:50%;background:#7B2FBE;display:inline-block;flex-shrink:0;"></span>';
+      html+=dm.dias30+' días con T° > 30°C — riesgo de estrés térmico en cultivos de verano</div>';
+    }
+    html+='</div>';
+  });
+
+  // Amplitud explanation
+  html+='<div style="background:#f8f7f3;border:1px solid #e8e6de;border-radius:8px;padding:10px 12px;margin-bottom:8px;font-size:10px;color:#666;line-height:1.5;">';
+  html+='<i class="ti ti-info-circle" style="font-size:10px;color:#999;vertical-align:-1px;margin-right:3px;"></i>';
+  html+='<strong>¿Por qué importa la amplitud térmica?</strong> Días calurosos + noches frescas favorecen la acumulación de azúcares y proteínas en el grano de trigo y cebada. Una amplitud mayor a 12°C en espigazón-llenado es óptima. Menos de 8°C (noches cálidas) favorece enfermedades fúngicas y reduce la calidad.';
+  html+='</div>';
+
+  // ── T>30 resumen ──
+  var dias30Total=allData.filter(function(d){return d.y===curYear;}).reduce(function(a,d){return a+d.dias30;},0);
+  if(dias30Total>0){
+    html+='<div style="background:#F3EAFD;border:1px solid #D4B8F0;border-radius:10px;padding:12px;margin-bottom:8px;">';
+    html+='<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">';
+    html+='<span style="width:12px;height:12px;border-radius:50%;background:#7B2FBE;display:inline-block;flex-shrink:0;"></span>';
+    html+='<span style="font-size:13px;font-weight:600;color:#4A1A75;">Días con T° > 30°C en '+curYear+'</span>';
+    html+='<span style="font-size:20px;font-weight:600;color:#7B2FBE;margin-left:auto;">'+dias30Total+'</span>';
+    html+='</div>';
+    html+='<div style="font-size:10px;color:#7B2FBE;line-height:1.4;">Estrés térmico en soja y maíz durante floración y llenado reduce el rendimiento hasta un 30%. En trigo reduce el peso hectolítrico.</div>';
+    html+='</div>';
+  }
+
+  html+='</div>';
+  q('ind-content').innerHTML=html;
 }
 
 // ── XLSX PARSER ────────────────────────────────────────────────
