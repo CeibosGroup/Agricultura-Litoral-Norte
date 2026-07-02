@@ -276,8 +276,15 @@ document.addEventListener('DOMContentLoaded',function(){
     var chdr=e.target.closest('.chdr[data-cid]');if(chdr){togC(chdr.getAttribute('data-cid'));return;}
     var lhdr=e.target.closest('.lhdr[data-lid]');if(lhdr){togL(lhdr.getAttribute('data-lid'));return;}
   });
-  start();
-  loadXLSX();
+  function waitAndStart(){
+    if(typeof HISTORIC !== 'undefined' && typeof VER_CULT !== 'undefined'){
+      start();
+      loadXLSX();
+    } else {
+      setTimeout(waitAndStart, 30);
+    }
+  }
+  waitAndStart();
 });
 
 function start(){
