@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
 <title>Agricultura Litoral Norte</title>
+<meta name="version" content="202607021419">
 <link rel="manifest" href="manifest.json">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="LN Agro">
@@ -220,7 +221,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   </div>
 </div>
 
-<script src="data.js"></script>
+<script>
+// Load data.js with cache buster based on week number to refresh weekly
+var _wk=Math.floor(Date.now()/604800000);
+var _s=document.createElement('script');
+_s.src='data.js?v='+_wk;
+document.head.appendChild(_s);
+</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
 // ── LLUVIA HISTORICA (planilla) ────────────────────────────────
@@ -275,8 +282,12 @@ document.addEventListener('DOMContentLoaded',function(){
     var chdr=e.target.closest('.chdr[data-cid]');if(chdr){togC(chdr.getAttribute('data-cid'));return;}
     var lhdr=e.target.closest('.lhdr[data-lid]');if(lhdr){togL(lhdr.getAttribute('data-lid'));return;}
   });
-  start();
-  loadXLSX();
+  // data.js may still be loading, wait for HISTORIC
+  function waitAndStart(){
+    if(typeof HISTORIC !== 'undefined'){start();loadXLSX();}
+    else setTimeout(waitAndStart,50);
+  }
+  waitAndStart();
 });
 
 function start(){
@@ -293,7 +304,7 @@ async function updateBg(){
     var yy=String(y).slice(2),yp=String(y+1).slice(2),camp=yy+'-'+yp;
     try{
       var ctrl=new AbortController();setTimeout(function(){ctrl.abort();},12000);
-      var res=await fetch(RAW+'/Planilla_labores_'+yy+'-'+yp+'.xlsx',{cache:'no-store',signal:ctrl.signal});
+      var res=await fetch(RAW+'/Planilla_labores_'+yy+'-'+yp+'.xlsx?t='+Date.now(),{cache:'no-store',signal:ctrl.signal});
       if(!res.ok)continue;
       var buf=await res.arrayBuffer(),wb=XLSX.read(buf,{cellStyles:true});
       AD[camp]={inv:parseSheet(wb,'Invierno'),ver:parseSheet(wb,'Verano')};
