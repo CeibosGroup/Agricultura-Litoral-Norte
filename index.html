@@ -304,7 +304,7 @@ async function updateBg(){
     var yy=String(y).slice(2),yp=String(y+1).slice(2),camp=yy+'-'+yp;
     try{
       var ctrl=new AbortController();setTimeout(function(){ctrl.abort();},12000);
-      var res=await fetch(RAW+'/Planilla_labores_'+yy+'-'+yp+'.xlsx?t='+Date.now(),{cache:'no-store',signal:ctrl.signal});
+      var res=await fetch(RAW+'/Planilla%20labores%20'+yy+'-'+yp+'.xlsx?t='+Date.now(),{cache:'no-store',signal:ctrl.signal});
       if(!res.ok)continue;
       var buf=await res.arrayBuffer(),wb=XLSX.read(buf,{cellStyles:true});
       AD[camp]={inv:parseSheet(wb,'Invierno'),ver:parseSheet(wb,'Verano')};
