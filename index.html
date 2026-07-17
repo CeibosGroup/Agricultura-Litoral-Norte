@@ -234,8 +234,8 @@ var FINN_COLOR='FF002060';
 var CLI={Tr:'Trigo',Cz:'Colza',Ceb:'Cebada',Cobertura:'Cob.',Carinata:'Car.'};
 var CLV={Sj1:'Soja 1',Sj2:'Soja 2',Mz1:'Maiz 1',Mz2:'Maiz 2',Cobertura:'Cob.'};
 var BCL={Tr:'bTr',Cz:'bCz',Ceb:'bCeb',Cobertura:'bCob',Carinata:'bCar',Sj1:'bSj1',Sj2:'bSj2',Mz1:'bMz1',Mz2:'bMz2'};
-var INI={Malacara:'ML','La Blanqueada':'LB','La Campana':'LC',Montecristo:'MC','Santa Rafaela':'SR','San Luis':'SL'};
-var CAMPOS_STAT = ['Santa Rafaela','Malacara','La Campana','Montecristo','San Luis','La Blanqueada'];
+var INI={Malacara:'ML','La Blanqueada':'LB','La Campana':'LC',Montecristo:'MC','Santa Rafaela':'SR','San Luis':'SL','Don Juan del Tala':'DJ'};
+var CAMPOS_STAT = ['Santa Rafaela','Malacara','La Campana','Montecristo','San Luis','La Blanqueada','Don Juan del Tala'];
 // Paysandú coordinates
 var LAT=-32.32, LON=-58.08;
 var RAW='https://raw.githubusercontent.com/CeibosGroup/Agricultura-Litoral-Norte/main';
@@ -1117,7 +1117,7 @@ function parseSheet(wb,sheetName){
   for(var ri=2;ri<=maxR;ri++){
     var v0=gv(ri,0);if(v0)campo=String(v0).trim();
     if(!campo)continue;
-    if(campo==='Pereira'||campo==='Don Juan Del Tala'||campo==='Don Juan del Tala')continue;
+    if(campo==='Pereira')continue;
     if(gv(ri,1)==null)continue;
     var lote=String(gv(ri,1)),hasRaw=sfn(gv(ri,2))||0;
     var re1haRaw=G(ri,'re1_ha'),re1ha=(typeof re1haRaw==='number'&&re1haRaw<10000)?re1haRaw:null;
