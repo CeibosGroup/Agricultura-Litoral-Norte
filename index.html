@@ -618,6 +618,10 @@ function render(){
   q('metrics').innerHTML=MC('Has',Math.round(totH).toLocaleString('es'),rows.length+' lotes',null,null)+MC(SE==='ver'?'Urea maiz':'Urea az.',promU?promU+' kg/ha':'—',conU.length+' lotes',null,null)+MC('Repaso',pR+'%','% area',pR,colPct(pR))+MC('Fung 1',pF1+'%','% area',pF1,colPct(pF1))+MC('Fung 2',pF2+'%','% area',pF2,colPct(pF2))+MC('Zinc fol.',pZn+'%','% area',pZn,colPct(pZn));
   var grp={};rows.forEach(function(d){if(!grp[d.campo])grp[d.campo]=[];grp[d.campo].push(d);});
   var el=q('campos');el.innerHTML='';
+  // Non-LN zones: render from FINN_FULL
+  if(activeZona!=='Litoral Norte'&&activeZona!=='Salto'){
+    renderFinnZona(activeZona,el);return;
+  }
   if(!rows.length){el.innerHTML='<div class="empty">Sin datos para esta temporada</div>';return;}
   Object.keys(grp).forEach(function(campo){
     var lotes=grp[campo],ini=INI[campo]||campo.slice(0,2).toUpperCase();
