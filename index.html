@@ -231,6 +231,7 @@ LLUVIAS_HIST['La Blanqueada'] = LLUVIAS_HIST['Santa Rafaela'];
 
 var HORAS_FRIO_VAR={"Hyola575":{"min":900,"max":1000,"label":"Hyola 575"},"Hyola 575":{"min":900,"max":1000,"label":"Hyola 575"},"Curry":{"min":500,"max":600,"label":"Curry CL"},"Curry CL":{"min":500,"max":600,"label":"Curry CL"},"Nuola300":{"min":600,"max":700,"label":"Nuola 300"},"Nuola 300":{"min":600,"max":700,"label":"Nuola 300"},"Nuvette":{"min":600,"max":700,"label":"Nuvette"},"Floriana":{"min":700,"max":800,"label":"Floriana"},"Beatrix":{"min":1000,"max":1200,"label":"Beatrix (ref.)"},"Hyola130":{"min":400,"max":500,"label":"Hyola 130"},"Hyola 130":{"min":400,"max":500,"label":"Hyola 130"},"Osiris":{"min":600,"max":700,"label":"Osiris"},"Olimpia":{"min":650,"max":750,"label":"Olimpia"}};
 var FINN_COLOR='FF002060';
+var FINN_LOTES={"Don Juan del Tala":["2","3","4A","4B","4C","5B","5C","6B","6C","7","8","8C","8D","9","9A","10B","10C","11","12B","14B"],"Malacara":["1","2","3","7","8","9","10","11","12","13"],"La Blanqueada":["1","2","3","4","5","7","8","9","10","11","12","13","14","15"],"La Campana":["1","2","3","4","5","6","11","12"],"Montecristo":["6","7","11","12","13","14","16"],"San Luis":["1","2"],"Santa Rafaela":["LBellaco","LChaniar","LEntrada","LLos Juanes","LManguera E","LManguera W","LNianiez","LPuesto","LTrillo"]};
 var CLI={Tr:'Trigo',Cz:'Colza',Ceb:'Cebada',Cobertura:'Cob.',Carinata:'Car.'};
 var CLV={Sj1:'Soja 1',Sj2:'Soja 2',Mz1:'Maiz 1',Mz2:'Maiz 2',Cobertura:'Cob.'};
 var BCL={Tr:'bTr',Cz:'bCz',Ceb:'bCeb',Cobertura:'bCob',Carinata:'bCar',Sj1:'bSj1',Sj2:'bSj2',Mz1:'bMz1',Mz2:'bMz2'};
@@ -294,6 +295,36 @@ function start(){
   buildPills(camps);render();
 }
 function loadXLSX(){var s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';s.onload=updateBg;document.body.appendChild(s);}
+async function parseFinnReporte(wb){
+  if(wb.SheetNames.indexOf('hoja1')<0)return;
+  var ws=wb.Sheets['hoja1'];if(!ws||!ws['!ref'])return;
+  var rng=XLSX.utils.decode_range(ws['!ref']);
+  var gv=function(r,c){var cell=ws[XLSX.utils.encode_cell({r:r,c:c})];return cell?cell.v:null;};
+  var EMAP={'UY_EL MALACARA':'Malacara','UY_LA BLANQUEADA':'La Blanqueada','UY_LA CAMPANA':'La Campana',
+    'UY_MONTECRISTO':'Montecristo','UY_SANTA RAFAELA':'Santa Rafaela','UY_SAN LUIS':'San Luis',
+    'UY_DON JUAN DEL TALA':'Don Juan del Tala'};
+  var newFinn={};
+  for(var ri=1;ri<=rng.e.r;ri++){
+    var estab=gv(ri,1);if(!estab||!EMAP[estab])continue;
+    var campo=EMAP[estab];
+    var loteFinn=String(gv(ri,4)||'').trim();
+    if(!loteFinn||loteFinn.toLowerCase().indexOf('generico')>=0)continue;
+    var lote=loteFinn;
+    var pfx=['EL MALACARA_','El Malacara-','UY_LA BLANQUEADA_','LA CAMPANA_','La Campana-',
+      'MONTE CRISTO_','Monte Cristo-','UY_SANTA RAFAELA_','UY_SAN LUIS_Lote ','UY_SAN LUIS_','UY_DON JUAN DEL TALA_'];
+    for(var pi=0;pi<pfx.length;pi++){if(lote.indexOf(pfx[pi])===0){lote=lote.slice(pfx[pi].length);break;}}
+    lote=lote.trim();
+    if(estab!=='UY_SANTA RAFAELA'){
+      lote=lote.replace(/^0+(\d)/,'$1').toUpperCase();
+    } else {
+      lote='L'+lote;
+    }
+    if(!newFinn[campo])newFinn[campo]=[];
+    if(newFinn[campo].indexOf(lote)<0)newFinn[campo].push(lote);
+  }
+  Object.keys(newFinn).forEach(function(c){FINN_LOTES[c]=newFinn[c];});
+}
+
 async function updateBg(){
   if(typeof XLSX==='undefined')return;
   var now=new Date();
@@ -310,6 +341,11 @@ async function updateBg(){
       var camps=Object.keys(AD).sort().reverse();AC=camps[0];
       buildPills(camps);render();
       q('synctxt').textContent=camp;q('sync').style.display='flex';
+      try{
+        var ctrl2=new AbortController();setTimeout(function(){ctrl2.abort();},10000);
+        var res2=await fetch(RAW+'/Reporte.xlsx?t='+Date.now(),{cache:'no-store',signal:ctrl2.signal});
+        if(res2.ok){var buf2=await res2.arrayBuffer();var wb2=XLSX.read(buf2,{type:'array'});await parseFinnReporte(wb2);render();}
+      }catch(e2){}
       break;
     }catch(e){continue;}
   }
@@ -420,12 +456,13 @@ function render(){
       var nextCult=SE==='inv'?(VER_CULT[AC]&&VER_CULT[AC][campo+'|'+d.lote]||null):(d.antec||null);
       var prevL=SE==='inv'?'Ver ant.':'Inv ant.',curL=SE==='inv'?'Inv '+AC:'Ver '+AC,nextL=SE==='inv'?'Ver '+AC:'Inv';
       var reBadge=hasRe?'<span class="re-tag"><i class="ti ti-refresh" style="font-size:9px;vertical-align:-1px;"></i>'+(rePct!=null?rePct+'%':'re')+'</span>':'';
+      var finnBadge=isFinnLote(campo,d.lote)?'<span style="display:inline-flex;align-items:center;margin-left:2px;" title="En Finnegans"><img src="data:image/png;base64,'+FINN_B64+'" style="width:13px;height:13px;opacity:.85;vertical-align:middle;"></span>':'';
       var alertHtml='';
       if(alerts.length){alertHtml='<div style="width:100%;margin-top:3px;">';alerts.forEach(function(a){alertHtml+='<span style="font-size:10px;padding:2px 7px;border-radius:3px;background:'+(a.tipo==='urg'?'#fceaea':'#eeedfe')+';color:'+(a.tipo==='urg'?'#b83030':'#534AB7')+';margin-right:4px;">'+a.msg+'</span>';});alertHtml+='</div>';}
       lhtml+='<div class="lrow"><div class="lhdr" data-lid="'+lid+'">'+
         '<span class="lnum">'+d.lote+'</span><span class="lhas">'+Math.round(d.has)+' ha</span>'+
         '<span class="cbadge '+(BCL[d.cult]||'bCob')+'">'+(CL[d.cult]||d.cult||'?')+'</span>'+
-        reBadge+alertHtml+
+        reBadge+finnBadge+alertHtml+
         '<div class="rot"><div class="ri"><div class="rl">'+prevL+'</div>'+rotB(d.antec||null)+'</div>'+
         '<span class="rarr">&#8250;</span><div class="ri cur"><div class="rl">'+curL+'</div>'+rotB(d.cult)+'</div>'+
         '<span class="rarr">&#8250;</span><div class="ri"><div class="rl">'+nextL+'</div>'+rotB(nextCult)+'</div></div>'+
@@ -1090,6 +1127,11 @@ function renderIndicadores(){
 
 // ── XLSX PARSER ────────────────────────────────────────────────
 function isFinn(cell){return cell&&cell.s&&cell.s.fgColor&&cell.s.fgColor.rgb===FINN_COLOR;}
+function isFinnLote(campo,lote){
+  var fl=FINN_LOTES[campo];
+  if(!fl)return false;
+  return fl.indexOf(String(lote))>=0;
+}
 function normCult(v){var m={CC:'Cobertura',cc:'Cobertura',Car:'Carinata',car:'Carinata'};return v?m[String(v).trim()]||String(v).trim():null;}
 function fmtDate(v){if(v==null)return null;if(typeof v==='number'&&v>40000){var d=XLSX.SSF.parse_date_code(v);if(d)return String(d.d).padStart(2,'0')+'/'+String(d.m).padStart(2,'0')+'/'+d.y;}var s=String(v).trim();if(s.includes('/')&&s.length<=6){var p=s.split('/');if(p.length===2){try{return p[0].padStart(2,'0')+'/'+p[1].padStart(2,'0')+'/2026';}catch(e){}}}return s||null;}
 function sfn(v){var n=parseFloat(v);return isNaN(n)?null:n;}
