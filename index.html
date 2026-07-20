@@ -173,6 +173,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   <!-- STATUS -->
   <div class="tab-panel on" id="panel-status">
     <div class="fstrip">
+      <span class="fl">Zona</span>
+      <div id="zona-chips" style="display:flex;gap:5px;"></div>
+    </div>
+    <div class="fstrip" id="fstrip-cultivo">
       <span class="fl">Cultivo</span>
       <div id="cchips" style="display:flex;gap:5px;"></div>
       <div class="fsep"></div>
@@ -222,6 +226,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 </div>
 
 <script src="data.js"></script>
+<script src="finn.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
 // ── LLUVIA HISTORICA (planilla) ────────────────────────────────
@@ -231,6 +236,8 @@ LLUVIAS_HIST['La Blanqueada'] = LLUVIAS_HIST['Santa Rafaela'];
 
 var HORAS_FRIO_VAR={"Hyola575":{"min":900,"max":1000,"label":"Hyola 575"},"Hyola 575":{"min":900,"max":1000,"label":"Hyola 575"},"Curry":{"min":500,"max":600,"label":"Curry CL"},"Curry CL":{"min":500,"max":600,"label":"Curry CL"},"Nuola300":{"min":600,"max":700,"label":"Nuola 300"},"Nuola 300":{"min":600,"max":700,"label":"Nuola 300"},"Nuvette":{"min":600,"max":700,"label":"Nuvette"},"Floriana":{"min":700,"max":800,"label":"Floriana"},"Beatrix":{"min":1000,"max":1200,"label":"Beatrix (ref.)"},"Hyola130":{"min":400,"max":500,"label":"Hyola 130"},"Hyola 130":{"min":400,"max":500,"label":"Hyola 130"},"Osiris":{"min":600,"max":700,"label":"Osiris"},"Olimpia":{"min":650,"max":750,"label":"Olimpia"}};
 var FINN_COLOR='FF002060';
+var FINN_FULL={};
+var CROP_LOTE={};
 var FINN_LOTES={"Don Juan del Tala":["2","3","4A","4B","4C","5B","5C","6B","6C","7","8","8C","8D","9","9A","10B","10C","11","12B","14B"],"Malacara":["1","2","3","7","8","9","10","11","12","13"],"La Blanqueada":["1","2","3","4","5","7","8","9","10","11","12","13","14","15"],"La Campana":["1","2","3","4","5","6","11","12"],"Montecristo":["6","7","11","12","13","14","16"],"San Luis":["1","2"],"Santa Rafaela":["LBellaco","LChaniar","LEntrada","LLos Juanes","LManguera E","LManguera W","LNianiez","LPuesto","LTrillo"]};
 var CLI={Tr:'Trigo',Cz:'Colza',Ceb:'Cebada',Cobertura:'Cob.',Carinata:'Car.'};
 var CLV={Sj1:'Soja 1',Sj2:'Soja 2',Mz1:'Maiz 1',Mz2:'Maiz 2',Cobertura:'Cob.'};
@@ -242,7 +249,7 @@ var LAT=-32.32, LON=-58.08;
 var RAW='https://raw.githubusercontent.com/CeibosGroup/Agricultura-Litoral-Norte/main';
 var AD=JSON.parse(JSON.stringify(HISTORIC));
 var AC=null,SE='inv',FC='all';
-var openC={},openL={},alertsOpen=false;
+var openC={},openL={},alertsOpen=false,activeZona='Litoral Norte';
 var climaCampo='all',climaPeriod='campaign';
 var climaChart=null,climaChart2=null;
 var omData=null; // open-meteo cache
@@ -269,6 +276,24 @@ document.addEventListener('DOMContentLoaded',function(){
       if(t==='indicadores')initIndicadores();
     };
   });
+  // Zone chips
+  var ZONAS=['Litoral Norte','Salto','Ruta 20','Durazno','Tacuarembó'];
+  var zc=q('zona-chips');
+  ZONAS.forEach(function(z){
+    var el=document.createElement('div');
+    el.className='fchip'+(z===activeZona?' on':'');
+    el.textContent=z;
+    el.onclick=(function(zona){return function(){
+      activeZona=zona;
+      document.querySelectorAll('#zona-chips .fchip').forEach(function(x){x.classList.toggle('on',x.textContent===zona);});
+      // Show/hide cultivo filter (only for Litoral Norte/Salto which have Excel data)
+      var hasExcel=zona==='Litoral Norte'||zona==='Salto';
+      q('fstrip-cultivo').style.display=hasExcel?'':'none';
+      openC={};openL={};
+      render();
+    };})(z);
+    zc.appendChild(el);
+  });
   q('btn-inv').onclick=function(){setSeason('inv');};
   q('btn-ver').onclick=function(){setSeason('ver');};
   q('btnRefresh').onclick=function(){updateBg();};
@@ -278,7 +303,7 @@ document.addEventListener('DOMContentLoaded',function(){
     var lhdr=e.target.closest('.lhdr[data-lid]');if(lhdr){togL(lhdr.getAttribute('data-lid'));return;}
   });
   function waitAndStart(){
-    if(typeof HISTORIC !== 'undefined' && typeof VER_CULT !== 'undefined'){
+    if(typeof HISTORIC !== 'undefined' && typeof VER_CULT !== 'undefined' && typeof FINN_FULL !== 'undefined'){
       start();
       loadXLSX();
     } else {
@@ -323,6 +348,69 @@ async function parseFinnReporte(wb){
     if(newFinn[campo].indexOf(lote)<0)newFinn[campo].push(lote);
   }
   Object.keys(newFinn).forEach(function(c){FINN_LOTES[c]=newFinn[c];});
+  // Also rebuild FINN_FULL for all zones
+  buildFinnFull(wb);
+}
+
+
+function buildFinnFull(wb){
+  if(!wb||wb.SheetNames.indexOf('hoja1')<0)return;
+  var ws=wb.Sheets['hoja1'];if(!ws||!ws['!ref'])return;
+  var rng=XLSX.utils.decode_range(ws['!ref']);
+  var gv=function(r,c){var cell=ws[XLSX.utils.encode_cell({r:r,c:c})];return cell?cell.v:null;};
+  var ZMAP={'UY_Litoral Norte':'Litoral Norte','UY_Salto':'Salto','UY_Ruta 20':'Ruta 20','UY_Durazno':'Durazno','UY_Tacuarembo':'Tacuarembó'};
+  var ACT_CULT={'COLZA':'Cz','TRIGO':'Tr','CEBADA':'Ceb','AVENA':'Cobertura','CARINATA':'Carinata','COBERTURA':'Cobertura','COLZA RIEGO':'Cz','TRIGO RIEGO':'Tr','CEBADA RIEGO':'Ceb'};
+  var newFull={};var newCrop={};
+  
+  function cleanEstab(e){return e.replace('UY_','').replace('_TECNO',' Tecno').replace('EL ','El ').replace('LA ','La ').replace('LOS ','Los ').replace('LAS ','Las ').trim();}
+  function cleanLote(estab,lote){
+    var s=String(lote||'').trim();
+    var pfx=['EL MALACARA_','El Malacara-','UY_LA BLANQUEADA_','LA CAMPANA_','La Campana-','MONTE CRISTO_','Monte Cristo-','UY_SANTA RAFAELA_','UY_SAN LUIS_Lote ','UY_SAN LUIS_','UY_DON JUAN DEL TALA_'];
+    var ec=estab.replace('UY_','');pfx.push(ec+'_');pfx.push(ec+'-');
+    for(var i=0;i<pfx.length;i++){if(s.indexOf(pfx[i])===0){s=s.slice(pfx[i].length);break;}}
+    s=s.trim();if(!s||s.toLowerCase().indexOf('generico')>=0)return null;
+    if(estab.indexOf('SANTA RAFAELA')>=0)return 'L'+s;
+    return s.replace(/^0+(\d)/,'$1').toUpperCase();
+  }
+  function mapField(tipo,labor){
+    var l=String(labor||'').toUpperCase();
+    if(tipo==='Laboreo'){
+      if(l.indexOf('SIEMBRA')>=0)return 'siem';
+      if(l.indexOf('PULVERIZ')>=0)return 'herb';
+      if(l.indexOf('FERTILIZ')>=0)return 'fert';
+      if(l.indexOf('DISQUERA')>=0)return 'barb';
+    } else {
+      if(['GLIFOSATO','GLYPHOSATE','CLETODIM','PARAQUAT','DIQUAT','2.4D','2,4D','ATRAZINA','LONTREL','AXIAL','HUSSAR','KORVETTO','TORDON','TRONADOR','AMINA','STARANE'].some(function(x){return l.indexOf(x)>=0;}))return 'herb';
+      if(['SEMILLA','VARIEDAD','HIBRIDO','HÍBRIDO'].some(function(x){return l.indexOf(x)>=0;}))return 'siem';
+      if(['UREA','FOSFATO','SPT','KCL','POTASIO','AZUFRE','SULFATO','NITRATO','MAP','DAP','SPS','FOSZINC'].some(function(x){return l.indexOf(x)>=0;}))return 'fert';
+      if(['FUNGICIDA','TRIFLOX','TEBUCON','AZOXIST','EPOXIC','BIXAFEN','PROTHIO'].some(function(x){return l.indexOf(x)>=0;}))return 'fung';
+      if(l.indexOf('ZINC')>=0)return 'znf';
+      if(l.indexOf('HUMICO')>=0||l.indexOf('HÚMICO')>=0)return 'hum';
+    }
+    return 'other';
+  }
+  
+  for(var ri=1;ri<=rng.e.r;ri++){
+    var zr=gv(ri,2);if(!zr||!ZMAP[zr])continue;
+    var zona=ZMAP[zr],estab=gv(ri,1),campo=cleanEstab(estab);
+    var lote=cleanLote(estab,gv(ri,4)||'');if(!lote)continue;
+    var fecha=gv(ri,0),tipo=gv(ri,10),labor=gv(ri,15),act=String(gv(ri,5)||'').toUpperCase();
+    var field=mapField(tipo,labor);
+    var fechaStr=fecha instanceof Date?fecha.toLocaleDateString('es-UY',{day:'2-digit',month:'2-digit',year:'numeric'}):null;
+    var hasFecha=!!fechaStr;
+    if(!newFull[zona])newFull[zona]={};
+    if(!newFull[zona][campo])newFull[zona][campo]={};
+    if(!newFull[zona][campo][lote])newFull[zona][campo][lote]={herb:{done:false,fecha:null,prod:[]},siem:{done:false,fecha:null,prod:[]},fert:{done:false,fecha:null,prod:[]},fung:{done:false,fecha:null,prod:[]},znf:{done:false,fecha:null,prod:[]},hum:{done:false,fecha:null,prod:[]}};
+    var d=newFull[zona][campo][lote];
+    if(field in d){
+      if(hasFecha){d[field].done=true;if(!d[field].fecha)d[field].fecha=fechaStr;}
+      var ls=String(labor);if(d[field].prod.indexOf(ls)<0)d[field].prod.push(ls);
+    }
+    var cult=ACT_CULT[act];
+    if(cult){var ck=zona+'|'+campo+'|'+lote;if(!newCrop[ck])newCrop[ck]=cult;}
+  }
+  Object.keys(newFull).forEach(function(z){FINN_FULL[z]=newFull[z];});
+  Object.keys(newCrop).forEach(function(k){CROP_LOTE[k]=newCrop[k];});
 }
 
 async function updateBg(){
@@ -423,6 +511,94 @@ function pushNotify(alerts){
   alerts.slice(0,3).forEach(function(a){try{new Notification('LN Agro · '+a.campo+' L'+a.lote,{body:a.msg,icon:'LOGO.jpeg'});}catch(e){}}); 
 }
 function filtered(){var cd=AD[AC];if(!cd)return[];var src=SE==='inv'?cd.inv:cd.ver;if(!src)return[];return FC==='all'?src:src.filter(function(d){return d.cult===FC;});}
+
+// ── FINN ZONE RENDERER ────────────────────────────────────────
+function renderFinnZona(zona, container){
+  var zonaData=FINN_FULL[zona];
+  if(!zonaData){
+    container.innerHTML='<div class="empty">Sin datos de Finnegans para esta zona</div>';
+    return;
+  }
+  var CLI2={Cz:'Colza',Tr:'Trigo',Ceb:'Cebada',Cobertura:'Cob.',Carinata:'Car.',
+            Sj1:'Soja 1',Sj2:'Soja 2',Mz1:'Maiz 1',Mz2:'Maiz 2'};
+  
+  Object.keys(zonaData).sort().forEach(function(campo){
+    var lotes=zonaData[campo];
+    var ini=campo.slice(0,2).toUpperCase();
+    var cid=sid(campo+zona);
+    var isOpen=!!openC[cid];
+    var totLotes=Object.keys(lotes).length;
+    var doneLotes=Object.keys(lotes).filter(function(l){
+      return Object.values(lotes[l]).some(function(v){return v.done;});
+    }).length;
+    
+    var lhtml='';
+    Object.keys(lotes).sort().forEach(function(lote){
+      var ld=lotes[lote];
+      var lid=sid(campo+zona+lote);
+      var isLo=!!openL[lid];
+      var cultKey=zona+'|'+campo+'|'+lote;
+      var cult=CROP_LOTE[cultKey]||null;
+      var cultBadge=cult?'<span class="cbadge '+(BCL[cult]||'bCob')+'">'+(CLI2[cult]||cult)+'</span>':'';
+      
+      // Count done labores
+      var doneCount=Object.values(ld).filter(function(v){return v.done;}).length;
+      var totalCount=Object.values(ld).filter(function(v){return v.prod&&v.prod.length>0;}).length;
+      
+      lhtml+='<div class="lrow">'+
+        '<div class="lhdr" data-lid="'+lid+'">'+
+        '<span class="lnum">'+lote+'</span>'+
+        cultBadge+
+        (doneCount>0?'<span style="font-size:10px;background:#e8f5ee;color:#1a8a5a;padding:1px 7px;border-radius:20px;font-weight:600;margin-left:4px;">'+doneCount+' labores</span>':'')+
+        '<i class="ti ti-chevron-right" style="font-size:11px;color:#ccc;margin-left:auto;'+(isLo?'transform:rotate(90deg)':'')+'"></i>'+
+        '</div>'+
+        '<div class="ldet'+(isLo?' open':'')+'" id="'+lid+'">'+(isLo?renderFinnDetail(ld):'')+'</div>'+
+      '</div>';
+    });
+    
+    var card=document.createElement('div');card.className='ccard';
+    card.innerHTML=
+      '<div class="chdr" data-cid="'+cid+'">'+
+        '<div class="mono">'+ini+'</div>'+
+        '<div><div class="cn">'+campo+'</div>'+
+        '<div class="cm">'+totLotes+' lotes &middot; '+doneLotes+' con labores</div></div>'+
+        '<span style="font-size:10px;background:#e8eef8;color:#002060;padding:2px 8px;border-radius:20px;font-weight:600;margin-left:auto;margin-right:6px;">Finn</span>'+
+        '<i class="ti ti-chevron-right chev'+(isOpen?' open':'')+'" id="ci'+cid+'"></i>'+
+      '</div>'+
+      '<div class="llist'+(isOpen?' open':'')+'" id="ll'+cid+'">'+lhtml+'</div>';
+    container.appendChild(card);
+  });
+}
+
+function renderFinnDetail(ld){
+  var FIELD_LABELS={
+    herb:'Herbicidas',siem:'Siembra',fert:'Fertilización',
+    fung:'Fungicidas',znf:'Zinc foliar',hum:'Ácidos húmicos'
+  };
+  var FIELD_ICONS={
+    herb:'ti-spray',siem:'ti-seeding',fert:'ti-test-pipe',
+    fung:'ti-shield-check',znf:'ti-droplet',hum:'ti-leaf'
+  };
+  var h='<div class="fsec"><div style="display:flex;flex-direction:column;gap:4px;">';
+  Object.keys(FIELD_LABELS).forEach(function(field){
+    var d=ld[field];
+    if(!d||(!d.done&&(!d.prod||!d.prod.length)))return;
+    var cls=d.done?'done':'pend';
+    var icon=FIELD_ICONS[field]||'ti-check-circle';
+    var prod=d.prod.slice(0,3).join(', ');
+    h+='<div class="li '+cls+'">'+
+      '<i class="ti '+icon+'"></i>'+
+      '<div class="lb">'+
+        '<div class="ln">'+FIELD_LABELS[field]+(d.done?FS():'')+' </div>'+
+        (prod?'<div class="ld">'+prod+'</div>':'')+
+        (d.fecha?'<div class="lf"><i class="ti ti-calendar" style="font-size:9px;vertical-align:-1px;"></i> '+d.fecha+'</div>':'')+
+      '</div>'+
+    '</div>';
+  });
+  h+='</div></div>';
+  return h;
+}
+
 function render(){
   var rows=filtered(),CL=SE==='inv'?CLI:CLV,prod=rows.filter(isProd);
   var cults=[];rows.forEach(function(d){if(d.cult&&cults.indexOf(d.cult)<0)cults.push(d.cult);});cults.sort();
@@ -485,7 +661,25 @@ function togC(cid){openC[cid]=!openC[cid];var ll=q('ll'+cid);if(ll)ll.classList.
 function togL(lid){
   openL[lid]=!openL[lid];var det=q(lid);
   if(det){
-    if(!det.innerHTML.trim()){var src=AD[AC]&&(SE==='inv'?AD[AC].inv:AD[AC].ver)||[];for(var i=0;i<src.length;i++){var d=src[i];if(sid(d.campo+'|'+d.lote+'|'+SE+'|'+AC)===lid){det.innerHTML=renderDetail(d);break;}}}
+    if(!det.innerHTML.trim()){
+      if(activeZona!=='Litoral Norte'&&activeZona!=='Salto'){
+        // Find in FINN_FULL
+        var zonaData=FINN_FULL[activeZona];
+        if(zonaData){
+          var found=false;
+          Object.keys(zonaData).forEach(function(campo){
+            if(found)return;
+            Object.keys(zonaData[campo]).forEach(function(lote){
+              if(found)return;
+              if(sid(campo+activeZona+lote)===lid){det.innerHTML=renderFinnDetail(zonaData[campo][lote]);found=true;}
+            });
+          });
+        }
+      } else {
+        var src=AD[AC]&&(SE==='inv'?AD[AC].inv:AD[AC].ver)||[];
+        for(var i=0;i<src.length;i++){var d=src[i];if(sid(d.campo+'|'+d.lote+'|'+SE+'|'+AC)===lid){det.innerHTML=renderDetail(d);break;}}
+      }
+    }
     det.classList.toggle('open');
     var icon=det.previousElementSibling&&det.previousElementSibling.querySelector('.ti-chevron-right');
     if(icon){if(openL[lid])icon.style.transform='rotate(90deg)';else icon.style.transform='';}
