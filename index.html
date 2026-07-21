@@ -542,8 +542,9 @@ function renderFinnZona(zona, container){
       var lid=sid(campo+zona+lote);
       var isLo=!!openL[lid];
       var cultKey=zona+'|'+campo+'|'+lote;
-      var cult=CROP_LOTE[cultKey]||null;
+      var cult=ld.cult||CROP_LOTE[cultKey]||null;
       var cultBadge=cult?'<span class="cbadge '+(BCL[cult]||'bCob')+'">'+(CLI2[cult]||cult)+'</span>':'';
+      var varBadge=ld.var?'<span style="font-size:10px;color:#666;margin-left:3px;">'+ld.var+'</span>':'';
       
       // Count done labores
       var doneCount=Object.keys(ld).filter(function(k){return ld[k]&&ld[k].done;}).length;
@@ -551,7 +552,7 @@ function renderFinnZona(zona, container){
       lhtml+='<div class="lrow">'+
         '<div class="lhdr" data-lid="'+lid+'">'+
         '<span class="lnum">'+lote+'</span>'+
-        cultBadge+
+        cultBadge+varBadge+
         (doneCount>0?'<span style="font-size:10px;background:#e8f5ee;color:#1a8a5a;padding:1px 7px;border-radius:20px;font-weight:600;margin-left:4px;">'+doneCount+' labores</span>':'')+
         '<i class="ti ti-chevron-right" style="font-size:11px;color:#ccc;margin-left:auto;'+(isLo?'transform:rotate(90deg)':'')+'"></i>'+
         '</div>'+
@@ -574,41 +575,57 @@ function renderFinnZona(zona, container){
 }
 
 function renderFinnDetail(ld){
-  var SECTIONS=[
-    {key:'herb',  label:'Herbicidas',       icon:'ti-spray'},
-    {key:'siem',  label:'Siembra',           icon:'ti-seeding'},
-    {key:'fert_bas', label:'Fert. basal',    icon:'ti-test-pipe'},
-    {key:'fert_n',   label:'Fert. nitrogenada', icon:'ti-test-pipe'},
-    {key:'fung',  label:'Fungicidas',        icon:'ti-shield-check'},
-    {key:'insec', label:'Insecticidas',      icon:'ti-bug'},
-    {key:'znf',   label:'Zinc foliar',       icon:'ti-droplet'},
-    {key:'hum',   label:'Ácidos húmicos',    icon:'ti-leaf'},
-  ];
-  var h='<div class="sgrid">';
-  // Split into 3 cols
-  var col1=['herb','siem'];
-  var col2=['fert_bas','fert_n'];
+  var SECTIONS={
+    barb:    {label:'Barbecho',          icon:'ti-spray'},
+    dg:      {label:'Doble golpe',       icon:'ti-spray'},
+    rep:     {label:'Repaso',            icon:'ti-spray'},
+    siem:    {label:'Siembra',           icon:'ti-seeding'},
+    fert_bas:{label:'Fert. basal',       icon:'ti-test-pipe'},
+    fert_n:  {label:'Fert. nitrogenada', icon:'ti-test-pipe'},
+    fung:    {label:'Fungicidas',        icon:'ti-shield-check'},
+    insec:   {label:'Insecticidas',      icon:'ti-bug'},
+    znf:     {label:'Zinc foliar',       icon:'ti-droplet'},
+    hum:     {label:'Ácidos húmicos',    icon:'ti-leaf'},
+  };
+  var col1=['barb','dg','rep'];
+  var col2=['siem','fert_bas','fert_n'];
   var col3=['fung','insec','znf','hum'];
+  
+  // Banner with var if available
+  var h='';
+  if(ld.var||ld.cult){
+    h+='<div class="dbanner">';
+    if(ld.var)h+='<span class="dvar">'+ld.var+'</span>';
+    h+='</div>';
+  }
+  
+  h+='<div class="sgrid">';
   function renderCol(keys){
     var ch='<div class="sec">';
+    var hasAny=false;
     keys.forEach(function(key){
-      var sec=SECTIONS.find(function(s){return s.key===key;});
+      var sec=SECTIONS[key];if(!sec)return;
       var d=ld[key];
-      if(!d&&!sec)return;
       var done=d&&d.done;
-      var items=d&&d.items?d.items:[];
+      var items=(d&&d.items)||[];
       var fecha=d&&d.fecha;
-      var hasData=done||items.length>0;
-      var cls=done?'done':hasData?'pend':'pend';
+      if(!done&&!items.length)return;
+      hasAny=true;
+      var cls=done?'done':'pend';
       ch+='<div class="li '+cls+'">'+
         '<i class="ti '+sec.icon+'"></i>'+
         '<div class="lb">'+
-          '<div class="ln">'+sec.label+(done?FS():'')+' </div>';
-      if(items.length){
-        // Show up to 3 items with qty
+          '<div class="ln">'+sec.label+(done?'<span class="ff">'+FS()+'</span>':'')+' </div>';
+      // Special: siembra shows var + kg_ha
+      if(key==='siem'){
+        var extra=[];
+        if(ld.var)extra.push(ld.var);
+        if(d&&d.kg_ha)extra.push(d.kg_ha+' kg/ha');
+        if(extra.length)ch+='<div class="ld">'+extra.join(' · ')+'</div>';
+      } else if(items.length){
         var shown=items.slice(0,3).map(function(it){
           var s=it.l;
-          if(it.q&&it.u)s+=' '+it.q+' '+it.u+'/ha';
+          if(it.q!=null&&it.u)s+=' '+it.q+' '+it.u+'/ha';
           return s;
         });
         ch+='<div class="ld">'+shown.join(' · ')+'</div>';
@@ -616,6 +633,7 @@ function renderFinnDetail(ld){
       if(fecha)ch+='<div class="lf"><i class="ti ti-calendar" style="font-size:9px;vertical-align:-1px;"></i> '+fecha+'</div>';
       ch+='</div></div>';
     });
+    if(!hasAny)ch+='<div style="font-size:10px;color:#ccc;padding:4px 6px;">—</div>';
     ch+='</div>';
     return ch;
   }
