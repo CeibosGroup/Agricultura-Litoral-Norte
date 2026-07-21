@@ -227,9 +227,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 
 <script src="data.js"></script>
 <script>
-var _fs=document.createElement('script');
-_fs.src='finn.js?v=202607211658';
-document.head.appendChild(_fs);
+var FINN_FULL={};var CROP_LOTE={};var FINN_READY=false;
+(function(){
+  var url='https://raw.githubusercontent.com/CeibosGroup/Agricultura-Litoral-Norte/main/finn.js?t='+Date.now();
+  fetch(url,{cache:'no-store'}).then(function(r){return r.text();}).then(function(txt){
+    try{eval(txt);FINN_READY=true;}catch(e){FINN_READY=true;console.error('finn.js',e);}
+  }).catch(function(e){FINN_READY=true;});
+})();
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
@@ -240,8 +244,6 @@ LLUVIAS_HIST['La Blanqueada'] = LLUVIAS_HIST['Santa Rafaela'];
 
 var HORAS_FRIO_VAR={"Hyola575":{"min":900,"max":1000,"label":"Hyola 575"},"Hyola 575":{"min":900,"max":1000,"label":"Hyola 575"},"Curry":{"min":500,"max":600,"label":"Curry CL"},"Curry CL":{"min":500,"max":600,"label":"Curry CL"},"Nuola300":{"min":600,"max":700,"label":"Nuola 300"},"Nuola 300":{"min":600,"max":700,"label":"Nuola 300"},"Nuvette":{"min":600,"max":700,"label":"Nuvette"},"Floriana":{"min":700,"max":800,"label":"Floriana"},"Beatrix":{"min":1000,"max":1200,"label":"Beatrix (ref.)"},"Hyola130":{"min":400,"max":500,"label":"Hyola 130"},"Hyola 130":{"min":400,"max":500,"label":"Hyola 130"},"Osiris":{"min":600,"max":700,"label":"Osiris"},"Olimpia":{"min":650,"max":750,"label":"Olimpia"}};
 var FINN_COLOR='FF002060';
-var FINN_FULL={};
-var CROP_LOTE={};
 var FINN_LOTES={"Don Juan del Tala":["2","3","4A","4B","4C","5B","5C","6B","6C","7","8","8C","8D","9","9A","10B","10C","11","12B","14B"],"Malacara":["1","2","3","7","8","9","10","11","12","13"],"La Blanqueada":["1","2","3","4","5","7","8","9","10","11","12","13","14","15"],"La Campana":["1","2","3","4","5","6","11","12"],"Montecristo":["6","7","11","12","13","14","16"],"San Luis":["1","2"],"Santa Rafaela":["LBellaco","LChaniar","LEntrada","LLos Juanes","LManguera E","LManguera W","LNianiez","LPuesto","LTrillo"]};
 var CLI={Tr:'Trigo',Cz:'Colza',Ceb:'Cebada',Cobertura:'Cob.',Carinata:'Car.'};
 var CLV={Sj1:'Soja 1',Sj2:'Soja 2',Mz1:'Maiz 1',Mz2:'Maiz 2',Cobertura:'Cob.'};
@@ -308,7 +310,7 @@ document.addEventListener('DOMContentLoaded',function(){
     var lhdr=e.target.closest('.lhdr[data-lid]');if(lhdr){togL(lhdr.getAttribute('data-lid'));return;}
   });
   function waitAndStart(){
-    if(typeof HISTORIC !== 'undefined' && typeof VER_CULT !== 'undefined' && typeof FINN_FULL !== 'undefined' && typeof CROP_LOTE !== 'undefined'){
+    if(typeof HISTORIC !== 'undefined' && typeof VER_CULT !== 'undefined' && typeof FINN_READY !== 'undefined' && FINN_READY){
       start();
       loadXLSX();
     } else {
