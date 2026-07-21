@@ -298,7 +298,7 @@ document.addEventListener('DOMContentLoaded',function(){
     };
   });
   // Zone chips
-  var ZONAS=['Litoral Norte','Salto','Ruta 20','Durazno','Tacuarembó'];
+  var ZONAS=['Todas','Litoral Norte','Salto','Ruta 20','Durazno','Tacuarembó'];
   var zc=q('zona-chips');
   ZONAS.forEach(function(z){
     var el=document.createElement('div');
@@ -309,8 +309,12 @@ document.addEventListener('DOMContentLoaded',function(){
       document.querySelectorAll('#zona-chips .fchip').forEach(function(x){x.classList.toggle('on',x.textContent===zona);});
       // Show/hide cultivo filter (only for Litoral Norte/Salto which have Excel data)
       var hasExcel=(zona==='Litoral Norte'||zona==='Salto')&&AD[AC];
-      q('fstrip-cultivo').style.display=hasExcel?'':'none';
-      openC={};openL={};
+      q('fstrip-cultivo').style.display='';
+      // Update season filter visibility
+      q('btn-inv').parentElement&&(q('btn-inv').style.display=hasExcel?'':'none');
+      q('btn-ver').parentElement&&(q('btn-ver').style.display=hasExcel?'':'none');
+      openC={};openL={};FC='all';
+      render();
       render();
     };})(z);
     zc.appendChild(el);
@@ -565,6 +569,8 @@ function renderFinnZona(zona, container){
     var lhtml='';
     Object.keys(lotes).sort().forEach(function(lote){
       var ld=lotes[lote];
+      // Apply cult filter
+      if(FC!=='all'&&ld.cult!==FC)return;
       var lid=sid(campo+zona+lote);
       var isLo=!!openL[lid];
       var cultKey=zona+'|'+campo+'|'+lote;      var cult=ld.cult||CROP_LOTE[cultKey]||null;
@@ -669,37 +675,65 @@ function renderFinnDetail(ld){
 
 
 function renderFinnMetrics(zona){
-  var zonaData=FINN_FULL[zona]||{};
-  var totLotes=0,conBarb=0,conSiem=0,conFertN=0,conFung=0,conZnf=0,conRep=0;
-  Object.values(zonaData).forEach(function(campos){
-    Object.values(campos).forEach(function(d){
-      totLotes++;
-      if(d.barb&&d.barb.done)conBarb++;
-      if(d.siem&&d.siem.done)conSiem++;
-      if(d.fert_n&&d.fert_n.done)conFertN++;
-      if(d.fung&&d.fung.done)conFung++;
-      if(d.znf&&d.znf.done)conZnf++;
-      if(d.rep&&d.rep.done)conRep++;
+  // Collect data - handle Todas
+  var zonas=zona==='Todas'?['Litoral Norte','Salto','Ruta 20','Durazno','Tacuarembó']:[zona];
+  var totLotes=0,conBarb=0,conDG=0,conRep=0,conSiem=0,conFertN=0,conFertBas=0,conFung=0,conZnf=0,conHum=0;
+  zonas.forEach(function(z){
+    var zonaData=FINN_FULL[z]||{};
+    Object.values(zonaData).forEach(function(lotes){
+      Object.values(lotes).forEach(function(d){
+        // Apply cult filter if set
+        if(FC!=='all'&&d.cult!==FC)return;
+        totLotes++;
+        if(d.barb&&d.barb.done)conBarb++;
+        if(d.dg&&d.dg.done)conDG++;
+        if(d.rep&&d.rep.done)conRep++;
+        if(d.siem&&d.siem.done)conSiem++;
+        if(d.fert_bas&&d.fert_bas.done)conFertBas++;
+        if(d.fert_n&&d.fert_n.done)conFertN++;
+        if(d.fung&&d.fung.done)conFung++;
+        if(d.znf&&d.znf.done)conZnf++;
+        if(d.hum&&d.hum.done)conHum++;
+      });
     });
   });
   function pct(n){return totLotes?Math.round(n/totLotes*100):0;}
   function colPct2(p){return p>=70?'#1a8a5a':p>=40?'#c47a12':'#b83030';}
   function MC(lbl,val,sub,bar,col){return '<div class="metric"><div class="ml">'+lbl+'</div><div class="mv">'+val+'</div>'+(sub?'<div class="ms">'+sub+'</div>':'')+(bar!=null?'<div class="mbar"><div class="mfill" style="width:'+bar+'%;background:'+col+';"></div></div>':'')+'</div>';}
-  var pB=pct(conBarb),pS=pct(conSiem),pN=pct(conFertN),pF=pct(conFung),pZ=pct(conZnf),pR=pct(conRep);
+  var pB=pct(conBarb),pR=pct(conRep),pS=pct(conSiem),pFB=pct(conFertBas),pN=pct(conFertN),pF=pct(conFung),pZ=pct(conZnf),pH=pct(conHum);
   q('metrics').innerHTML=
-    MC('Lotes',totLotes,zona,null,null)+
+    MC('Has',totLotes+' lotes',zona,null,null)+
     MC('Barbecho',pB+'%','% lotes',pB,colPct2(pB))+
     MC('Siembra',pS+'%','% lotes',pS,colPct2(pS))+
-    MC('Fert N',pN+'%','% lotes',pN,colPct2(pN))+
+    MC('Repaso',pR+'%','% lotes',pR,colPct2(pR))+
+    MC('Fert. N',pN+'%','% lotes',pN,colPct2(pN))+
+    MC('Fert. bas.',pFB+'%','% lotes',pFB,colPct2(pFB))+
+    MC('Fungicida',pF+'%','% lotes',pF,colPct2(pF))+
+    MC('Zinc fol.',pZ+'%','% lotes',pZ,colPct2(pZ));s',pN,colPct2(pN))+
     MC('Fungicida',pF+'%','% lotes',pF,colPct2(pF))+
     MC('Repaso',pR+'%','% lotes',pR,colPct2(pR));
 }
 
 function render(){
   var rows=filtered(),CL=SE==='inv'?CLI:CLV,prod=rows.filter(isProd);
-  var cults=[];rows.forEach(function(d){if(d.cult&&cults.indexOf(d.cult)<0)cults.push(d.cult);});cults.sort();
+  var cults=[];
+  var CL2={Cz:'Colza',Tr:'Trigo',Ceb:'Cebada',Cobertura:'Cob.',Carinata:'Car.',Sj1:'Soja 1',Sj2:'Soja 2',Mz1:'Maiz 1',Mz2:'Maiz 2'};
+  if(activeZona==='Litoral Norte'||activeZona==='Salto'){
+    rows.forEach(function(d){if(d.cult&&cults.indexOf(d.cult)<0)cults.push(d.cult);});
+  } else {
+    // Collect cults from FINN_FULL
+    var finnZonas=activeZona==='Todas'?['Litoral Norte','Salto','Ruta 20','Durazno','Tacuarembó']:[activeZona];
+    finnZonas.forEach(function(z){
+      Object.values(FINN_FULL[z]||{}).forEach(function(lotes){
+        Object.values(lotes).forEach(function(d){
+          if(d.cult&&cults.indexOf(d.cult)<0)cults.push(d.cult);
+        });
+      });
+    });
+  }
+  cults.sort();
   var cchips=q('cchips');cchips.innerHTML='';
-  [{v:'all',l:'Todos'}].concat(cults.map(function(c){return{v:c,l:CL[c]||c};})).forEach(function(o){
+  [{v:'all',l:'Todos'}].concat(cults.map(function(c){return{v:c,l:CL2[c]||CL[c]||c};})).forEach(function(o){
     var el=document.createElement('div');el.className='fchip'+(FC===o.v?' on':'');el.setAttribute('data-v',o.v);el.textContent=o.l;
     el.onclick=(function(v){return function(){setFilt(v);};})(o.v);cchips.appendChild(el);
   });
@@ -708,7 +742,17 @@ function render(){
     renderAlerts([]);
     renderFinnMetrics(activeZona);
     var el2=q('campos');el2.innerHTML='';
-    renderFinnZona(activeZona,el2);
+    if(activeZona==='Todas'){
+      ['Litoral Norte','Salto','Ruta 20','Durazno','Tacuarembó'].forEach(function(z){
+        var sec=document.createElement('div');
+        sec.style.cssText='font-size:9px;font-weight:700;color:#999;text-transform:uppercase;letter-spacing:.06em;padding:8px 16px 4px;';
+        sec.textContent=z;
+        el2.appendChild(sec);
+        renderFinnZona(z,el2);
+      });
+    } else {
+      renderFinnZona(activeZona,el2);
+    }
     return;
   }
   var allAlerts=[];rows.forEach(function(d){getLoteAlerts(d).forEach(function(a){allAlerts.push({campo:d.campo,lote:d.lote,tipo:a.tipo,msg:a.msg});});});
