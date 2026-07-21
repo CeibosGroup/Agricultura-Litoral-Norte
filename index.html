@@ -759,6 +759,7 @@ function togL(lid){
         var dZona=lhdrEl&&lhdrEl.getAttribute('data-zona')||activeZona;
         var dCampo=lhdrEl&&lhdrEl.getAttribute('data-campo');
         var dLote=lhdrEl&&lhdrEl.getAttribute('data-flote');
+        console.log('togL finn:',dZona,dCampo,dLote,'exists:',!!(FINN_FULL[dZona]&&FINN_FULL[dZona][dCampo]&&FINN_FULL[dZona][dCampo]&&FINN_FULL[dZona][dCampo][dLote]));
         if(dCampo&&dLote&&FINN_FULL[dZona]&&FINN_FULL[dZona][dCampo]&&FINN_FULL[dZona][dCampo][dLote]){
           det.innerHTML=renderFinnDetail(FINN_FULL[dZona][dCampo][dLote]);
         } else {
