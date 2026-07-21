@@ -388,7 +388,8 @@ function buildFinnFull(wb){
     var s=String(lote||'').trim();
     var pfx=['EL MALACARA_','El Malacara-','UY_LA BLANQUEADA_','LA CAMPANA_','La Campana-','MONTE CRISTO_','Monte Cristo-','UY_SANTA RAFAELA_','UY_SAN LUIS_Lote ','UY_SAN LUIS_','UY_DON JUAN DEL TALA_'];
     var ec=estab.replace('UY_','');pfx.push(ec+'_');pfx.push(ec+'-');
-    for(var i=0;i<pfx.length;i++){if(s.indexOf(pfx[i])===0){s=s.slice(pfx[i].length);break;}}
+    var sl=s.toLowerCase();
+    for(var i=0;i<pfx.length;i++){if(sl.indexOf(pfx[i].toLowerCase())===0){s=s.slice(pfx[i].length);break;}}
     s=s.trim();if(!s||s.toLowerCase().indexOf('generico')>=0)return null;
     if(estab.indexOf('SANTA RAFAELA')>=0)return 'L'+s;
     return s.replace(/^0+(\d)/,'$1').toUpperCase();
