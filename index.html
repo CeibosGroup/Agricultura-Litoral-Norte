@@ -687,13 +687,16 @@ function render(){
     var el=document.createElement('div');el.className='fchip'+(FC===o.v?' on':'');el.setAttribute('data-v',o.v);el.textContent=o.l;
     el.onclick=(function(v){return function(){setFilt(v);};})(o.v);cchips.appendChild(el);
   });
-  var allAlerts=[];rows.forEach(function(d){getLoteAlerts(d).forEach(function(a){allAlerts.push({campo:d.campo,lote:d.lote,tipo:a.tipo,msg:a.msg});});});
-  renderAlerts(allAlerts);
-  // For Finn zones, compute metrics from FINN_FULL
+  // For Finn zones, skip alerts/metrics from Excel and go straight to Finn
   if(activeZona!=='Litoral Norte'&&activeZona!=='Salto'){
+    renderAlerts([]);
     renderFinnMetrics(activeZona);
+    var el2=q('campos');el2.innerHTML='';
+    renderFinnZona(activeZona,el2);
     return;
   }
+  var allAlerts=[];rows.forEach(function(d){getLoteAlerts(d).forEach(function(a){allAlerts.push({campo:d.campo,lote:d.lote,tipo:a.tipo,msg:a.msg});});});
+  renderAlerts(allAlerts);
   var totH=rows.reduce(function(a,r){return a+r.has;},0);
   var urows=SE==='ver'?rows.filter(isMz):prod;
   var conU=urows.filter(function(d){return totalUrea(d)>0;});
@@ -701,12 +704,12 @@ function render(){
   var pR=pctArea(prod,function(d){return d.rep&&d.rep.fecha;}),pF1=pctArea(prod,function(d){return d.f1&&d.f1.prod;}),pF2=pctArea(prod,function(d){return d.f2&&d.f2.prod;}),pZn=pctArea(prod,function(d){return d.znf&&d.znf.dosis;});
   function MC(lbl,val,sub,bar,col){return '<div class="metric"><div class="ml">'+lbl+'</div><div class="mv">'+val+'</div>'+(sub?'<div class="ms">'+sub+'</div>':'')+(bar!=null?'<div class="mbar"><div class="mfill" style="width:'+bar+'%;background:'+col+';"></div></div>':'')+'</div>';}
   q('metrics').innerHTML=MC('Has',Math.round(totH).toLocaleString('es'),rows.length+' lotes',null,null)+MC(SE==='ver'?'Urea maiz':'Urea az.',promU?promU+' kg/ha':'—',conU.length+' lotes',null,null)+MC('Repaso',pR+'%','% area',pR,colPct(pR))+MC('Fung 1',pF1+'%','% area',pF1,colPct(pF1))+MC('Fung 2',pF2+'%','% area',pF2,colPct(pF2))+MC('Zinc fol.',pZn+'%','% area',pZn,colPct(pZn));
-  var grp={};rows.forEach(function(d){if(!grp[d.campo])grp[d.campo]=[];grp[d.campo].push(d);});
   var el=q('campos');el.innerHTML='';
-  // Non-LN zones: render from FINN_FULL
+  // Non-LN/Salto zones: render from FINN_FULL
   if(activeZona!=='Litoral Norte'&&activeZona!=='Salto'){
     renderFinnZona(activeZona,el);return;
   }
+  var grp={};rows.forEach(function(d){if(!grp[d.campo])grp[d.campo]=[];grp[d.campo].push(d);});
   if(!rows.length){el.innerHTML='<div class="empty">Sin datos para esta temporada</div>';return;}
   Object.keys(grp).forEach(function(campo){
     var lotes=grp[campo],ini=INI[campo]||campo.slice(0,2).toUpperCase();
