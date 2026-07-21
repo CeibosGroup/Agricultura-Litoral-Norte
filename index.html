@@ -246,7 +246,8 @@ var FINN_LOTES={"Don Juan del Tala":["2","3","4A","4B","4C","5B","5C","6B","6C",
 var CLI={Tr:'Trigo',Cz:'Colza',Ceb:'Cebada',Cobertura:'Cob.',Carinata:'Car.'};
 var CLV={Sj1:'Soja 1',Sj2:'Soja 2',Mz1:'Maiz 1',Mz2:'Maiz 2',Cobertura:'Cob.'};
 var BCL={Tr:'bTr',Cz:'bCz',Ceb:'bCeb',Cobertura:'bCob',Carinata:'bCar',Sj1:'bSj1',Sj2:'bSj2',Mz1:'bMz1',Mz2:'bMz2'};
-var INI={Malacara:'ML','La Blanqueada':'LB','La Campana':'LC',Montecristo:'MC','Santa Rafaela':'SR','San Luis':'SL','Don Juan del Tala':'DJ'};
+var INI={Malacara:'ML','La Blanqueada':'LB','La Campana':'LC',Montecristo:'MC','Santa Rafaela':'SR','San Luis':'SL'};
+var INI_SALTO={'Don Juan del Tala':'DJ'};
 var CAMPOS_STAT = ['Santa Rafaela','Malacara','La Campana','Montecristo','San Luis','La Blanqueada','Don Juan del Tala'];
 // Paysandú coordinates
 var LAT=-32.32, LON=-58.08;
@@ -291,7 +292,7 @@ document.addEventListener('DOMContentLoaded',function(){
       activeZona=zona;
       document.querySelectorAll('#zona-chips .fchip').forEach(function(x){x.classList.toggle('on',x.textContent===zona);});
       // Show/hide cultivo filter (only for Litoral Norte/Salto which have Excel data)
-      var hasExcel=zona==='Litoral Norte'||zona==='Salto';
+      var hasExcel=(zona==='Litoral Norte'||zona==='Salto')&&AD[AC];
       q('fstrip-cultivo').style.display=hasExcel?'':'none';
       openC={};openL={};
       render();
@@ -514,7 +515,15 @@ function pushNotify(alerts){
   if(window._notifSent)return;window._notifSent=true;
   alerts.slice(0,3).forEach(function(a){try{new Notification('LN Agro · '+a.campo+' L'+a.lote,{body:a.msg,icon:'LOGO.jpeg'});}catch(e){}}); 
 }
-function filtered(){var cd=AD[AC];if(!cd)return[];var src=SE==='inv'?cd.inv:cd.ver;if(!src)return[];return FC==='all'?src:src.filter(function(d){return d.cult===FC;});}
+function filtered(){
+  var cd=AD[AC];if(!cd)return[];
+  var src=SE==='inv'?cd.inv:cd.ver;if(!src)return[];
+  // Filter by active zona
+  var zonaFields={'Litoral Norte':Object.keys(INI),'Salto':Object.keys(INI_SALTO)};
+  var allowed=zonaFields[activeZona];
+  if(allowed){src=src.filter(function(d){return allowed.indexOf(d.campo)>=0;});}
+  return FC==='all'?src:src.filter(function(d){return d.cult===FC;});
+}
 
 // ── FINN ZONE RENDERER ────────────────────────────────────────
 function renderFinnZona(zona, container){
@@ -642,6 +651,34 @@ function renderFinnDetail(ld){
   return h;
 }
 
+
+function renderFinnMetrics(zona){
+  var zonaData=FINN_FULL[zona]||{};
+  var totLotes=0,conBarb=0,conSiem=0,conFertN=0,conFung=0,conZnf=0,conRep=0;
+  Object.values(zonaData).forEach(function(campos){
+    Object.values(campos).forEach(function(d){
+      totLotes++;
+      if(d.barb&&d.barb.done)conBarb++;
+      if(d.siem&&d.siem.done)conSiem++;
+      if(d.fert_n&&d.fert_n.done)conFertN++;
+      if(d.fung&&d.fung.done)conFung++;
+      if(d.znf&&d.znf.done)conZnf++;
+      if(d.rep&&d.rep.done)conRep++;
+    });
+  });
+  function pct(n){return totLotes?Math.round(n/totLotes*100):0;}
+  function colPct2(p){return p>=70?'#1a8a5a':p>=40?'#c47a12':'#b83030';}
+  function MC(lbl,val,sub,bar,col){return '<div class="metric"><div class="ml">'+lbl+'</div><div class="mv">'+val+'</div>'+(sub?'<div class="ms">'+sub+'</div>':'')+(bar!=null?'<div class="mbar"><div class="mfill" style="width:'+bar+'%;background:'+col+';"></div></div>':'')+'</div>';}
+  var pB=pct(conBarb),pS=pct(conSiem),pN=pct(conFertN),pF=pct(conFung),pZ=pct(conZnf),pR=pct(conRep);
+  q('metrics').innerHTML=
+    MC('Lotes',totLotes,zona,null,null)+
+    MC('Barbecho',pB+'%','% lotes',pB,colPct2(pB))+
+    MC('Siembra',pS+'%','% lotes',pS,colPct2(pS))+
+    MC('Fert N',pN+'%','% lotes',pN,colPct2(pN))+
+    MC('Fungicida',pF+'%','% lotes',pF,colPct2(pF))+
+    MC('Repaso',pR+'%','% lotes',pR,colPct2(pR));
+}
+
 function render(){
   var rows=filtered(),CL=SE==='inv'?CLI:CLV,prod=rows.filter(isProd);
   var cults=[];rows.forEach(function(d){if(d.cult&&cults.indexOf(d.cult)<0)cults.push(d.cult);});cults.sort();
@@ -652,6 +689,11 @@ function render(){
   });
   var allAlerts=[];rows.forEach(function(d){getLoteAlerts(d).forEach(function(a){allAlerts.push({campo:d.campo,lote:d.lote,tipo:a.tipo,msg:a.msg});});});
   renderAlerts(allAlerts);
+  // For Finn zones, compute metrics from FINN_FULL
+  if(activeZona!=='Litoral Norte'&&activeZona!=='Salto'){
+    renderFinnMetrics(activeZona);
+    return;
+  }
   var totH=rows.reduce(function(a,r){return a+r.has;},0);
   var urows=SE==='ver'?rows.filter(isMz):prod;
   var conU=urows.filter(function(d){return totalUrea(d)>0;});
