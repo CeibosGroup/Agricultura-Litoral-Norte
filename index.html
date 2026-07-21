@@ -228,7 +228,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 <script src="data.js"></script>
 <script>
 var _fs=document.createElement('script');
-_fs.src='finn.js?v='+Math.floor(Date.now()/3600000);
+_fs.src='finn.js?v='+Math.floor(Date.now()/60000);
 document.head.appendChild(_fs);
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
@@ -550,8 +550,7 @@ function renderFinnZona(zona, container){
       var ld=lotes[lote];
       var lid=sid(campo+zona+lote);
       var isLo=!!openL[lid];
-      var cultKey=zona+'|'+campo+'|'+lote;
-      var cult=ld.cult||CROP_LOTE[cultKey]||null;
+      var cultKey=zona+'|'+campo+'|'+lote;      var cult=ld.cult||CROP_LOTE[cultKey]||null;
       var cultBadge=cult?'<span class="cbadge '+(BCL[cult]||'bCob')+'">'+(CLI2[cult]||cult)+'</span>':'';
       var varBadge=ld.var?'<span style="font-size:10px;color:#666;margin-left:3px;">'+ld.var+'</span>':'';
       
@@ -559,7 +558,7 @@ function renderFinnZona(zona, container){
       var doneCount=Object.keys(ld).filter(function(k){return ld[k]&&ld[k].done;}).length;
       
       lhtml+='<div class="lrow">'+
-        '<div class="lhdr" data-lid="'+lid+'">'+
+        '<div class="lhdr" data-lid="'+lid+'" data-zona="'+zona+'" data-campo="'+campo+'" data-flote="'+lote+'">'+
         '<span class="lnum">'+lote+'</span>'+
         cultBadge+varBadge+
         (doneCount>0?'<span style="font-size:10px;background:#e8f5ee;color:#1a8a5a;padding:1px 7px;border-radius:20px;font-weight:600;margin-left:4px;">'+doneCount+' labores</span>':'')+
@@ -755,15 +754,23 @@ function togL(lid){
   if(det){
     if(!det.innerHTML.trim()){
       if(activeZona!=='Litoral Norte'&&activeZona!=='Salto'){
-        // Find in FINN_FULL
-        var zonaData=FINN_FULL[activeZona];
-        if(zonaData){
+        // Use data attributes from lhdr for reliable lookup
+        var lhdrEl=det.previousElementSibling;
+        var dZona=lhdrEl&&lhdrEl.getAttribute('data-zona')||activeZona;
+        var dCampo=lhdrEl&&lhdrEl.getAttribute('data-campo');
+        var dLote=lhdrEl&&lhdrEl.getAttribute('data-flote');
+        if(dCampo&&dLote&&FINN_FULL[dZona]&&FINN_FULL[dZona][dCampo]&&FINN_FULL[dZona][dCampo][dLote]){
+          det.innerHTML=renderFinnDetail(FINN_FULL[dZona][dCampo][dLote]);
+        } else {
+          // Fallback: search by lid
           var found=false;
-          Object.keys(zonaData).forEach(function(campo){
+          Object.keys(FINN_FULL[activeZona]||{}).forEach(function(campo){
             if(found)return;
-            Object.keys(zonaData[campo]).forEach(function(lote){
+            Object.keys(FINN_FULL[activeZona][campo]||{}).forEach(function(lote){
               if(found)return;
-              if(sid(campo+activeZona+lote)===lid){det.innerHTML=renderFinnDetail(zonaData[campo][lote]);found=true;}
+              if(sid(campo+activeZona+lote)===lid){
+                det.innerHTML=renderFinnDetail(FINN_FULL[activeZona][campo][lote]);found=true;
+              }
             });
           });
         }
