@@ -567,10 +567,12 @@ function renderFinnZona(zona, container){
     }).length;
     
     var lhtml='';
+    var visibleLotes=0;
     Object.keys(lotes).sort().forEach(function(lote){
       var ld=lotes[lote];
       // Apply cult filter
       if(FC!=='all'&&(ld.cult||null)!==FC)return;
+      visibleLotes++;
       var lid=sid(campo+zona+lote);
       var isLo=!!openL[lid];
       var cultKey=zona+'|'+campo+'|'+lote;      var cult=ld.cult||CROP_LOTE[cultKey]||null;
@@ -591,6 +593,7 @@ function renderFinnZona(zona, container){
       '</div>';
     });
     
+    if(FC!=='all'&&visibleLotes===0)return;
     var card=document.createElement('div');card.className='ccard';
     card.innerHTML=
       '<div class="chdr" data-cid="'+cid+'">'+
@@ -764,7 +767,7 @@ function render(){
   var promU=conU.length?Math.round(conU.reduce(function(a,d){return a+totalUrea(d)*d.has;},0)/conU.reduce(function(a,d){return a+d.has;},0)):0;
   var pR=pctArea(prod,function(d){return d.rep&&d.rep.fecha;}),pF1=pctArea(prod,function(d){return d.f1&&d.f1.prod;}),pF2=pctArea(prod,function(d){return d.f2&&d.f2.prod;}),pZn=pctArea(prod,function(d){return d.znf&&d.znf.dosis;});
   function MC(lbl,val,sub,bar,col){return '<div class="metric"><div class="ml">'+lbl+'</div><div class="mv">'+val+'</div>'+(sub?'<div class="ms">'+sub+'</div>':'')+(bar!=null?'<div class="mbar"><div class="mfill" style="width:'+bar+'%;background:'+col+';"></div></div>':'')+'</div>';}
-  q('metrics').innerHTML=MC('Has',Math.round(totH).toLocaleString('es'),rows.length+' lotes',null,null)+MC(SE==='ver'?'Urea maiz':'Urea az.',promU?promU+' kg/ha':'—',conU.length+' lotes',null,null)+MC('Repaso',pR+'%','% area',pR,colPct(pR))+MC('Fung 1',pF1+'%','% area',pF1,colPct(pF1))+MC('Fung 2',pF2+'%','% area',pF2,colPct(pF2))+MC('Zinc fol.',pZn+'%','% area',pZn,colPct(pZn));
+  q('metrics').innerHTML=MC('Has',Math.round(totH).toLocaleString('es'),rows.length+' lotes',null,null)+MC(SE==='ver'?'Urea maiz':'Urea az.',promU?promU+' kg/ha':'—',conU.length+' lotes',null,null)+MC('Repaso',pR+'%','% area',pR,colPct(pR))+MC('Fung 1',pF1+'%','% area',pF1,colPct(pF1))+MC('Fung 2',pF2+'%','% area',pF2,colPct(pF2))+MC('Zinc fol.',pZn+'%','% area',pZn,colPct(pZn))+MC('Ac. húmicos',pctArea(prod,function(d){return d.hum&&d.hum.dosis!=null;})+'%','% area',pctArea(prod,function(d){return d.hum&&d.hum.dosis!=null;}),colPct(pctArea(prod,function(d){return d.hum&&d.hum.dosis!=null;})));
   var el=q('campos');el.innerHTML='';
   // Non-LN/Salto zones: render from FINN_FULL
   if(activeZona!=='Litoral Norte'&&activeZona!=='Salto'){
