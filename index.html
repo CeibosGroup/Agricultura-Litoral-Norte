@@ -1674,7 +1674,7 @@ async function sendChat(){
         'X-Title':'LN Agro Asistente'
       },
       body:JSON.stringify({
-        model:'google/gemma-3-12b-it:free',
+        model:'meta-llama/llama-3.1-8b-instruct:free',
         max_tokens:1500,
         messages:[
           {role:'system',content:systemPrompt},
@@ -1683,7 +1683,7 @@ async function sendChat(){
       })
     });
     var data=await resp.json();
-    var answer=data.choices&&data.choices[0]?data.choices[0].message.content:'Sin respuesta';
+    var answer=data.choices&&data.choices[0]?data.choices[0].message.content:(data.error?'Error: '+data.error.message:'Sin respuesta');
     loadingDiv.textContent=answer;
   }catch(e){
     loadingDiv.textContent='Error al conectar con el asistente. Verificá tu conexión.';
