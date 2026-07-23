@@ -526,58 +526,6 @@ function buildFinnFull(wb){
   });
   Object.keys(newCrop).forEach(function(k){CROP_LOTE[k]=newCrop[k];});
 }
-  
-  function cleanEstab(e){return e.replace('UY_','').replace('_TECNO',' Tecno').replace('EL ','El ').replace('LA ','La ').replace('LOS ','Los ').replace('LAS ','Las ').trim();}
-  function cleanLote(estab,lote){
-    var s=String(lote||'').trim();
-    var pfx=['EL MALACARA_','El Malacara-','UY_LA BLANQUEADA_','LA CAMPANA_','La Campana-','MONTE CRISTO_','Monte Cristo-','UY_SANTA RAFAELA_','UY_SAN LUIS_Lote ','UY_SAN LUIS_','UY_DON JUAN DEL TALA_'];
-    var ec=estab.replace('UY_','');pfx.push(ec+'_');pfx.push(ec+'-');
-    var sl=s.toLowerCase();
-    for(var i=0;i<pfx.length;i++){if(sl.indexOf(pfx[i].toLowerCase())===0){s=s.slice(pfx[i].length);break;}}
-    s=s.trim();if(!s||s.toLowerCase().indexOf('generico')>=0)return null;
-    if(estab.indexOf('SANTA RAFAELA')>=0)return 'L'+s;
-    return s.replace(/^0+(\d)/,'$1').toUpperCase();
-  }
-  function mapField(tipo,labor){
-    var l=String(labor||'').toUpperCase();
-    if(tipo==='Laboreo'){
-      if(l.indexOf('SIEMBRA')>=0)return 'siem';
-      if(l.indexOf('PULVERIZ')>=0)return 'herb';
-      if(l.indexOf('FERTILIZ')>=0)return 'fert';
-      if(l.indexOf('DISQUERA')>=0)return 'barb';
-    } else {
-      if(['GLIFOSATO','GLYPHOSATE','CLETODIM','PARAQUAT','DIQUAT','2.4D','2,4D','ATRAZINA','LONTREL','AXIAL','HUSSAR','KORVETTO','TORDON','TRONADOR','AMINA','STARANE'].some(function(x){return l.indexOf(x)>=0;}))return 'herb';
-      if(['SEMILLA','VARIEDAD','HIBRIDO','HÍBRIDO'].some(function(x){return l.indexOf(x)>=0;}))return 'siem';
-      if(['UREA','FOSFATO','SPT','KCL','POTASIO','AZUFRE','SULFATO','NITRATO','MAP','DAP','SPS','FOSZINC'].some(function(x){return l.indexOf(x)>=0;}))return 'fert';
-      if(['FUNGICIDA','TRIFLOX','TEBUCON','AZOXIST','EPOXIC','BIXAFEN','PROTHIO'].some(function(x){return l.indexOf(x)>=0;}))return 'fung';
-      if(l.indexOf('ZINC')>=0)return 'znf';
-      if(l.indexOf('HUMICO')>=0||l.indexOf('HÚMICO')>=0)return 'hum';
-    }
-    return 'other';
-  }
-  
-  for(var ri=1;ri<=rng.e.r;ri++){
-    var zr=gv(ri,2);if(!zr||!ZMAP[zr])continue;
-    var zona=ZMAP[zr],estab=gv(ri,1),campo=cleanEstab(estab);
-    var lote=cleanLote(estab,gv(ri,4)||'');if(!lote)continue;
-    var fecha=gv(ri,0),tipo=gv(ri,10),labor=gv(ri,15),act=String(gv(ri,5)||'').toUpperCase();
-    var field=mapField(tipo,labor);
-    var fechaStr=fecha instanceof Date?fecha.toLocaleDateString('es-UY',{day:'2-digit',month:'2-digit',year:'numeric'}):null;
-    var hasFecha=!!fechaStr;
-    if(!newFull[zona])newFull[zona]={};
-    if(!newFull[zona][campo])newFull[zona][campo]={};
-    if(!newFull[zona][campo][lote])newFull[zona][campo][lote]={herb:{done:false,fecha:null,prod:[]},siem:{done:false,fecha:null,prod:[]},fert:{done:false,fecha:null,prod:[]},fung:{done:false,fecha:null,prod:[]},znf:{done:false,fecha:null,prod:[]},hum:{done:false,fecha:null,prod:[]}};
-    var d=newFull[zona][campo][lote];
-    if(field in d){
-      if(hasFecha){d[field].done=true;if(!d[field].fecha)d[field].fecha=fechaStr;}
-      var ls=String(labor);if(d[field].prod.indexOf(ls)<0)d[field].prod.push(ls);
-    }
-    var cult=ACT_CULT[act];
-    if(cult){var ck=zona+'|'+campo+'|'+lote;if(!newCrop[ck])newCrop[ck]=cult;}
-  }
-  Object.keys(newFull).forEach(function(z){FINN_FULL[z]=newFull[z];});
-  Object.keys(newCrop).forEach(function(k){CROP_LOTE[k]=newCrop[k];});
-}
 
 async function updateBg(){
   if(typeof XLSX==='undefined')return;
