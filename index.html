@@ -1658,12 +1658,13 @@ async function sendChat(){
   q('chat-send').disabled=true;
 
   var ctx=buildContext();
-  var systemPrompt='Sos un asistente agrónomo experto que trabaja con Nicolás Arocha en Ceibos Group Uruguay.\n'+
-    'Tenés acceso completo a los datos de la campaña agrícola 26-27 que se incluyen abajo.\n'+
-    'Respondé en español rioplatense, de forma concisa y técnica.\n'+
-    'Si te piden un análisis agronómico, dalo con criterio técnico considerando la fecha actual ('+ new Date().toLocaleDateString('es-UY')+').\n'+
-    'Si el dato no está disponible en el contexto, decilo claramente.\n\n'+
-    'DATOS DE CAMPAÑA:\n'+ctx;
+  var systemPrompt='Sos un asistente agrónomo para Ceibos Group Uruguay, campaña '+AC+'.\n'+
+    'Respondé SIEMPRE en español rioplatense, directo y técnico.\n'+
+    'Cuando te pregunten por lotes específicos, listá EXACTAMENTE los lotes del contexto que cumplen la condición.\n'+
+    'Si la pregunta es sobre lotes sin cierta labor, buscá en el contexto todos los lotes donde esa labor NO aparece o aparece como "Sin labores".\n'+
+    'NUNCA digas que no tenés información si los datos están en el contexto. Analizá el contexto completo antes de responder.\n'+
+    'Fecha actual: '+new Date().toLocaleDateString('es-UY')+'.\n\n'+
+    'DATOS DE CAMPAÑA (formato: Campo Lote (has) Cultivo [variedad]: labores realizadas):\n'+ctx;
 
   try{
     var resp=await fetch('https://openrouter.ai/api/v1/chat/completions',{
@@ -1675,8 +1676,8 @@ async function sendChat(){
         'X-Title':'LN Agro Asistente'
       },
       body:JSON.stringify({
-        model:'meta-llama/llama-3.1-8b-instruct',
-        max_tokens:1000,
+        model:'google/gemma-3-12b-it:free',
+        max_tokens:1500,
         messages:[
           {role:'system',content:systemPrompt},
           {role:'user',content:text}
