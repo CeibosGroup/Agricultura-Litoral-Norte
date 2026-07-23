@@ -1573,65 +1573,71 @@ function renderIndicadores(){
 }
 
 // ── ASISTENTE ─────────────────────────────────────────────────
-function buildContext(){
-  var ctx = [];
-  ctx.push('=== CAMPAÑA ACTIVA: '+AC+' === Fecha: '+new Date().toLocaleDateString('es-UY'));
-
-  // LN + Salto from Excel
-  var camp=AD[AC];
-  if(camp&&camp.inv&&camp.inv.length){
-    ctx.push('\n--- LITORAL NORTE / SALTO ---');
-    camp.inv.forEach(function(d){
-      var labores=[];
-      if(d.barb&&d.barb.done)labores.push('Barbecho '+(d.barb.fecha||''));
-      if(d.dg&&d.dg.done)labores.push('DG '+(d.dg.fecha||''));
-      if(d.rep&&d.rep.done)labores.push('Repaso '+(d.rep.fecha||''));
-      if(d.siem&&d.siem.fecha)labores.push('Siembra '+(d.siem.fecha||'')+' var:'+(d.siem.var||'?'));
-      if(d.re1&&d.re1.fecha)labores.push('Resiembra '+(d.re1.fecha||''));
-      if(d.fert_bas&&(d.fert_bas.spt||d.fert_bas.kcl||d.fert_bas.fosz))labores.push('FertBasal '+(d.fert_bas.fecha_p||''));
-      var uT=(d.urea_siem&&d.urea_siem.kg||0)+(d.z22&&d.z22.kg||0)+(d.z30&&d.z30.kg||0)+(d.z33&&d.z33.kg||0);
-      if(uT>0)labores.push('Urea '+uT+'kg/ha');
-      if(d.f1&&d.f1.prod)labores.push('Fung1 '+(d.f1.fecha||''));
-      if(d.f2&&d.f2.prod)labores.push('Fung2 '+(d.f2.fecha||''));
-      if(d.znf&&d.znf.dosis)labores.push('Zinc '+(d.znf.fecha||''));
-      if(d.hum&&d.hum.dosis)labores.push('Humicos '+(d.hum.fecha||''));
-      // Explicitly note missing key labores
-      if(!(d.barb&&d.barb.done))labores.push('SIN_BARBECHO');
-      if(!(d.rep&&d.rep.done))labores.push('SIN_REPASO');
-      if(!(d.siem&&d.siem.fecha))labores.push('SIN_SIEMBRA');
-      if(!(d.f1&&d.f1.prod))labores.push('SIN_FUNGICIDA');
-      if(uT===0)labores.push('SIN_UREA');
-      if(!(d.znf&&d.znf.dosis))labores.push('SIN_ZINC');
-      if(!(d.hum&&d.hum.dosis))labores.push('SIN_HUMICOS');
-      ctx.push(d.campo+' L'+d.lote+' ('+Math.round(d.has)+'ha) CULT:'+( d.cult||'?')+' VAR:'+(d.siem&&d.siem.var||'?')+' | '+labores.join(' | '));
-    });
+function buildContext(pregunta){
+  var ctx=[];
+  var p=(pregunta||'').toLowerCase();
+  ctx.push('CAMPAÑA:'+AC+' Fecha:'+new Date().toLocaleDateString('es-UY'));
+  var cultFilter=null;
+  if(p.match(/colza/))cultFilter='Cz';
+  else if(p.match(/trigo/))cultFilter='Tr';
+  else if(p.match(/cebada/))cultFilter='Ceb';
+  else if(p.match(/cobertura|avena/))cultFilter='Cobertura';
+  else if(p.match(/soja/))cultFilter='Sj1';
+  else if(p.match(/ma[íi]z/))cultFilter='Mz1';
+  var wantLN=!p.match(/ruta 20|durazno|tacuaremb/)||p.match(/litoral|blanqueada|malacara|campana|montecristo|rafaela|san luis/);
+  var wantFinn=p.match(/ruta 20|durazno|tacuaremb|salto|todas/)||!p.match(/litoral norte/);
+  
+  if(wantLN){
+    var camp=AD[AC];
+    if(camp&&camp.inv){
+      ctx.push('=LN/SALTO=');
+      camp.inv.forEach(function(d){
+        if(cultFilter&&d.cult!==cultFilter)return;
+        var l=[];
+        l.push(d.barb&&d.barb.done?'Barb '+(d.barb.fecha||''):'SIN_BARB');
+        if(d.dg&&d.dg.done)l.push('DG '+(d.dg.fecha||''));
+        l.push(d.rep&&d.rep.done?'Repaso '+(d.rep.fecha||''):'SIN_REPASO');
+        l.push(d.siem&&d.siem.fecha?'Siem '+(d.siem.fecha||'')+' '+(d.siem.var||''):'SIN_SIEM');
+        var uT=(d.urea_siem&&d.urea_siem.kg||0)+(d.z22&&d.z22.kg||0)+(d.z30&&d.z30.kg||0)+(d.z33&&d.z33.kg||0);
+        l.push(uT>0?'Urea '+uT+'kg':'SIN_UREA');
+        l.push(d.f1&&d.f1.prod?'F1 '+(d.f1.fecha||''):'SIN_F1');
+        l.push(d.f2&&d.f2.prod?'F2 '+(d.f2.fecha||''):'SIN_F2');
+        l.push(d.znf&&d.znf.dosis?'Zinc '+(d.znf.fecha||''):'SIN_ZINC');
+        l.push(d.hum&&d.hum.dosis?'Hum '+(d.hum.fecha||''):'SIN_HUM');
+        ctx.push(d.campo+' L'+d.lote+' '+Math.round(d.has)+'ha C:'+(d.cult||'?')+' V:'+(d.siem&&d.siem.var||'?')+' '+l.join(' '));
+      });
+    }
   }
-
-  // Finn zones
-  ['Ruta 20','Durazno','Tacuarembó','Salto'].forEach(function(zona){
-    var zd=FINN_FULL[zona];if(!zd)return;
-    ctx.push('\n--- '+zona.toUpperCase()+' ---');
-    Object.keys(zd).sort().forEach(function(campo){
-      Object.keys(zd[campo]).sort().forEach(function(lote){
-        var d=zd[campo][lote];
-        var labores=[];
-        if(d.barb&&d.barb.done)labores.push('Barbecho '+(d.barb.fecha||''));else labores.push('SIN_BARBECHO');
-        if(d.dg&&d.dg.done)labores.push('DG '+(d.dg.fecha||''));
-        if(d.rep&&d.rep.done)labores.push('Repaso '+(d.rep.fecha||''));else labores.push('SIN_REPASO');
-        if(d.siem&&d.siem.done)labores.push('Siembra '+(d.siem.fecha||'')+(d.var?' var:'+d.var:''));else labores.push('SIN_SIEMBRA');
-        if(d.fert_bas&&d.fert_bas.done)labores.push('FertBasal '+(d.fert_bas.fecha||''));else labores.push('SIN_FERT_BASAL');
-        if(d.fert_n&&d.fert_n.done)labores.push('FertN '+(d.fert_n.fecha||''));else labores.push('SIN_UREA');
-        if(d.fung&&d.fung.done)labores.push('Fungicida '+(d.fung.fecha||''));else labores.push('SIN_FUNGICIDA');
-        if(d.znf&&d.znf.done)labores.push('Zinc '+(d.znf.fecha||''));else labores.push('SIN_ZINC');
-        if(d.hum&&d.hum.done)labores.push('Humicos '+(d.hum.fecha||''));else labores.push('SIN_HUMICOS');
-        ctx.push(campo+' L'+lote+(d.has?' ('+Math.round(d.has)+'ha)':'')+' CULT:'+(d.cult||'?')+' VAR:'+(d.var||'?')+' | '+labores.join(' | '));
+  if(wantFinn){
+    var zonas=['Ruta 20','Durazno','Tacuarembó','Salto'];
+    if(p.match(/durazno/))zonas=['Durazno'];
+    else if(p.match(/ruta 20/))zonas=['Ruta 20'];
+    else if(p.match(/tacuaremb/))zonas=['Tacuarembó'];
+    else if(p.match(/salto/))zonas=['Salto'];
+    zonas.forEach(function(zona){
+      var zd=FINN_FULL[zona];if(!zd)return;
+      ctx.push('='+zona+'=');
+      Object.keys(zd).sort().forEach(function(campo){
+        Object.keys(zd[campo]).sort().forEach(function(lote){
+          var d=zd[campo][lote];
+          if(cultFilter&&d.cult!==cultFilter)return;
+          var l=[];
+          l.push(d.barb&&d.barb.done?'Barb '+(d.barb.fecha||''):'SIN_BARB');
+          if(d.dg&&d.dg.done)l.push('DG '+(d.dg.fecha||''));
+          l.push(d.rep&&d.rep.done?'Repaso '+(d.rep.fecha||''):'SIN_REPASO');
+          l.push(d.siem&&d.siem.done?'Siem '+(d.siem.fecha||'')+' '+(d.var||''):'SIN_SIEM');
+          l.push(d.fert_n&&d.fert_n.done?'UreaN '+(d.fert_n.fecha||''):'SIN_UREA');
+          l.push(d.fert_bas&&d.fert_bas.done?'FertBas '+(d.fert_bas.fecha||''):'SIN_FERT_BAS');
+          l.push(d.fung&&d.fung.done?'Fung '+(d.fung.fecha||''):'SIN_FUNG');
+          l.push(d.znf&&d.znf.done?'Zinc '+(d.znf.fecha||''):'SIN_ZINC');
+          l.push(d.hum&&d.hum.done?'Hum '+(d.hum.fecha||''):'SIN_HUM');
+          ctx.push(campo+' L'+lote+(d.has?' '+Math.round(d.has)+'ha':'')+' C:'+(d.cult||'?')+' V:'+(d.var||'?')+' '+l.join(' '));
+        });
       });
     });
-  });
-
+  }
   return ctx.join('\n');
 }
-
 function addMsg(role, text, loading){
   var msgs=q('chat-messages');
   var div=document.createElement('div');
@@ -1655,7 +1661,7 @@ async function sendChat(){
   var loadingDiv=addMsg('assistant','',true);
   q('chat-send').disabled=true;
 
-  var ctx=buildContext();
+  var ctx=buildContext(text);
   var systemPrompt='Sos un asistente agrónomo para Ceibos Group Uruguay, campaña '+AC+'.\n'+
     'Respondé SIEMPRE en español rioplatense, directo y técnico.\n'+
     'Cuando te pregunten por lotes específicos, listá EXACTAMENTE los lotes del contexto que cumplen la condición.\n'+
