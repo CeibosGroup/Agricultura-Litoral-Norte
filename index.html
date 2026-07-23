@@ -1667,7 +1667,7 @@ async function sendChat(){
 
   try{
     var GEMINI_KEY='AQ.Ab8RN6KM4y_EWoObyGe8Tm7Q_VYrJviAvberOuWiAwvsrsIQKw';
-    var resp=await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent?key='+GEMINI_KEY,{
+    var resp=await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key='+GEMINI_KEY,{
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
