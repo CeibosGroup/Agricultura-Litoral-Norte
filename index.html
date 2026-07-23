@@ -1666,18 +1666,17 @@ async function sendChat(){
     'DATOS DE CAMPAÑA:\n'+ctx;
 
   try{
-    var resp=await fetch('https://api.anthropic.com/v1/messages',{
+    var resp=await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=AIzaSyAQ_Ab8RN6KM4y_EWoObyGe8Tm7Q_VYrJviAvberOuWiAwvsrsIQKw',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
-        model:'claude-sonnet-4-6',
-        max_tokens:1000,
-        system:systemPrompt,
-        messages:[{role:'user',content:text}]
+        system_instruction:{parts:[{text:systemPrompt}]},
+        contents:[{role:'user',parts:[{text:text}]}],
+        generationConfig:{maxOutputTokens:1000,temperature:0.3}
       })
     });
     var data=await resp.json();
-    var answer=data.content&&data.content[0]?data.content[0].text:'Sin respuesta';
+    var answer=data.candidates&&data.candidates[0]&&data.candidates[0].content&&data.candidates[0].content.parts?data.candidates[0].content.parts[0].text:'Sin respuesta';
     loadingDiv.textContent=answer;
   }catch(e){
     loadingDiv.textContent='Error al conectar con el asistente. Verificá tu conexión.';
