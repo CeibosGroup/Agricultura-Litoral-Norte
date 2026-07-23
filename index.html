@@ -1665,17 +1665,16 @@ async function sendChat(){
     'DATOS DE CAMPAÑA (formato: Campo Lote (has) Cultivo [variedad]: labores realizadas):\n'+ctx;
 
   try{
-    var resp=await fetch('https://openrouter.ai/api/v1/chat/completions',{
+    var resp=await fetch('https://api.groq.com/openai/v1/chat/completions',{
       method:'POST',
       headers:{
         'Content-Type':'application/json',
-        'Authorization':'Bearer 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',
-        'HTTP-Referer':'https://ceibosgroup.github.io/Agricultura-Litoral-Norte/',
-        'X-Title':'LN Agro Asistente'
+        'Authorization':'Bearer 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'
       },
       body:JSON.stringify({
-        model:'openai/gpt-oss-20b:free',
+        model:'llama-3.3-70b-versatile',
         max_tokens:1500,
+        temperature:0.2,
         messages:[
           {role:'system',content:systemPrompt},
           {role:'user',content:text}
