@@ -1708,6 +1708,8 @@ function buildContext(pregunta){
   }
   return ctx.join('\n');
 }
+var chatHistory = [];
+
 function addMsg(role, text, loading){
   var msgs=q('chat-messages');
   var div=document.createElement('div');
@@ -1732,6 +1734,9 @@ async function sendChat(){
   q('chat-send').disabled=true;
 
   var ctx=buildContext(text);
+
+  // Build messages with history
+  var messages=chatHistory.slice(-6).concat([{role:'user',content:text}]);
   var systemPrompt='Sos un asistente agrónomo para Ceibos Group Uruguay, campaña '+AC+'.\n'+
     'Respondé SIEMPRE en español rioplatense, directo y técnico.\n\n'+
     'REGLAS CRÍTICAS DE PRECISIÓN - nunca las violes:\n'+
@@ -1763,12 +1768,17 @@ async function sendChat(){
         model:'claude-haiku-4-5-20251001',
         max_tokens:1500,
         system:systemPrompt,
-        messages:[{role:'user',content:text}]
+        messages:messages
       })
     });
     var data=await resp.json();
     var answer=data.content&&data.content[0]?data.content[0].text:(data.error?'Error: '+data.error.message:'Sin respuesta');
     loadingDiv.textContent=answer;
+    // Save to history
+    chatHistory.push({role:'user',content:text});
+    chatHistory.push({role:'assistant',content:answer});
+    // Keep last 10 exchanges max
+    if(chatHistory.length>20)chatHistory=chatHistory.slice(-20);
   }catch(e){
     loadingDiv.textContent='Error al conectar con el asistente. Verificá tu conexión.';
   }
