@@ -1576,38 +1576,72 @@ function renderIndicadores(){
 function buildContext(pregunta){
   var ctx=[];
   var p=(pregunta||'').toLowerCase();
-  ctx.push('CAMPAÑA:'+AC+' Fecha:'+new Date().toLocaleDateString('es-UY'));
+  ctx.push('CAMPAÑA:'+AC+' HOY:'+new Date().toLocaleDateString('es-UY'));
+
+  // Detect filters
   var cultFilter=null;
   if(p.match(/colza/))cultFilter='Cz';
   else if(p.match(/trigo/))cultFilter='Tr';
   else if(p.match(/cebada/))cultFilter='Ceb';
   else if(p.match(/cobertura|avena/))cultFilter='Cobertura';
-  else if(p.match(/soja/))cultFilter='Sj1';
-  else if(p.match(/ma[íi]z/))cultFilter='Mz1';
+  else if(p.match(/soja/)){cultFilter='Sj1';}
+  else if(p.match(/ma[íi]z/)){cultFilter='Mz1';}
+
   var wantLN=!p.match(/ruta 20|durazno|tacuaremb/)||p.match(/litoral|blanqueada|malacara|campana|montecristo|rafaela|san luis/);
   var wantFinn=p.match(/ruta 20|durazno|tacuaremb|salto|todas/)||!p.match(/litoral norte/);
-  
+
+  var CLI2={Cz:'Colza',Tr:'Trigo',Ceb:'Cebada',Cobertura:'Cob',Carinata:'Car',Sj1:'Sj1',Sj2:'Sj2',Mz1:'Mz1',Mz2:'Mz2'};
+
+  // LN + Salto from Excel
   if(wantLN){
     var camp=AD[AC];
     if(camp&&camp.inv){
       ctx.push('=LN/SALTO=');
       camp.inv.forEach(function(d){
         if(cultFilter&&d.cult!==cultFilter)return;
+        // Next crop from VER_CULT
+        var nextCult=VER_CULT[AC]&&VER_CULT[AC][d.campo+'|'+d.lote]||null;
         var l=[];
-        l.push(d.barb&&d.barb.done?'Barb '+(d.barb.fecha||''):'SIN_BARB');
-        if(d.dg&&d.dg.done)l.push('DG '+(d.dg.fecha||''));
-        l.push(d.rep&&d.rep.done?'Repaso '+(d.rep.fecha||''):'SIN_REPASO');
-        l.push(d.siem&&d.siem.fecha?'Siem '+(d.siem.fecha||'')+' '+(d.siem.var||''):'SIN_SIEM');
+        // Barbecho with products
+        if(d.barb&&d.barb.done){
+          l.push('BARB '+(d.barb.fecha||'')+(d.barb.prod?' ['+d.barb.prod.slice(0,40)+']':''));
+        }else l.push('SIN_BARB');
+        // DG
+        if(d.dg&&d.dg.done)l.push('DG '+(d.dg.fecha||'')+(d.dg.prod?' ['+d.dg.prod.slice(0,30)+']':''));
+        // Repaso with products
+        if(d.rep&&d.rep.done){
+          l.push('REPASO '+(d.rep.fecha||'')+(d.rep.prod?' ['+d.rep.prod.slice(0,40)+']':''));
+        }else l.push('SIN_REPASO');
+        // Siembra
+        l.push(d.siem&&d.siem.fecha?'SIEM '+(d.siem.fecha||'')+' '+(d.siem.var||''):'SIN_SIEM');
+        // Resiembra
+        if(d.re1&&d.re1.fecha)l.push('RESIEM '+(d.re1.fecha||'')+' '+(d.re1.var||''));
+        // Fert basal
+        if(d.fert_bas){
+          var fb=[];
+          if(d.fert_bas.spt)fb.push('SPT'+d.fert_bas.spt);
+          if(d.fert_bas.kcl)fb.push('KCl'+d.fert_bas.kcl);
+          if(d.fert_bas.fosz)fb.push('Fosz'+d.fert_bas.fosz);
+          if(d.fert_bas.caso4)fb.push('CaSO4'+d.fert_bas.caso4);
+          if(fb.length)l.push('FERT_BAS '+fb.join('+'));
+        }
+        // Urea
         var uT=(d.urea_siem&&d.urea_siem.kg||0)+(d.z22&&d.z22.kg||0)+(d.z30&&d.z30.kg||0)+(d.z33&&d.z33.kg||0);
-        l.push(uT>0?'Urea '+uT+'kg':'SIN_UREA');
-        l.push(d.f1&&d.f1.prod?'F1 '+(d.f1.fecha||''):'SIN_F1');
-        l.push(d.f2&&d.f2.prod?'F2 '+(d.f2.fecha||''):'SIN_F2');
-        l.push(d.znf&&d.znf.dosis?'Zinc '+(d.znf.fecha||''):'SIN_ZINC');
-        l.push(d.hum&&d.hum.dosis?'Hum '+(d.hum.fecha||''):'SIN_HUM');
-        ctx.push(d.campo+' L'+d.lote+' '+Math.round(d.has)+'ha C:'+(d.cult||'?')+' V:'+(d.siem&&d.siem.var||'?')+' '+l.join(' '));
+        l.push(uT>0?'UREA_TOT '+uT+'kg/ha':'SIN_UREA');
+        // Fungicidas
+        l.push(d.f1&&d.f1.prod?'F1 '+(d.f1.fecha||'')+' ['+d.f1.prod.slice(0,30)+']':'SIN_F1');
+        l.push(d.f2&&d.f2.prod?'F2 '+(d.f2.fecha||'')+' ['+d.f2.prod.slice(0,30)+']':'SIN_F2');
+        // Zinc y humicos
+        l.push(d.znf&&d.znf.dosis?'ZINC '+d.znf.dosis+'L/ha '+(d.znf.fecha||''):'SIN_ZINC');
+        l.push(d.hum&&d.hum.dosis?'HUM '+d.hum.dosis+'L/ha '+(d.hum.fecha||''):'SIN_HUM');
+        // Next crop
+        if(nextCult)l.push('PROX:'+( CLI2[nextCult]||nextCult));
+        ctx.push(d.campo+' L'+d.lote+' '+Math.round(d.has)+'ha CULT:'+(CLI2[d.cult]||d.cult||'?')+' ANT:'+(CLI2[d.antec]||d.antec||'?')+' | '+l.join(' | '));
       });
     }
   }
+
+  // Finn zones
   if(wantFinn){
     var zonas=['Ruta 20','Durazno','Tacuarembó','Salto'];
     if(p.match(/durazno/))zonas=['Durazno'];
@@ -1622,16 +1656,35 @@ function buildContext(pregunta){
           var d=zd[campo][lote];
           if(cultFilter&&d.cult!==cultFilter)return;
           var l=[];
-          l.push(d.barb&&d.barb.done?'Barb '+(d.barb.fecha||''):'SIN_BARB');
-          if(d.dg&&d.dg.done)l.push('DG '+(d.dg.fecha||''));
-          l.push(d.rep&&d.rep.done?'Repaso '+(d.rep.fecha||''):'SIN_REPASO');
-          l.push(d.siem&&d.siem.done?'Siem '+(d.siem.fecha||'')+' '+(d.var||''):'SIN_SIEM');
-          l.push(d.fert_n&&d.fert_n.done?'UreaN '+(d.fert_n.fecha||''):'SIN_UREA');
-          l.push(d.fert_bas&&d.fert_bas.done?'FertBas '+(d.fert_bas.fecha||''):'SIN_FERT_BAS');
-          l.push(d.fung&&d.fung.done?'Fung '+(d.fung.fecha||''):'SIN_FUNG');
-          l.push(d.znf&&d.znf.done?'Zinc '+(d.znf.fecha||''):'SIN_ZINC');
-          l.push(d.hum&&d.hum.done?'Hum '+(d.hum.fecha||''):'SIN_HUM');
-          ctx.push(campo+' L'+lote+(d.has?' '+Math.round(d.has)+'ha':'')+' C:'+(d.cult||'?')+' V:'+(d.var||'?')+' '+l.join(' '));
+          // Barbecho with products
+          if(d.barb&&d.barb.done){
+            var prods=d.barb.items?d.barb.items.slice(0,3).map(function(i){return i.l+(i.q?' '+i.q+(i.u||''):'');}).join('+'):'';
+            l.push('BARB '+(d.barb.fecha||'')+(prods?' ['+prods+']':''));
+          }else l.push('SIN_BARB');
+          if(d.dg&&d.dg.done){
+            var prods=d.dg.items?d.dg.items.slice(0,2).map(function(i){return i.l;}).join('+'):'';
+            l.push('DG '+(d.dg.fecha||'')+(prods?' ['+prods+']':''));
+          }
+          if(d.rep&&d.rep.done){
+            var prods=d.rep.items?d.rep.items.slice(0,3).map(function(i){return i.l+(i.q?' '+i.q+(i.u||''):'');}).join('+'):'';
+            l.push('REPASO '+(d.rep.fecha||'')+(prods?' ['+prods+']':''));
+          }else l.push('SIN_REPASO');
+          l.push(d.siem&&d.siem.done?'SIEM '+(d.siem.fecha||'')+' '+(d.var||''):'SIN_SIEM');
+          if(d.fert_n&&d.fert_n.done){
+            var prods=d.fert_n.items?d.fert_n.items.slice(0,2).map(function(i){return i.l+(i.q?' '+i.q+'kg/ha':'');}).join('+'):'';
+            l.push('UREA '+(d.fert_n.fecha||'')+(prods?' ['+prods+']':''));
+          }else l.push('SIN_UREA');
+          if(d.fert_bas&&d.fert_bas.done){
+            var prods=d.fert_bas.items?d.fert_bas.items.slice(0,3).map(function(i){return i.l+(i.q?' '+i.q+'kg/ha':'');}).join('+'):'';
+            l.push('FERT_BAS '+(d.fert_bas.fecha||'')+(prods?' ['+prods+']':''));
+          }else l.push('SIN_FERT_BAS');
+          if(d.fung&&d.fung.done){
+            var prods=d.fung.items?d.fung.items.slice(0,2).map(function(i){return i.l;}).join('+'):'';
+            l.push('FUNG '+(d.fung.fecha||'')+(prods?' ['+prods+']':''));
+          }else l.push('SIN_FUNG');
+          l.push(d.znf&&d.znf.done?'ZINC '+(d.znf.fecha||''):'SIN_ZINC');
+          l.push(d.hum&&d.hum.done?'HUM '+(d.hum.fecha||''):'SIN_HUM');
+          ctx.push(campo+' L'+lote+(d.has?' '+Math.round(d.has)+'ha':'')+' CULT:'+(CLI2[d.cult]||d.cult||'?')+' VAR:'+(d.var||'?')+' | '+l.join(' | '));
         });
       });
     });
@@ -1671,24 +1724,23 @@ async function sendChat(){
     'DATOS DE CAMPAÑA (formato: Campo Lote (has) Cultivo [variedad]: labores realizadas):\n'+ctx;
 
   try{
-    var resp=await fetch('https://api.groq.com/openai/v1/chat/completions',{
+    var resp=await fetch('https://api.anthropic.com/v1/messages',{
       method:'POST',
       headers:{
         'Content-Type':'application/json',
-        'Authorization':'Bearer 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'
+        'x-api-key':'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',
+        'anthropic-version':'2023-06-01',
+        'anthropic-dangerous-direct-browser-access':'true'
       },
       body:JSON.stringify({
-        model:'llama-3.3-70b-versatile',
+        model:'claude-haiku-4-5-20251001',
         max_tokens:1500,
-        temperature:0.2,
-        messages:[
-          {role:'system',content:systemPrompt},
-          {role:'user',content:text}
-        ]
+        system:systemPrompt,
+        messages:[{role:'user',content:text}]
       })
     });
     var data=await resp.json();
-    var answer=data.choices&&data.choices[0]?data.choices[0].message.content:(data.error?'Error: '+data.error.message:'Sin respuesta');
+    var answer=data.content&&data.content[0]?data.content[0].text:(data.error?'Error: '+data.error.message:'Sin respuesta');
     loadingDiv.textContent=answer;
   }catch(e){
     loadingDiv.textContent='Error al conectar con el asistente. Verificá tu conexión.';
