@@ -1603,17 +1603,28 @@ function buildContext(pregunta){
         var nextCult=VER_CULT[AC]&&VER_CULT[AC][d.campo+'|'+d.lote]||null;
         var l=[];
         // Barbecho with products
-        if(d.barb&&d.barb.done){
-          l.push('BARB '+(d.barb.fecha||'')+(d.barb.prod?' ['+d.barb.prod.slice(0,40)+']':''));
+        var barbFecha=d.barb&&d.barb.fecha;
+        if(barbFecha&&barbFecha!=='PROGRAMADO'){
+          l.push('BARB_REAL '+barbFecha+(d.barb.prod?' ['+d.barb.prod.slice(0,40)+']':''));
+        }else if(barbFecha==='PROGRAMADO'){
+          l.push('BARB_PROG'+(d.barb.prod?' ['+d.barb.prod.slice(0,40)+']':''));
         }else l.push('SIN_BARB');
         // DG
-        if(d.dg&&d.dg.done)l.push('DG '+(d.dg.fecha||'')+(d.dg.prod?' ['+d.dg.prod.slice(0,30)+']':''));
+        var dgFecha=d.dg&&d.dg.fecha;
+        if(dgFecha&&dgFecha!=='PROGRAMADO')l.push('DG_REAL '+dgFecha+(d.dg.prod?' ['+d.dg.prod.slice(0,30)+']':''));
+        else if(dgFecha==='PROGRAMADO')l.push('DG_PROG'+(d.dg.prod?' ['+d.dg.prod.slice(0,30)+']':''));
         // Repaso with products
-        if(d.rep&&d.rep.done){
-          l.push('REPASO '+(d.rep.fecha||'')+(d.rep.prod?' ['+d.rep.prod.slice(0,40)+']':''));
+        var repFecha=d.rep&&d.rep.fecha;
+        if(repFecha&&repFecha!=='PROGRAMADO'){
+          l.push('REPASO_REAL '+repFecha+(d.rep.prod?' ['+d.rep.prod.slice(0,40)+']':''));
+        }else if(repFecha==='PROGRAMADO'){
+          l.push('REPASO_PROG'+(d.rep.prod?' ['+d.rep.prod.slice(0,40)+']':''));
         }else l.push('SIN_REPASO');
         // Siembra
-        l.push(d.siem&&d.siem.fecha?'SIEM '+(d.siem.fecha||'')+' '+(d.siem.var||''):'SIN_SIEM');
+        var siemFecha=d.siem&&d.siem.fecha;
+        if(siemFecha&&siemFecha!=='PROGRAMADO')l.push('SIEM_REAL '+siemFecha+' '+(d.siem.var||''));
+        else if(siemFecha==='PROGRAMADO')l.push('SIEM_PROG '+(d.siem.var||''));
+        else l.push('SIN_SIEM');
         // Resiembra
         if(d.re1&&d.re1.fecha)l.push('RESIEM '+(d.re1.fecha||'')+' '+(d.re1.var||''));
         // Fert basal
@@ -1629,8 +1640,14 @@ function buildContext(pregunta){
         var uT=(d.urea_siem&&d.urea_siem.kg||0)+(d.z22&&d.z22.kg||0)+(d.z30&&d.z30.kg||0)+(d.z33&&d.z33.kg||0);
         l.push(uT>0?'UREA_TOT '+uT+'kg/ha':'SIN_UREA');
         // Fungicidas
-        l.push(d.f1&&d.f1.prod?'F1 '+(d.f1.fecha||'')+' ['+d.f1.prod.slice(0,30)+']':'SIN_F1');
-        l.push(d.f2&&d.f2.prod?'F2 '+(d.f2.fecha||'')+' ['+d.f2.prod.slice(0,30)+']':'SIN_F2');
+        var f1Fecha=d.f1&&d.f1.fecha;
+        if(f1Fecha&&f1Fecha!=='PROGRAMADO')l.push('F1_REAL '+f1Fecha+' ['+(d.f1.prod||'').slice(0,30)+']');
+        else if(f1Fecha==='PROGRAMADO')l.push('F1_PROG ['+(d.f1.prod||'').slice(0,30)+']');
+        else l.push('SIN_F1');
+        var f2Fecha=d.f2&&d.f2.fecha;
+        if(f2Fecha&&f2Fecha!=='PROGRAMADO')l.push('F2_REAL '+f2Fecha+' ['+(d.f2.prod||'').slice(0,30)+']');
+        else if(f2Fecha==='PROGRAMADO')l.push('F2_PROG ['+(d.f2.prod||'').slice(0,30)+']');
+        else l.push('SIN_F2');
         // Zinc y humicos
         l.push(d.znf&&d.znf.dosis?'ZINC '+d.znf.dosis+'L/ha '+(d.znf.fecha||''):'SIN_ZINC');
         l.push(d.hum&&d.hum.dosis?'HUM '+d.hum.dosis+'L/ha '+(d.hum.fecha||''):'SIN_HUM');
@@ -1716,12 +1733,22 @@ async function sendChat(){
 
   var ctx=buildContext(text);
   var systemPrompt='Sos un asistente agrónomo para Ceibos Group Uruguay, campaña '+AC+'.\n'+
-    'Respondé SIEMPRE en español rioplatense, directo y técnico.\n'+
-    'Cuando te pregunten por lotes específicos, listá EXACTAMENTE los lotes del contexto que cumplen la condición.\n'+
-    'Si la pregunta es sobre lotes sin cierta labor, buscá en el contexto todos los lotes donde esa labor NO aparece o aparece como "Sin labores".\n'+
-    'NUNCA digas que no tenés información si los datos están en el contexto. Analizá el contexto completo antes de responder.\n'+
+    'Respondé SIEMPRE en español rioplatense, directo y técnico.\n\n'+
+    'REGLAS CRÍTICAS DE PRECISIÓN - nunca las violes:\n'+
+    '1. Una labor está REALIZADA solo si tiene fecha real (dd/mm/aaaa) en el contexto. Ej: "BARB 01/06/2026"\n'+
+    '2. Si dice PROGRAMADO = planificada pero NO ejecutada todavía. Indicalo explícitamente.\n'+
+    '3. Si una labor no aparece en el contexto = NO SE REALIZÓ.\n'+
+    '4. NUNCA inferís que algo se hizo si no tiene fecha real. La ausencia de fecha = no realizado.\n'+
+    '5. LITORAL NORTE y SALTO son zonas DISTINTAS e independientes. No las mezclés jamás.\n'+
+    '6. Solo respondé con datos explícitos del contexto. Si no está, decí "sin dato registrado".\n'+
+    '7. Cuando listés lotes sin cierta labor, verificá campo por campo en el contexto antes de responder.\n\n'+
+    'FORMATO DEL CONTEXTO:\n'+
+    '- SIN_BARB / SIN_REPASO / SIN_SIEM / SIN_F1 etc = esa labor no está realizada\n'+
+    '- BARB fecha [productos] = barbecho realizado con esa fecha\n'+
+    '- PROGRAMADO = planificado pero no ejecutado\n'+
+    '- PROX:Mz1 = cultivo siguiente planificado\n\n'+
     'Fecha actual: '+new Date().toLocaleDateString('es-UY')+'.\n\n'+
-    'DATOS DE CAMPAÑA (formato: Campo Lote (has) Cultivo [variedad]: labores realizadas):\n'+ctx;
+    'DATOS:\n'+ctx;
 
   try{
     var resp=await fetch('https://api.anthropic.com/v1/messages',{
@@ -1771,7 +1798,7 @@ function isFinnLote(campo,lote){
   return fl.indexOf(String(lote))>=0;
 }
 function normCult(v){var m={CC:'Cobertura',cc:'Cobertura',Car:'Carinata',car:'Carinata'};return v?m[String(v).trim()]||String(v).trim():null;}
-function fmtDate(v){if(v==null)return null;if(typeof v==='number'&&v>40000){var d=XLSX.SSF.parse_date_code(v);if(d)return String(d.d).padStart(2,'0')+'/'+String(d.m).padStart(2,'0')+'/'+d.y;}var s=String(v).trim();if(s.includes('/')&&s.length<=6){var p=s.split('/');if(p.length===2){try{return p[0].padStart(2,'0')+'/'+p[1].padStart(2,'0')+'/2026';}catch(e){}}}return s||null;}
+function fmtDate(v){if(v==null)return null;if(typeof v==='number'&&v>40000){var d=XLSX.SSF.parse_date_code(v);if(d)return String(d.d).padStart(2,'0')+'/'+String(d.m).padStart(2,'0')+'/'+d.y;}var s=String(v).trim().toLowerCase();if(s==='programado'||s==='prog'||s==='p')return 'PROGRAMADO';s=String(v).trim();if(s.includes('/')&&s.length<=6){var p=s.split('/');if(p.length===2){try{return p[0].padStart(2,'0')+'/'+p[1].padStart(2,'0')+'/2026';}catch(e){}}}return s||null;}
 function sfn(v){var n=parseFloat(v);return isNaN(n)?null:n;}
 function findCol(h0,h1,grp,col,fb){var exact=col.length<=3,cur=null;for(var i=0;i<h0.length;i++){if(h0[i])cur=String(h0[i]).trim();if(cur&&cur.toLowerCase().indexOf(grp.toLowerCase())>=0&&h1[i]){var b=String(h1[i]).trim().toLowerCase();if(exact?b===col.toLowerCase():b.indexOf(col.toLowerCase())>=0)return i;}}return fb!=null?fb:null;}
 function herbCols(h0,h1,grp){var SKIP=['fecha','contratista','ha','kg','origen semilla','sembradora','%'],cur=null,cols=[],fechaCol=null,finnCol=null;for(var i=0;i<h0.length;i++){if(h0[i])cur=String(h0[i]).trim();if(cur===grp&&h1[i]){var h=String(h1[i]).trim();if(SKIP.indexOf(h.toLowerCase())>=0){if(h.toLowerCase()==='fecha'&&!fechaCol)fechaCol=i;}else{cols.push({idx:i,name:h});if(!finnCol)finnCol=i;}}}return{cols:cols,fechaCol:fechaCol,finnCol:finnCol};}
@@ -1806,7 +1833,7 @@ function parseSheet(wb,sheetName){
       barb:{prod:herbProds(vArr,BARB),fecha:fmtDate(BARB.fechaCol!=null?gv(ri,BARB.fechaCol):null),finn:FH(ri,BARB),done:herbProds(vArr,BARB)!=null},
       dg:{prod:herbProds(vArr,DG),fecha:fmtDate(DG.fechaCol!=null?gv(ri,DG.fechaCol):null),finn:FH(ri,DG),done:herbProds(vArr,DG)!=null},
       rep:{prod:herbProds(vArr,REP),fecha:fmtDate(REP.fechaCol!=null?gv(ri,REP.fechaCol):null),finn:FH(ri,REP),done:herbProds(vArr,REP)!=null},
-      siem:{var:G(ri,'siem_var')?String(G(ri,'siem_var')):null,fecha:fmtDate(G(ri,'siem_fecha')),finn:FA(ri,['siem_var','siem_fecha'])},
+      siem:{var:G(ri,'siem_var')?String(G(ri,'siem_var')):null,fecha:fmtDate(G(ri,'siem_fecha')),finn:FA(ri,['siem_var','siem_fecha']),done:fmtDate(G(ri,'siem_fecha'))!=null&&fmtDate(G(ri,'siem_fecha'))!=='PROGRAMADO'},
       re1:{var:G(ri,'re1_var')?String(G(ri,'re1_var')):null,fecha:fmtDate(G(ri,'re1_fecha')),ha:re1ha,finn:FA(ri,['re1_var','re1_fecha'])},
       fert_bas:{spt:sfn(G(ri,'bas_spt')),spt_finn:GF(ri,'bas_spt'),kcl:sfn(G(ri,'bas_kcl')),kcl_finn:GF(ri,'bas_kcl'),fosz:sfn(G(ri,'bas_fosz')),fosz_finn:GF(ri,'bas_fosz'),caso4:sfn(G(ri,'bas_caso4')),caso4_finn:GF(ri,'bas_caso4'),fecha_p:fmtDate(G(ri,'bas_fecha_p')),fecha_k:fmtDate(G(ri,'bas_fecha_k')),fecha_s:fmtDate(G(ri,'bas_fecha_s'))},
       urea_siem:{kg:sfn(G(ri,'urea_siem')),fecha:fmtDate(G(ri,'urea_fecha')),finn:FA(ri,['urea_siem','urea_fecha'])},
