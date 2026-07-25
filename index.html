@@ -459,8 +459,38 @@ function buildFinnFull(wb){
     return null;
   }
 
-  // Get siem dates from FINN_FULL (already loaded from plan)
+  // Mapa de columnas por NOMBRE de header, no por índice fijo (Finnegans reordena columnas entre exports)
+  var COL={};
+  for(var hc=rng.s.c;hc<=rng.e.c;hc++){
+    var hv=gv(rng.s.r,hc);
+    if(hv!=null)COL[String(hv).trim()]=hc;
+  }
+  var REQ=['Fecha','Establecimiento','Zona','Lote','Actividad','Labor/producto','Cant./ha','Tipo','Unidad'];
+  for(var qi=0;qi<REQ.length;qi++){
+    if(COL[REQ[qi]]==null){console.error('buildFinnFull: no encontré la columna "'+REQ[qi]+'" en Reporte.xlsx, abortando parseo');return;}
+  }
+
+  // PASO 1: fecha real de siembra por lote (leída del propio Reporte), prioridad sobre Plan de Siembra
+  var actualSiem={};
+  for(var pr=rng.s.r+1;pr<=rng.e.r;pr++){
+    var zr0=gv(pr,COL['Zona']);if(!zr0||!ZMAP[zr0])continue;
+    var zona0=ZMAP[zr0];
+    var estab0=String(gv(pr,COL['Establecimiento'])||'');
+    var campo0=cleanEstab(estab0);
+    var lote0=cleanLote(estab0,gv(pr,COL['Lote'])||'');if(!lote0)continue;
+    var tipo0=String(gv(pr,COL['Tipo'])||'');
+    var labor0=String(gv(pr,COL['Labor/producto'])||'').trim().toUpperCase();
+    var isSiem0=(tipo0==='Laboreo'&&labor0.indexOf('RESIEMBRA')<0&&labor0.indexOf('SIEMBRA')>=0)||(tipo0==='Insumo'&&labor0.indexOf('SEMILLA')>=0);
+    if(!isSiem0)continue;
+    var fr0=gv(pr,COL['Fecha']);var fd0=fr0 instanceof Date?fr0:null;if(!fd0)continue;
+    var k0=zona0+'|'+campo0+'|'+lote0;
+    if(!actualSiem[k0]||fd0<actualSiem[k0])actualSiem[k0]=fd0;
+  }
+
+  // Fecha de siembra a usar: primero la real del Reporte, si no hay, la del Plan de Siembra ya cargada en FINN_FULL
   function getSiemDt(zona,campo,lote){
+    var k=zona+'|'+campo+'|'+lote;
+    if(actualSiem[k])return actualSiem[k];
     var d=FINN_FULL[zona]&&FINN_FULL[zona][campo]&&FINN_FULL[zona][campo][lote];
     if(!d||!d.siem||!d.siem.fecha)return null;
     var p=d.siem.fecha.split('/');
@@ -468,20 +498,20 @@ function buildFinnFull(wb){
   }
 
   var newFull={};var newCrop={};
-  for(var ri=1;ri<=rng.e.r;ri++){
-    var zr=gv(ri,2);if(!zr||!ZMAP[zr])continue;
+  for(var ri=rng.s.r+1;ri<=rng.e.r;ri++){
+    var zr=gv(ri,COL['Zona']);if(!zr||!ZMAP[zr])continue;
     var zona=ZMAP[zr];
-    var estab=String(gv(ri,1)||'');
+    var estab=String(gv(ri,COL['Establecimiento'])||'');
     var campo=cleanEstab(estab);
-    var lote=cleanLote(estab,gv(ri,4)||'');if(!lote)continue;
-    var fechaRaw=gv(ri,0);
+    var lote=cleanLote(estab,gv(ri,COL['Lote'])||'');if(!lote)continue;
+    var fechaRaw=gv(ri,COL['Fecha']);
     var fechaDt=fechaRaw instanceof Date?fechaRaw:null;
     var fechaStr=fechaDt?String(fechaDt.getDate()).padStart(2,'0')+'/'+(String(fechaDt.getMonth()+1)).padStart(2,'0')+'/'+fechaDt.getFullYear():null;
-    var tipo=String(gv(ri,10)||'');
-    var labor=String(gv(ri,15)||'').trim();
-    var cantHa=gv(ri,19);
-    var unidad=String(gv(ri,18)||'').trim();
-    var act=String(gv(ri,5)||'').toUpperCase();
+    var tipo=String(gv(ri,COL['Tipo'])||'');
+    var labor=String(gv(ri,COL['Labor/producto'])||'').trim();
+    var cantHa=gv(ri,COL['Cant./ha']);
+    var unidad=String(gv(ri,COL['Unidad'])||'').trim();
+    var act=String(gv(ri,COL['Actividad'])||'').toUpperCase();
     var siemDt=getSiemDt(zona,campo,lote);
     var field=getField(tipo,labor,fechaDt,siemDt);
     if(!field)continue;
