@@ -42,11 +42,12 @@ def clean_estab(e):
 
 def clean_lote(estab, lote):
     s = str(lote or '').strip()
-    ec = str(estab or '').replace('UY_','')
-    sl = s.lower()
-    for sep in ['_','-']:
-        p = (ec+sep).lower()
-        if sl.startswith(p): s=s[len(p):]; break
+    if s.upper().startswith('UY_'): s = s[3:]
+    ec = str(estab or '').replace('UY_','').strip()
+    ec_parts = [re.escape(p) for p in re.split(r'[_\-\s]+', ec) if p]
+    if ec_parts:
+        pat = r'^' + r'[_\-\s]*'.join(ec_parts) + r'[_\-\s]+'
+        s = re.sub(pat, '', s, flags=re.IGNORECASE)
     for p in ['El Malacara-','El Juncal-','El Rincon-','El Trebol-','Los Tilos-',
               'Monte Cristo-','La Campana-','El Laurel-','El Arbolito-','El Tajamar-',
               'El Totoral-','Los Nogales-','Torre Alta_','Don Venancio-','La Macarena-',
