@@ -443,9 +443,9 @@ function buildFinnFull(wb){
     for(var i=0;i<SKIP_P.length;i++){if(l.indexOf(SKIP_P[i])>=0)return null;}
     var before=!siemDt||(fechaDt&&fechaDt<siemDt);
     if(tipo==='Laboreo'){
+      if(l.indexOf('RESIEMBRA')>=0)return 're1';
       if(l.indexOf('SIEMBRA')>=0)return 'siem';
       if(l.indexOf('DISQUERA')>=0||l.indexOf('DISCO ACONDICIONADOR')>=0)return 'barb';
-      if(l.indexOf('RESIEMBRA')>=0)return 're1';
       return null;
     }
     if(l.indexOf('SEMILLA')>=0)return 'siem';
