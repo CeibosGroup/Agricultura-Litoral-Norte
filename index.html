@@ -192,6 +192,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       <span class="fl">Estacion</span>
       <div class="fchip on" id="btn-inv">Invierno</div>
       <div class="fchip" id="btn-ver">Verano</div>
+      <div class="fsep" id="lnfinn-sep" style="display:none;"></div>
+      <div class="fchip" id="btn-lnfinn" style="display:none;" title="Prueba: leer Litoral Norte/Salto 100% del Reporte Finnegans en vez de la Planilla">Probar 100% Finn</div>
     </div>
     <div class="alerts-bar" id="alerts-bar">
       <div class="alerts-collapsed" id="alerts-collapsed" style="display:none;">
@@ -298,6 +300,7 @@ var AD=JSON.parse(JSON.stringify(HISTORIC));
 var AC=null,SE='inv',FC='all';
 var openC={},openL={},alertsOpen=false,activeZona='Litoral Norte';
 var cardFilter=null; // {key:'znf'|'rep'|'fung1'|'fung2'|'hum'|'urea', want:true|false} o null
+var lnFinn=false; // true = Litoral Norte/Salto también se leen 100% del Reporte Finnegans (prueba)
 var climaCampo='all',climaPeriod='campaign';
 var climaChart=null,climaChart2=null;
 var omData=null; // open-meteo cache
@@ -353,7 +356,7 @@ document.addEventListener('DOMContentLoaded',function(){
       activeZona=zona;
       document.querySelectorAll('#zona-chips .fchip').forEach(function(x){x.classList.toggle('on',x.textContent===zona);});
       // Show/hide cultivo filter (only for Litoral Norte/Salto which have Excel data)
-      var hasExcel=(zona==='Litoral Norte'||zona==='Salto')&&AD[AC];
+      var hasExcel=(zona==='Litoral Norte'||zona==='Salto')&&AD[AC]&&!lnFinn;
       q('fstrip-cultivo').style.display='';
       // Update season filter visibility
       q('btn-inv').parentElement&&(q('btn-inv').style.display=hasExcel?'':'none');
@@ -873,9 +876,16 @@ function renderFinnMetrics(zona){
 
 function render(){
   var rows=filtered(),CL=SE==='inv'?CLI:CLV,prod=rows.filter(isProd);
+  var hasExcelNow=(activeZona==='Litoral Norte'||activeZona==='Salto')&&AD[AC]&&!lnFinn;
+  if(q('btn-inv').parentElement)q('btn-inv').style.display=hasExcelNow?'':'none';
+  if(q('btn-ver'))q('btn-ver').style.display=hasExcelNow?'':'none';
+  var showLnFinnToggle=(activeZona==='Litoral Norte'||activeZona==='Salto');
+  q('btn-lnfinn').style.display=showLnFinnToggle?'':'none';
+  q('lnfinn-sep').style.display=showLnFinnToggle?'':'none';
+  q('btn-lnfinn').classList.toggle('on',lnFinn);
   var cults=[];
   var CL2={Cz:'Colza',Tr:'Trigo',Ceb:'Cebada',Cobertura:'Cob.',Carinata:'Car.',Sj1:'Soja 1',Sj2:'Soja 2',Mz1:'Maiz 1',Mz2:'Maiz 2'};
-  if(activeZona==='Litoral Norte'||activeZona==='Salto'){
+  if((activeZona==='Litoral Norte'||activeZona==='Salto')&&!lnFinn){
     rows.forEach(function(d){if(d.cult&&cults.indexOf(d.cult)<0)cults.push(d.cult);});
   } else {
     // Collect cults from FINN_FULL
@@ -894,8 +904,8 @@ function render(){
     var el=document.createElement('div');el.className='fchip'+(FC===o.v?' on':'');el.setAttribute('data-v',o.v);el.textContent=o.l;
     el.onclick=(function(v){return function(){setFilt(v);};})(o.v);cchips.appendChild(el);
   });
-  // For Finn zones, skip alerts/metrics from Excel and go straight to Finn
-  if(activeZona!=='Litoral Norte'&&activeZona!=='Salto'){
+  // For Finn zones (o LN/Salto en modo prueba 100% Finnegans), skip alerts/metrics de Excel y usar Finn
+  if(lnFinn||(activeZona!=='Litoral Norte'&&activeZona!=='Salto')){
     renderAlerts([]);
     renderFinnMetrics(activeZona);
     var el2=q('campos');el2.innerHTML='';
@@ -1889,6 +1899,14 @@ document.addEventListener('DOMContentLoaded',function(){
       }
       render();
     });
+  }
+  var lnFinnBtn=q('btn-lnfinn');
+  if(lnFinnBtn){
+    lnFinnBtn.onclick=function(){
+      lnFinn=!lnFinn;
+      openC={};openL={};FC='all';
+      render();
+    };
   }
 });
 
