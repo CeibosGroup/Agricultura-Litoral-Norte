@@ -243,7 +243,7 @@ for _, row in df.iterrows():
             if not any(x.get('l')==labor for x in d[field]['items']):
                 d[field]['items'].append(item)
         elif field == 'siem' and pd.notna(cant_ha) and float(cant_ha) > 1:
-            d['siem']['kg_ha'] = round(float(cant_ha), 0)
+            d['siem']['kg_ha'] = d['siem'].get('kg_ha', 0) + float(cant_ha)
 
 # Merge plan dates/vars
 for zona, campos in finn_full.items():
@@ -268,6 +268,13 @@ for key, ps in plan_siem.items():
             'cult': ps.get('cult'), 'var': ps.get('var'), 'has': ps.get('has'),
             **{f:{'done':False,'fecha':None,'items':[]} for f in FIELDS}
         }
+
+# Redondear kg_ha acumulado (se sumó sin redondear fila a fila para no perder precisión)
+for zona, campos in finn_full.items():
+    for campo, lotes in campos.items():
+        for lote, d in lotes.items():
+            if d.get('siem', {}).get('kg_ha') is not None:
+                d['siem']['kg_ha'] = round(d['siem']['kg_ha'])
 
 # Clean empty fields
 def clean_obj(obj):

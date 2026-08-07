@@ -537,18 +537,18 @@ function buildFinnFull(wb){
         if(!d[field].items)d[field].items=[];
         if(!d[field].items.some(function(x){return x.l===labor;}))d[field].items.push(item);
       } else if(field==='siem'&&cantHa&&parseFloat(cantHa)>1){
-        d.siem.kg_ha=Math.round(parseFloat(cantHa));
+        d.siem.kg_ha=(d.siem.kg_ha||0)+parseFloat(cantHa);
       }
     }
   }
-  // Merge into FINN_FULL
+  // Reemplaza cada campo (establecimiento) tocado por el Reporte completo, en vez de mezclar
+  // clave por clave. Ruta 20/Durazno/Tacuarembó dependen 100% de este parseo, así que cualquier
+  // clave de lote vieja (con formato ya corregido en cleanLote, ej. "UY_BICHADERO-33" vs "33")
+  // queda purgada en cada corrida en vez de quedar duplicada para siempre.
   Object.keys(newFull).forEach(function(z){
     if(!FINN_FULL[z])FINN_FULL[z]={};
     Object.keys(newFull[z]).forEach(function(c){
-      if(!FINN_FULL[z][c])FINN_FULL[z][c]={};
-      Object.keys(newFull[z][c]).forEach(function(l){
-        FINN_FULL[z][c][l]=newFull[z][c][l];
-      });
+      FINN_FULL[z][c]=newFull[z][c];
     });
   });
   Object.keys(newCrop).forEach(function(k){CROP_LOTE[k]=newCrop[k];});
@@ -769,7 +769,7 @@ function renderFinnDetail(ld){
       if(key==='siem'){
         var extra=[];
         if(ld.var)extra.push(ld.var);
-        if(d&&d.kg_ha)extra.push(d.kg_ha+' kg/ha');
+        if(d&&d.kg_ha)extra.push(Math.round(d.kg_ha)+' kg/ha');
         if(extra.length)ch+='<div class="ld">'+extra.join(' · ')+'</div>';
       } else if(items.length){
         var shown=items.slice(0,3).map(function(it){
