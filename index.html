@@ -176,7 +176,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div class="tab on" data-tab="status">Status</div>
     <div class="tab" data-tab="clima">Clima</div>
     <div class="tab" data-tab="indicadores">Indicadores</div>
-    <div class="tab tab-locked" data-tab="asistente" title="Próximamente">Asistente <i class="ti ti-lock" style="font-size:10px;vertical-align:-1px;"></i></div>
+    <div class="tab" data-tab="asistente">Asistente</div>
   </div>
 
   <!-- STATUS -->
@@ -361,7 +361,7 @@ document.addEventListener('DOMContentLoaded',function(){
       // Update season filter visibility
       q('btn-inv').parentElement&&(q('btn-inv').style.display=hasExcel?'':'none');
       q('btn-ver').parentElement&&(q('btn-ver').style.display=hasExcel?'':'none');
-      openC={};openL={};FC='all';
+      openC={};openL={};FC='all';cardFilter=null;
       render();
       render();
     };})(z);
@@ -990,7 +990,7 @@ function togL(lid){
   openL[lid]=!openL[lid];var det=q(lid);
   if(det){
     if(!det.innerHTML.trim()){
-      if(activeZona!=='Litoral Norte'&&activeZona!=='Salto'){
+      if(lnFinn||(activeZona!=='Litoral Norte'&&activeZona!=='Salto')){
         // Use data attributes from lhdr for reliable lookup
         var lhdrEl=det.previousElementSibling;
         var dZona=lhdrEl&&lhdrEl.getAttribute('data-zona')||activeZona;
@@ -1904,7 +1904,7 @@ document.addEventListener('DOMContentLoaded',function(){
   if(lnFinnBtn){
     lnFinnBtn.onclick=function(){
       lnFinn=!lnFinn;
-      openC={};openL={};FC='all';
+      openC={};openL={};FC='all';cardFilter=null;
       render();
     };
   }
